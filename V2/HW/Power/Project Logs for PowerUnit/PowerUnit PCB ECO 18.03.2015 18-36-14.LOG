@@ -1,0 +1,22 @@
+Removed Pin From Net: NetName=NetU1_7 Pin=U8-4
+Added Component: Designator=C5(0402_)
+Added Component: Designator=U(SOT23-5)
+Added Pin To Net: NetName=GND Pin=C1-2
+Added Pin To Net: NetName=3V3 Pin=C5-1
+Added Pin To Net: NetName=GND Pin=C5-2
+Added Pin To Net: NetName=3V3 Pin=R7-2
+Added Pin To Net: NetName=GND Pin=U3-1
+Added Pin To Net: NetName=GND Pin=U3-2
+Added Pin To Net: NetName=3V3 Pin=U3-3
+Added Pin To Net: NetName=GND Pin=U-3
+Added Pin To Net: NetName=NetU1_7 Pin=U-4
+Added Pin To Net: NetName=3V3 Pin=U-5
+Added Pin To Net: NetName=NetU8_4 Pin=U8-4
+Added Pin To Net: NetName=NetU8_4 Pin=U-1
+Added Net: Name=NetU8_4
+Added Pin To Net: NetName=OVERTEMP Pin=R7-1
+Added Pin To Net: NetName=OVERTEMP Pin=U3-5
+Added Pin To Net: NetName=OVERTEMP Pin=U-2
+Added Net: Name=OVERTEMP
+Added Member To Class: ClassName=PowerUnit Member=Component C5 100n
+Added Member To Class: ClassName=PowerUnit Member=Component U 74LVC1G08

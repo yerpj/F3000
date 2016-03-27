@@ -1,0 +1,22 @@
+Removed Pin From Net: NetName=GND Pin=R5-1
+Removed Pin From Net: NetName=RELAYOUT1 Pin=R5-2
+Removed Pin From Net: NetName=NetR11_8 Pin=R16-1
+Removed Pin From Net: NetName=NetR11_7 Pin=R17-1
+Removed Pin From Net: NetName=NetR11_6 Pin=R18-1
+Removed Pin From Net: NetName=NetR11_5 Pin=R19-1
+Removed Pin From Net: NetName=NetR11_8 Pin=U5-1
+Removed Pin From Net: NetName=NetR11_7 Pin=U5-3
+Removed Pin From Net: NetName=NetR11_6 Pin=U5-5
+Removed Pin From Net: NetName=NetR11_5 Pin=U5-7
+Added Component: Designator=R5(0402_)
+Added Pin To Net: NetName=GND Pin=R5-1
+Added Pin To Net: NetName=RELAYOUT1 Pin=R5-2
+Added Pin To Net: NetName=NetR11_5 Pin=R16-1
+Added Pin To Net: NetName=NetR11_6 Pin=R17-1
+Added Pin To Net: NetName=NetR11_7 Pin=R18-1
+Added Pin To Net: NetName=NetR11_8 Pin=R19-1
+Added Pin To Net: NetName=NetR11_5 Pin=U5-1
+Added Pin To Net: NetName=NetR11_6 Pin=U5-3
+Added Pin To Net: NetName=NetR11_7 Pin=U5-5
+Added Pin To Net: NetName=NetR11_8 Pin=U5-7
+Added Member To Class: ClassName=PowerUnit Member=Component R5 10k

@@ -1,0 +1,8 @@
+Added Component: Designator=T1(DPAK)
+Added Component: Designator=T2(DPAK)
+Added Component: Designator=T3(DPAK)
+Added Component: Designator=T4(DPAK)
+Added Member To Class: ClassName=PowerUnit Member=Component T1 NTD5867NL
+Added Member To Class: ClassName=PowerUnit Member=Component T2 NTD5867NL
+Added Member To Class: ClassName=PowerUnit Member=Component T3 NTD5867NL
+Added Member To Class: ClassName=PowerUnit Member=Component T4 NTD5867NL

@@ -1,0 +1,10 @@
+Added Component: Designator=H1(Mechanical_hole)
+Added Component: Designator=H2(Mechanical_hole)
+Added Component: Designator=H3(Mechanical_hole)
+Added Component: Designator=H4(Mechanical_hole)
+Added Pin To Net: NetName=GND Pin=H1-0
+Added Pin To Net: NetName=GND Pin=H2-0
+Added Pin To Net: NetName=GND Pin=H3-0
+Added Pin To Net: NetName=GND Pin=H4-0
+Added Net: Name=GND
+Added Class: Name=PowerUnit

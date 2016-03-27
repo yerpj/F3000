@@ -1,0 +1,4 @@
+Added Component: Designator=R5(0402_)
+Added Pin To Net: NetName=GND Pin=R5-1
+Added Pin To Net: NetName=RELAYOUT1 Pin=R5-2
+Added Member To Class: ClassName=PowerUnit Member=Component R5 10k

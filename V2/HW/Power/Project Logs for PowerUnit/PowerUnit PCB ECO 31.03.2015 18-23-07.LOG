@@ -1,0 +1,9 @@
+Change Component Footprint: Designator=TP1 Old Footprint=TP_1mm New Footprint=TP_1_5mm
+Added Pin To Net: NetName=3V3 Pin=R8-5
+Added Pin To Net: NetName=3V3 Pin=R8-6
+Added Pin To Net: NetName=3V3 Pin=R8-7
+Added Pin To Net: NetName=3V3 Pin=R8-8
+Added Pin To Net: NetName=3V3 Pin=R9-1
+Added Pin To Net: NetName=3V3 Pin=R9-2
+Added Pin To Net: NetName=3V3 Pin=R9-3
+Added Pin To Net: NetName=3V3 Pin=R9-4

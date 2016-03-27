@@ -1,0 +1,8 @@
+Added Component: Designator=R20(0805_)
+Added Component: Designator=T5(SOT23)
+Added Pin To Net: NetName=GND Pin=T5-2
+Added Pin To Net: NetName=NetR20_2 Pin=R20-2
+Added Pin To Net: NetName=NetR20_2 Pin=T5-3
+Added Net: Name=NetR20_2
+Added Member To Class: ClassName=PowerUnit Member=Component R20 560R
+Added Member To Class: ClassName=PowerUnit Member=Component T5 MMBT3904

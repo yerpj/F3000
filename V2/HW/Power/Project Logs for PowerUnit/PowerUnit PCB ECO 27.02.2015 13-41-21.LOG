@@ -1,0 +1,77 @@
+Added Component: Designator=C1(0402_)
+Added Component: Designator=C2(0402_)
+Added Component: Designator=C3(0402_)
+Added Component: Designator=D1(0603_Pol)
+Added Component: Designator=D2(0603_Pol)
+Added Component: Designator=P1(PHOENIX_MKDSN6)
+Added Component: Designator=R1(0402_)
+Added Component: Designator=R2(0402_)
+Added Component: Designator=R3(0402_)
+Added Component: Designator=U1(VSSOP10)
+Added Component: Designator=U2(VSSOP10)
+Added Component: Designator=U3(SOT23-5)
+Added Pin To Net: NetName=GND Pin=P1-2
+Added Pin To Net: NetName=GND Pin=R1-1
+Added Pin To Net: NetName=GND Pin=R2-1
+Added Pin To Net: NetName=GND Pin=T2-3
+Added Pin To Net: NetName=GND Pin=T4-3
+Added Pin To Net: NetName=GND Pin=U1-9
+Added Pin To Net: NetName=GND Pin=U2-9
+Added Pin To Net: NetName=NetC2_1 Pin=C2-1
+Added Pin To Net: NetName=NetC2_1 Pin=D1-2
+Added Pin To Net: NetName=NetC2_1 Pin=U1-2
+Added Net: Name=NetC2_1
+Added Pin To Net: NetName=NetC2_2 Pin=C2-2
+Added Pin To Net: NetName=NetC2_2 Pin=P1-3
+Added Pin To Net: NetName=NetC2_2 Pin=T1-3
+Added Pin To Net: NetName=NetC2_2 Pin=T2-4
+Added Pin To Net: NetName=NetC2_2 Pin=U1-4
+Added Net: Name=NetC2_2
+Added Pin To Net: NetName=NetC3_1 Pin=C3-1
+Added Pin To Net: NetName=NetC3_1 Pin=D2-2
+Added Pin To Net: NetName=NetC3_1 Pin=U2-2
+Added Net: Name=NetC3_1
+Added Pin To Net: NetName=NetC3_2 Pin=C3-2
+Added Pin To Net: NetName=NetC3_2 Pin=P1-4
+Added Pin To Net: NetName=NetC3_2 Pin=T3-3
+Added Pin To Net: NetName=NetC3_2 Pin=T4-4
+Added Pin To Net: NetName=NetC3_2 Pin=U2-4
+Added Net: Name=NetC3_2
+Added Pin To Net: NetName=NetR1_2 Pin=R1-2
+Added Pin To Net: NetName=NetR1_2 Pin=U1-6
+Added Net: Name=NetR1_2
+Added Pin To Net: NetName=NetR2_2 Pin=R2-2
+Added Pin To Net: NetName=NetR2_2 Pin=U2-6
+Added Net: Name=NetR2_2
+Added Pin To Net: NetName=NetT1_1 Pin=T1-1
+Added Pin To Net: NetName=NetT1_1 Pin=U1-3
+Added Net: Name=NetT1_1
+Added Pin To Net: NetName=NetT2_1 Pin=T2-1
+Added Pin To Net: NetName=NetT2_1 Pin=U1-10
+Added Net: Name=NetT2_1
+Added Pin To Net: NetName=NetT3_1 Pin=T3-1
+Added Pin To Net: NetName=NetT3_1 Pin=U2-3
+Added Net: Name=NetT3_1
+Added Pin To Net: NetName=NetT4_1 Pin=T4-1
+Added Pin To Net: NetName=NetT4_1 Pin=U2-10
+Added Net: Name=NetT4_1
+Added Pin To Net: NetName=VIN Pin=D1-1
+Added Pin To Net: NetName=VIN Pin=D2-1
+Added Pin To Net: NetName=VIN Pin=P1-1
+Added Pin To Net: NetName=VIN Pin=T1-4
+Added Pin To Net: NetName=VIN Pin=T3-4
+Added Pin To Net: NetName=VIN Pin=U1-1
+Added Pin To Net: NetName=VIN Pin=U2-1
+Added Net: Name=VIN
+Added Member To Class: ClassName=PowerUnit Member=Component C1 100n
+Added Member To Class: ClassName=PowerUnit Member=Component C2 47n
+Added Member To Class: ClassName=PowerUnit Member=Component C3 47n
+Added Member To Class: ClassName=PowerUnit Member=Component D1 CDSU4148
+Added Member To Class: ClassName=PowerUnit Member=Component D2 CDSU4148
+Added Member To Class: ClassName=PowerUnit Member=Component P1 Header 6
+Added Member To Class: ClassName=PowerUnit Member=Component R1 100k
+Added Member To Class: ClassName=PowerUnit Member=Component R2 100k
+Added Member To Class: ClassName=PowerUnit Member=Component R3 10k
+Added Member To Class: ClassName=PowerUnit Member=Component U1 LM5106MM/NOPB
+Added Member To Class: ClassName=PowerUnit Member=Component U2 LM5106MM/NOPB
+Added Member To Class: ClassName=PowerUnit Member=Component U3 MCP9501
