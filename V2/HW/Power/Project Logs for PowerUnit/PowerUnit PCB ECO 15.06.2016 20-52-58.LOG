@@ -1,0 +1,70 @@
+Added Component: Designator=P1(PHOENIX_PTSA05_36)
+Added Component: Designator=P2(PHOENIX_MKDSN8)
+Added Component: Designator=P3(PHOENIX_PTSA05_12)
+Added Pin To Net: NetName=P1 Pin=P1-1
+Added Pin To Net: NetName=GND Pin=P1-2
+Added Pin To Net: NetName=VIN Pin=P1-3
+Added Pin To Net: NetName=P2 Pin=P1-4
+Added Pin To Net: NetName=GND Pin=P1-5
+Added Pin To Net: NetName=VIN Pin=P1-6
+Added Pin To Net: NetName=RAPPORT+ Pin=P1-7
+Added Pin To Net: NetName=GND Pin=P1-8
+Added Pin To Net: NetName=VIN Pin=P1-9
+Added Pin To Net: NetName=RAPPORT- Pin=P1-10
+Added Pin To Net: NetName=GND Pin=P1-11
+Added Pin To Net: NetName=VIN Pin=P1-12
+Added Pin To Net: NetName=NEUTRE Pin=P1-13
+Added Pin To Net: NetName=GND Pin=P1-14
+Added Pin To Net: NetName=VIN Pin=P1-15
+Added Pin To Net: NetName=GAS Pin=P1-16
+Added Pin To Net: NetName=GND Pin=P1-17
+Added Pin To Net: NetName=VIN Pin=P1-18
+Added Pin To Net: NetName=EMBRAY Pin=P1-19
+Added Pin To Net: NetName=GND Pin=P1-20
+Added Pin To Net: NetName=VIN Pin=P1-21
+Added Pin To Net: NetName=HUILE Pin=P1-22
+Added Pin To Net: NetName=GND Pin=P1-23
+Added Pin To Net: NetName=VIN Pin=P1-24
+Added Pin To Net: NetName=REGIME Pin=P1-25
+Added Pin To Net: NetName=GND Pin=P1-26
+Added Pin To Net: NetName=VIN Pin=P1-27
+Added Pin To Net: NetName=RES Pin=P1-28
+Added Pin To Net: NetName=GND Pin=P1-29
+Added Pin To Net: NetName=VIN Pin=P1-30
+Added Pin To Net: NetName=NTC Pin=P1-31
+Added Pin To Net: NetName=GND Pin=P1-32
+Added Pin To Net: NetName=VIN Pin=P1-33
+Added Pin To Net: NetName=10V Pin=P1-34
+Added Pin To Net: NetName=VIF Pin=P1-35
+Added Pin To Net: NetName=3V3 Pin=P1-36
+Added Pin To Net: NetName=VBAT Pin=P2-1
+Added Pin To Net: NetName=NetC23_2 Pin=P2-2
+Added Pin To Net: NetName=NetC26_2 Pin=P2-3
+Added Pin To Net: NetName=NetD21_1 Pin=P2-4
+Added Pin To Net: NetName=NetD22_1 Pin=P2-6
+Added Pin To Net: NetName=GND Pin=P2-8
+Added Pin To Net: NetName=GND Pin=P3-1
+Added Pin To Net: NetName=VIN Pin=P3-2
+Added Pin To Net: NetName=VNTC Pin=P3-3
+Added Pin To Net: NetName=DI_0 Pin=P3-4
+Added Pin To Net: NetName=DI_1 Pin=P3-5
+Added Pin To Net: NetName=DI_2 Pin=P3-6
+Added Pin To Net: NetName=DI_3 Pin=P3-7
+Added Pin To Net: NetName=DI_4 Pin=P3-8
+Added Pin To Net: NetName=DI_5 Pin=P3-9
+Added Pin To Net: NetName=DI_6 Pin=P3-10
+Added Pin To Net: NetName=DI_7 Pin=P3-11
+Added Pin To Net: NetName=DI_8 Pin=P3-12
+Change Net Name : Old Net Name=NetP6_2 New Net Name=NetU11_3
+Change Net Name : Old Net Name=NetP6_3 New Net Name=NetU11_6
+Change Net Name : Old Net Name=NetP6_4 New Net Name=NetU11_10
+Change Net Name : Old Net Name=NetP6_5 New Net Name=NetU11_14
+Added Pin To Net: NetName=NetP2_5 Pin=P2-5
+Added Pin To Net: NetName=NetP2_5 Pin=R23-2
+Added Net: Name=NetP2_5
+Added Pin To Net: NetName=NetP2_7 Pin=P2-7
+Added Pin To Net: NetName=NetP2_7 Pin=R29-2
+Added Net: Name=NetP2_7
+Added Member To Class: ClassName=U_Inputs Member=Component P1 Header 36
+Added Member To Class: ClassName=U_outputs Member=Component P2 Header 8
+Added Member To Class: ClassName=U_interface Member=Component P3 Header 12
