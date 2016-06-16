@@ -1,0 +1,18 @@
+Removed Pin From Net: NetName=VBAT Pin=P2-1
+Removed Pin From Net: NetName=NetC25_2 Pin=P2-2
+Removed Pin From Net: NetName=NetC29_2 Pin=P2-3
+Removed Pin From Net: NetName=NetD21_1 Pin=P2-4
+Removed Pin From Net: NetName=NetD22_1 Pin=P2-6
+Removed Pin From Net: NetName=GND Pin=P2-8
+Added Pin To Net: NetName=GND Pin=P2-1
+Added Pin To Net: NetName=VBAT Pin=P2-2
+Added Pin To Net: NetName=NetC25_2 Pin=P2-3
+Added Pin To Net: NetName=NetC29_2 Pin=P2-4
+Added Pin To Net: NetName=NetD21_1 Pin=P2-5
+Added Pin To Net: NetName=NetD22_1 Pin=P2-7
+Added Pin To Net: NetName=NetP2_6 Pin=P2-6
+Added Pin To Net: NetName=NetP2_6 Pin=R30-2
+Added Net: Name=NetP2_6
+Added Pin To Net: NetName=NetP2_8 Pin=P2-8
+Added Pin To Net: NetName=NetP2_8 Pin=R36-2
+Added Net: Name=NetP2_8
