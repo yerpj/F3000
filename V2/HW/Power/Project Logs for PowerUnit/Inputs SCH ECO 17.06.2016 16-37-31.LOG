@@ -1,0 +1,30 @@
+Change Value of Parameter Digikey ref in Part C9 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C10 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C11 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C12 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C15 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C16 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C17 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C18 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C19 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C20 Old=abc New=490-6438-1-ND 
+Added Parameter Manufacturer=Murata to Part C9
+Added Parameter Manufacturer=Murata to Part C10
+Added Parameter Manufacturer=Murata to Part C11
+Added Parameter Manufacturer=Murata to Part C12
+Added Parameter Manufacturer=Murata to Part C15
+Added Parameter Manufacturer=Murata to Part C16
+Added Parameter Manufacturer=Murata to Part C17
+Added Parameter Manufacturer=Murata to Part C18
+Added Parameter Manufacturer=Murata to Part C19
+Added Parameter Manufacturer=Murata to Part C20
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C9
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C10
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C11
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C12
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C15
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C16
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C17
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C18
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C19
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C20

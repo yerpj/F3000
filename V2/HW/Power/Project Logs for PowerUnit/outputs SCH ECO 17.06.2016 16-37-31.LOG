@@ -1,0 +1,12 @@
+Change Value of Parameter Digikey ref in Part C37 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C38 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C39 Old=abc New=490-6438-1-ND 
+Change Value of Parameter Digikey ref in Part C40 Old=abc New=490-6438-1-ND 
+Added Parameter Manufacturer=Murata to Part C37
+Added Parameter Manufacturer=Murata to Part C38
+Added Parameter Manufacturer=Murata to Part C39
+Added Parameter Manufacturer=Murata to Part C40
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C37
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C38
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C39
+Added Parameter Manufacturer PartNum=GRM188R72A103KA01D to Part C40

@@ -1,0 +1,6 @@
+Change Value of Parameter Digikey ref in Part C25 Old= New=490-10702-1-ND
+Change Value of Parameter Digikey ref in Part C29 Old= New=490-10702-1-ND
+Added Parameter Manufacturer=Murata to Part C25
+Added Parameter Manufacturer=Murata to Part C29
+Added Parameter Manufacturer PartNum=GRM155R71H473KE14D to Part C25
+Added Parameter Manufacturer PartNum=GRM155R71H473KE14D to Part C29
