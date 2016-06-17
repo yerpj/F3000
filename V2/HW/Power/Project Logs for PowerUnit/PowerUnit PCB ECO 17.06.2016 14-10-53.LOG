@@ -1,0 +1,22 @@
+Removed Pin From Net: NetName=GND Pin=P2-1
+Removed Pin From Net: NetName=VBAT Pin=P2-2
+Removed Pin From Net: NetName=NetC25_2 Pin=P2-3
+Removed Pin From Net: NetName=NetC29_2 Pin=P2-4
+Removed Pin From Net: NetName=NetD21_1 Pin=P2-5
+Removed Pin From Net: NetName=NetD22_1 Pin=P2-7
+Removed Member From Class: ClassName=HV_NET Member=NetP2_6
+Removed Member From Class: ClassName=HV_NET Member=NetP2_8
+Added Pin To Net: NetName=NetD22_1 Pin=P2-2
+Added Pin To Net: NetName=NetD21_1 Pin=P2-4
+Added Pin To Net: NetName=NetC29_2 Pin=P2-5
+Added Pin To Net: NetName=NetC25_2 Pin=P2-6
+Added Pin To Net: NetName=VBAT Pin=P2-7
+Added Pin To Net: NetName=GND Pin=P2-8
+Added Pin To Net: NetName=NetP2_1 Pin=P2-1
+Added Pin To Net: NetName=NetP2_1 Pin=R36-2
+Added Net: Name=NetP2_1
+Added Pin To Net: NetName=NetP2_3 Pin=P2-3
+Added Pin To Net: NetName=NetP2_3 Pin=R30-2
+Added Net: Name=NetP2_3
+Added Member To Class: ClassName=HV_NET Member=Wire NetP2_1
+Added Member To Class: ClassName=HV_NET Member=Wire NetP2_3
