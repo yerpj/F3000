@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
 PCB File : C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\HW\Power\PowerUnit.PcbDoc
 Date     : 20.06.2016
-Time     : 10:23:00
+Time     : 11:23:19
 
 Processing Rule : Clearance Constraint (Gap=1.9mm) (InNetClass('HV_NET')),(not InNetClass('HV_NET'))
 Rule Violations :0

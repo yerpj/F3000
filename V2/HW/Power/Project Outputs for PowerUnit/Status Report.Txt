@@ -1,21 +1,9 @@
-Output: Gerber Files
-Type  : Gerber
+Output: Bill of Materials
+Type  : BOM
 From  : Variant [[No Variations]] of Project [PowerUnit.PrjPCB]
-   Generated File[PowerUnit.GTL]
-   Generated File[PowerUnit.GBL]
-   Generated File[PowerUnit.GTO]
-   Generated File[PowerUnit.GTP]
-   Generated File[PowerUnit.GTS]
-   Generated File[PowerUnit.GBS]
-   Generated File[PowerUnit.GBP]
-   Generated File[PowerUnit.GBO]
-   Generated File[PowerUnit.GKO]
-   Generated File[PowerUnit.RUL]
-   Generated File[PowerUnit.EXTREP]
-   Generated File[PowerUnit.REP]
 
 
-Files Generated   : 12
+Files Generated   : 0
 Documents Printed : 0
 
-Finished Output Generation At 10:23:21 On 20.06.2016
+Finished Output Generation At 11:38:23 On 20.06.2016
