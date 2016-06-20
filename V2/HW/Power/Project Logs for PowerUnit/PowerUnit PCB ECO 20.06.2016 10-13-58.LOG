@@ -1,0 +1,19 @@
+Added Component: Designator=P4(HDR1X18)
+Added Pin To Net: NetName=GND Pin=P4-1
+Added Pin To Net: NetName=VIN Pin=P4-2
+Added Pin To Net: NetName=VNTC Pin=P4-3
+Added Pin To Net: NetName=RES_OUT Pin=P4-4
+Added Pin To Net: NetName=REGIME_OUT Pin=P4-5
+Added Pin To Net: NetName=HUILE_OUT Pin=P4-6
+Added Pin To Net: NetName=EMBRAY_OUT Pin=P4-7
+Added Pin To Net: NetName=GAS_OUT Pin=P4-8
+Added Pin To Net: NetName=NEUTRE_OUT Pin=P4-9
+Added Pin To Net: NetName=RAPPORT-_OUT Pin=P4-10
+Added Pin To Net: NetName=RAPPORT+_OUT Pin=P4-11
+Added Pin To Net: NetName=P2_OUT Pin=P4-12
+Added Pin To Net: NetName=P1_OUT Pin=P4-13
+Added Pin To Net: NetName=MOT+_IN Pin=P4-14
+Added Pin To Net: NetName=MOT-_IN Pin=P4-15
+Added Pin To Net: NetName=RELAY1_IN Pin=P4-16
+Added Pin To Net: NetName=RELAY2_IN Pin=P4-17
+Added Member To Class: ClassName=U_interface Member=Component P4 Header 18

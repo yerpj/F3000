@@ -1,18 +1,18 @@
 Protel Design System Design Rule Check
-PCB File : C:\Users\Jean-Philippe\Documents\JP\perso\F3000\V2\HW\Power\PowerUnit.PcbDoc
-Date     : 16.06.2016
-Time     : 23:05:41
+PCB File : C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\HW\Power\PowerUnit.PcbDoc
+Date     : 20.06.2016
+Time     : 10:23:00
 
 Processing Rule : Clearance Constraint (Gap=1.9mm) (InNetClass('HV_NET')),(not InNetClass('HV_NET'))
 Rule Violations :0
 
-Processing Rule : Clearance Constraint (Gap=0.125mm) (All),(All)
+Processing Rule : Clearance Constraint (Gap=0.15mm) (All),(All)
 Rule Violations :0
 
-Processing Rule : Width Constraint (Min=0.1mm) (Max=10mm) (Preferred=0.15mm) (All)
+Processing Rule : Width Constraint (Min=0.2mm) (Max=10mm) (Preferred=0.3mm) (All)
 Rule Violations :0
 
-Processing Rule : Matched Lengths(Tolerance=1.5mm) (All)
+Processing Rule : Matched Net Lengths(Tolerance=1.5mm) (All)
 Rule Violations :0
 
 Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)
@@ -50,4 +50,4 @@ Rule Violations :0
 
 
 Violations Detected : 0
-Time Elapsed        : 00:00:02
+Time Elapsed        : 00:00:01
