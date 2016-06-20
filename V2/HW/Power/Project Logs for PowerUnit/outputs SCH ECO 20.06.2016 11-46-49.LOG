@@ -1,0 +1,20 @@
+Change Value of Parameter Digikey ref in Part C37 Old=490-6438-1-ND New=1276-1814-1-ND 
+Change Value of Parameter Manufacturer in Part C37 Old=Murata New=Samsung
+Change Value of Parameter Manufacturer PartNum in Part C37 Old=GRM188R72A103KA01D New=CL10B683KB8NNNC
+Change Value of Parameter Digikey ref in Part C38 Old=490-6438-1-ND New=1276-1814-1-ND 
+Change Value of Parameter Manufacturer in Part C38 Old=Murata New=Samsung
+Change Value of Parameter Manufacturer PartNum in Part C38 Old=GRM188R72A103KA01D New=CL10B683KB8NNNC
+Change Value of Parameter Digikey ref in Part C39 Old=490-6438-1-ND New=1276-1814-1-ND 
+Change Value of Parameter Manufacturer in Part C39 Old=Murata New=Samsung
+Change Value of Parameter Manufacturer PartNum in Part C39 Old=GRM188R72A103KA01D New=CL10B683KB8NNNC
+Change Value of Parameter Digikey ref in Part C40 Old=490-6438-1-ND New=1276-1814-1-ND 
+Change Value of Parameter Manufacturer in Part C40 Old=Murata New=Samsung
+Change Value of Parameter Manufacturer PartNum in Part C40 Old=GRM188R72A103KA01D New=CL10B683KB8NNNC
+Added Parameter Nominal voltage=50V to Part C37
+Added Parameter Nominal voltage=50V to Part C38
+Added Parameter Nominal voltage=50V to Part C39
+Added Parameter Nominal voltage=50V to Part C40
+Added Parameter Value=68n to Part C37
+Added Parameter Value=68n to Part C38
+Added Parameter Value=68n to Part C39
+Added Parameter Value=68n to Part C40
