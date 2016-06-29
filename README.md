@@ -17,3 +17,6 @@ More info on demand
 
 ![alt tag](https://github.com/yerpj/F3000/blob/2c577e5689fe7c43b66d8537eae2b1d42888bca9/V2/DOC/V2_3dPreview.png)
 
+![alt tag](https://github.com/yerpj/F3000/blob/2c577e5689fe7c43b66d8537eae2b1d42888bca9/V2/DOC/PCB_assembled_and_tested.jpg)
+
+
