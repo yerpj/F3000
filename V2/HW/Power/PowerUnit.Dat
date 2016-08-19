@@ -1,0 +1,38 @@
+Field=Designator~String~Designator~100|Field=Description~String~Description~100|Field=Manufacturer~String~Manufacturer~100|Field=Manufacturer PartNum~String~Manufacturer PartNum~100|Field=Digikey ref~String~Digikey ref~100|Field=Quantity~Integer~Quantity~100|Field=Value~String~Value~100|Field=Footprint~String~Footprint~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~PowerUnit.PrjPCB|ReportField=ProjectFullPath~C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\HW\Power\PowerUnit.PrjPCB|ReportField=Title~Bill of Materials For Project [PowerUnit.PrjPCB] (No PCB Document Selected)|ReportField=TotalQuantity~130|ReportField=ReportTime~16:50:49|ReportField=ReportDate~19.08.2016|ReportField=ReportDateTime~19.08.2016 16:50:49|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=Application_BuildNumber~|ReportField=ApprovedBy~|ReportField=Author~|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~19.08.2016|ReportField=CurrentTime~16:50:36|ReportField=Date~|ReportField=DocumentFullPathAndName~C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\HW\Power\PowerUnit.SchDoc|ReportField=DocumentName~PowerUnit.SchDoc|ReportField=DocumentNumber~|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~19.08.2016|ReportField=Organization~|ReportField=ProjectName~PowerUnit.PrjPCB|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~|ReportField=SheetTotal~|ReportField=Time~|ReportField=Title~|ReportField=DataSourceFileName~PowerUnit.PrjPCB|ReportField=DataSourceFullPath~C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\HW\Power\PowerUnit.PrjPCB
+C1, C2||Nichicon|UVR1H101MPD1TD|493-5916-1-ND|2|100u|C_pol8x12mm
+C3, C4, C5, C6, C21, C22, C23||Murata|GRM155R61E105MA12D|490-10018-1-ND|7|1u|0402_
+C7, C8, C13, C14, C24, C26, C27, C28, C30, C31, C32, C33, C34, C35, C36||TDK Corp.|C1005X5R1E104K050BC|445-4964-1-ND|15|100n|0402_
+C9, C10, C11, C12, C15, C16, C17, C18, C19, C20, C37, C38, C39, C40||Samsung|CL10B683KB8NNNC|1276-1814-1-ND|14|68n|0603_
+C25, C29||Murata|GRM155R71H473KE14D|490-10702-1-ND|2|47n|0402_
+D1||ON Semi|1N5354BG|1N5354BGOS-ND|1||R_DIL_vertical_holes1_2mm
+D2, D3, D4, D5, D8, D9, D10, D11, D14, D15, D17, D18||Micro Commercial Co|1N4148WX-TP|1N4148WXTPMSCT-ND|12||SOD323
+D6, D7, D12, D13, D16|DIODE ZENER ARRAY 15V SOT23-3|Diodes Inc.|AZ23C15-7-F|AZ23C15-FDICT-ND|5||SOT23
+D19, D20||Comchip Tech.|CDSU4148|641-1001-1-ND|2||0603_Pol
+D21, D22|SMAJ Transient Voltage Suppressor Diode Series|Littelfuse Inc|SMAJ24CA|SMAJ24CALFCT-ND|2||DO-214AC
+F1||Schurter Inc|3403.0166.11|486-1247-ND|1||FUSE_UMT250
+L1||Wurth Electronics Inc|7447709220|732-1243-1-ND|1|22u|WURTH_7447709220
+P1|Header, 36-Pin|Phoenix Contact|1990164|277-1810-ND|1||PHOENIX_PTSA05_36
+P2|Header, 8-Pin|Phoenix|1869279|277-5855-ND|1||PHOENIX_SMKDSN8
+P3|Header, 10-Pin|Phoenix|1990164|277-1810-ND|1||PHOENIX_PTSA05_18
+P4|Header, 10-Pin||||1||HDR1X18
+R1, R2, R3, R4, R9, R10, R11, R12, R17, R18||Yageo|RC0805JR-072K2L|311-2.2KARCT-ND|10|2k2|0805_
+R5, R6, R7, R8, R13, R14, R15, R16, R19, R20, R31, R33, R37, R39, R40, R41, R42, R43||Panasonic|ERJ-2RKF1002X|P10.0KLCT-ND|18|10k|0402_
+R21, R22||Yageo|RC0805FR-07510RL|311-510CRCT-ND|2|500R|0805_
+R23, R24, R26, R27||Panasonic|ERJ-6ENF22R0V|P22.0CCT-ND|4|22R|0805_
+R25, R28||Susumu|RR0510P-104-D|RR05P100KDCT-ND|2|100k|0402_
+R29, R35||Panasonic|ERJ-2RKF6800X|P680LCT-ND|2|680R|0402_
+R30, R36||Cantherm|MF72-060D5|317-1146-ND|2||MF72-010D5
+R32, R38||Rohm Semi|ESR10EZPJ223|RHM22KKCT-ND|2|22k|0805_
+R34||Rohm Semi|MCR01MRTF1001|RHM1.00KCDCT-ND|1|1k|0402_
+T1, T2, T3, T4||On Semi|NTD5867NLT4G|NTD5867NLT4GOSCT-ND|4||DPAK
+U1|IC REG LDO 10V 0.15A SOT223-3|Microchip|MCP1804T-A002I/DB|MCP1804T-A002I/DBCT-ND|1||SOT223-4M
+U2|IC REG LDO 3.3V 0.15A SOT223-3|Microchip|MCP1804T-3302I/DB|MCP1804T-3302I/DBCT-ND|1||SOT223-4M
+U3, U4, U14|IC LEVEL SHIFTER HEX 16-SOIC|On Semi|MC14504BDG|MC14504BDGOS-ND|3||SOIC16
+U5|IC REG LDO 5V 0.15A SOT23-5|Microchip|MCP1804T-5002I/OT|MCP1804T-5002I/OTCT-ND|1||sot23-5
+U6|IC OPAMP GP 220KHZ RRO 8SO SHTDN|Linear Technology|LT1636CS8#PBF|LT1636CS8#PBF-ND|1||soic8
+U7, U10||Texas Intruments|LM5106MM/NOPB|LM5106MM/NOPBCT-ND|2||VSSOP10
+U8|IC GATE AND 1CH 3-INP SOT-363|Diodes Inc.|74LVC1G11DW-7|74LVC1G11DW-7CT-ND|1||SOT363
+U9||Diodes Inc.|74AHC1G32SE-7|74AHC1G32SE-7DICT-ND|1||SOT353
+U11, U13||IXYS Integrated|CPC1018NTR|CLA225CT-ND|2||CPC10xxN
+U12|IC OSC SGL TIMER 2.1MHZ 8-SOIC|Texas Intruments|TLC555CDR|296-1336-1-ND|1||soic8
+U15||Microchip|MCP9501PT-095E/OT|MCP9501PT-095E/OTCT-ND|1||SOT23-5

@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------
-NCDrill File Report For: PowerUnit.PcbDoc   20.06.2016  12:19:10
+NCDrill File Report For: PowerUnit.PcbDoc   19.08.2016  16:25:32
 ---------------------------------------------------------------------------
 
 Layer Pair : Top Layer to Bottom Layer
@@ -7,13 +7,13 @@ ASCII RoundHoles File : PowerUnit.TXT
 
 Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
 ---------------------------------------------------------------------------
-T1        0.3mm (11.811mil)        Round          92               512.20 mm (20.17 Inch)
-T2        0.8mm (31.496mil)        Round          2                2.54 mm (0.10 Inch)
-T3        0.9mm (35.433mil)        Round          22               212.01 mm (8.35 Inch)
-T4        1mm (39.37mil)           Round          4                27.77 mm (1.09 Inch)
+T1        0.3mm (11.811mil)        Round          93               513.53 mm (20.22 Inch)
+T2        0.9mm (35.433mil)        Round          22               212.01 mm (8.35 Inch)
+T3        1mm (39.37mil)           Round          4                27.77 mm (1.09 Inch)
+T4        1.2mm (47.244mil)        Round          2                2.54 mm (0.10 Inch)
 T5        1.5mm (59.055mil)        Round          62               401.18 mm (15.79 Inch)
 T6        3.2mm (125.984mil)       Round          4                255.04 mm (10.04 Inch)
 ---------------------------------------------------------------------------
-Totals                                            186              1410.74 mm (55.54 Inch)
+Totals                                            187              1412.08 mm (55.59 Inch)
 
-Total Processing Time (hh:mm:ss) : 00:00:00
+Total Processing Time (hh:mm:ss) : 00:00:01

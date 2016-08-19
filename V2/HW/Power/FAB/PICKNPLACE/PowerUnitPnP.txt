@@ -1,5 +1,6 @@
 Designator Footprint               Mid X         Mid Y         Ref X         Ref Y         Pad X         Pad Y TB      Rotation Comment        
 
+P4         HDR1X18               86.66mm          14mm      108.25mm          14mm      108.25mm          14mm  T        180.00 Header 18      
 P3         PHOENIX_PTSA05_18       86.25mm           5mm       107.5mm         2.5mm       107.5mm         2.5mm  T        180.00 Header 18      
 P2         PHOENIX_SMKDSN8       42.72mm        6.25mm        60.5mm        6.25mm        60.5mm        6.25mm  T        180.00 Header 8       
 P1         PHOENIX_PTSA05_36       66.25mm          43mm        22.5mm        45.5mm        22.5mm        45.5mm  T        360.00 Header 36      
@@ -43,7 +44,7 @@ C37        0603_                    72mm        16.5mm          72mm        16.5
 C38        0603_                  69.5mm        16.5mm        69.5mm        16.5mm        69.5mm       17.35mm  B          0.00 68n            
 C39        0603_                    67mm        16.5mm          67mm        16.5mm          67mm       17.35mm  B          0.00 68n            
 C40        0603_                  74.5mm        16.5mm        74.5mm        16.5mm        74.5mm       17.35mm  B          0.00 68n            
-D1         R_dil_vertical         9.52mm          10mm        8.25mm          10mm        8.25mm          10mm  T        360.00 Zener          
+D1         R_DIL_vertical_holes1_2mm        9.52mm          10mm        8.25mm          10mm        8.25mm          10mm  T        360.00 Zener          
 D2         SOD323                   25mm       34.75mm          25mm       34.75mm       23.89mm       34.75mm  T        270.00 1N4148         
 D3         SOD323                 32.5mm       34.75mm        32.5mm       34.75mm       31.39mm       34.75mm  T        270.00 1N4148         
 D4         SOD323                   40mm       34.75mm          40mm       34.75mm       38.89mm       34.75mm  T        270.00 1N4148         
@@ -122,7 +123,7 @@ U5         sot23-5            108.5001mm     23.0001mm       108.5mm          23
 U6         soic8               103.095mm        19.8mm         105mm       22.25mm         105mm       22.25mm  T        270.00 LT1636         
 U7         VSSOP10                23.5mm       30.75mm        23.5mm       30.75mm       25.55mm       29.75mm  T        180.00 LM5106MM/NOPB  
 U8         SOT363                   19mm       30.25mm          19mm       30.25mm       18.35mm        29.3mm  T         90.00 74LVC1G11      
-U9         SOT23-5             17.4999mm     26.7501mm        17.5mm       26.75mm     18.8999mm     25.8001mm  T         90.00 74AHC1G32      
+U9         SOT353                 17.5mm       26.75mm        17.5mm       26.75mm       18.45mm        26.1mm  T        180.00 74AHC1G32      
 U10        VSSOP10                32.5mm       30.75mm        32.5mm       30.75mm       34.55mm       29.75mm  T        180.00 LM5106MM/NOPB  
 U11        CPC10xxN              43.75mm       22.25mm       43.75mm       22.25mm       45.02mm       25.05mm  T        180.00 CPC1018N       
 U12        soic8                14.055mm       32.05mm       12.15mm        29.6mm       12.15mm        29.6mm  T         90.00 TLC555         
