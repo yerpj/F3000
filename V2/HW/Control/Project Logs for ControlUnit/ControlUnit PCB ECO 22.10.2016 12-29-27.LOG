@@ -1,0 +1,16 @@
+Added Component: Designator=D1(LED3MM_GREEN)
+Added Component: Designator=D3(LED5MM_RED)
+Added Component: Designator=D4(LED3MM_BLUE)
+Added Component: Designator=D6(LED3MM_GREEN)
+Added Pin To Net: NetName=3V3 Pin=D1-1
+Added Pin To Net: NetName=LED_MODE3 Pin=D1-2
+Added Pin To Net: NetName=3V3 Pin=D3-1
+Added Pin To Net: NetName=LED_TEMP3 Pin=D3-2
+Added Pin To Net: NetName=3V3 Pin=D4-1
+Added Pin To Net: NetName=LED_MODE2 Pin=D4-2
+Added Pin To Net: NetName=3V3 Pin=D6-1
+Added Pin To Net: NetName=LED_MODE1 Pin=D6-2
+Added Member To Class: ClassName=U_MCU Member=Component D1 led
+Added Member To Class: ClassName=U_MCU Member=Component D3 led
+Added Member To Class: ClassName=U_MCU Member=Component D4 led
+Added Member To Class: ClassName=U_MCU Member=Component D6 led
