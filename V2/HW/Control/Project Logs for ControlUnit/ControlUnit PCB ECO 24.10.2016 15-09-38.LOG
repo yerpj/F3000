@@ -1,0 +1,11 @@
+Removed Pin From Net: NetName=GND Pin=C7-2
+Change Component DesignItemId : Designator=C7 Old DesignItemId=C_pol New DesignItemId=C
+Change Component Footprint: Designator=C5 Old Footprint=0603c New Footprint=0402_
+Change Component Footprint: Designator=C6 Old Footprint=0603c New Footprint=0402_
+Change Component Footprint: Designator=C8 Old Footprint=0603c New Footprint=0402_
+Change Component Footprint: Designator=C7 Old Footprint=Cpol New Footprint=1206_
+Change Component Comment : Designator=C8 Old Comment=C New Comment=100n
+Change Component Comment : Designator=C7 Old Comment=C_pol New Comment=10u
+Added Pin To Net: NetName=GND Pin=C7-1
+Added Pin To Net: NetName=VIN Pin=C7-2
+Added Pin To Net: NetName=VIN Pin=U4-2

@@ -1,0 +1,32 @@
+Added Component: Designator=J9(header2x10)
+Added Pin To Net: NetName=VIN Pin=J9-1
+Added Pin To Net: NetName=GND Pin=J9-2
+Added Pin To Net: NetName=EMBRAY_IN Pin=J9-10
+Added Net: Name=EMBRAY_IN
+Added Pin To Net: NetName=IN_ACCEL_IN Pin=J9-17
+Added Net: Name=IN_ACCEL_IN
+Added Pin To Net: NetName=IN_NEUTRE_IN Pin=J9-3
+Added Net: Name=IN_NEUTRE_IN
+Added Pin To Net: NetName=IN_OIL_IN Pin=J9-9
+Added Net: Name=IN_OIL_IN
+Added Pin To Net: NetName=IN_ROT_IN Pin=J9-5
+Added Net: Name=IN_ROT_IN
+Added Pin To Net: NetName=MOT+_OUT Pin=J9-16
+Added Net: Name=MOT+_OUT
+Added Pin To Net: NetName=MOT-_OUT Pin=J9-14
+Added Net: Name=MOT-_OUT
+Added Pin To Net: NetName=POS1_IN Pin=J9-12
+Added Net: Name=POS1_IN
+Added Pin To Net: NetName=POS2_IN Pin=J9-11
+Added Net: Name=POS2_IN
+Added Pin To Net: NetName=RAPPORT2_IN Pin=J9-19
+Added Net: Name=RAPPORT2_IN
+Added Pin To Net: NetName=RAPPORT3_IN Pin=J9-15
+Added Net: Name=RAPPORT3_IN
+Added Pin To Net: NetName=START_UC_OUT Pin=J9-20
+Added Net: Name=START_UC_OUT
+Added Pin To Net: NetName=STOP_OUT Pin=J9-18
+Added Net: Name=STOP_OUT
+Added Pin To Net: NetName=TEMP_IN Pin=J9-6
+Added Net: Name=TEMP_IN
+Added Member To Class: ClassName=U_MCU Member=Component J9 Header 10X2
