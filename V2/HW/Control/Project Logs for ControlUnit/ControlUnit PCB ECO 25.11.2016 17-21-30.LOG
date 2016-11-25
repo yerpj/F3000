@@ -1,0 +1,16 @@
+Removed Pin From Net: NetName=BARGRAPH_LED1 Pin=U6-6
+Removed Pin From Net: NetName=BARGRAPH_LED2 Pin=U6-7
+Removed Pin From Net: NetName=BARGRAPH_LED3 Pin=U6-8
+Removed Pin From Net: NetName=BARGRAPH_LED4 Pin=U6-9
+Removed Pin From Net: NetName=BARGRAPH_LED5 Pin=U6-11
+Removed Pin From Net: NetName=BARGRAPH_LED6 Pin=U6-12
+Removed Pin From Net: NetName=BARGRAPH_LED7 Pin=U6-13
+Removed Pin From Net: NetName=BARGRAPH_LED8 Pin=U6-14
+Added Pin To Net: NetName=BARGRAPH_LED8 Pin=U6-6
+Added Pin To Net: NetName=BARGRAPH_LED7 Pin=U6-7
+Added Pin To Net: NetName=BARGRAPH_LED6 Pin=U6-8
+Added Pin To Net: NetName=BARGRAPH_LED5 Pin=U6-9
+Added Pin To Net: NetName=BARGRAPH_LED4 Pin=U6-11
+Added Pin To Net: NetName=BARGRAPH_LED3 Pin=U6-12
+Added Pin To Net: NetName=BARGRAPH_LED2 Pin=U6-13
+Added Pin To Net: NetName=BARGRAPH_LED1 Pin=U6-14
