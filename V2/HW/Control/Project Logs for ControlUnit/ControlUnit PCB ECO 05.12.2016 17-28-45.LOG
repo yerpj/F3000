@@ -1,0 +1,43 @@
+Removed Pin From Net: NetName=NetC4_1 Pin=FB2-1
+Removed Pin From Net: NetName=3V3 Pin=FB2-2
+Removed Member From Class: ClassName=U_MCU Member=FB2
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = "568-10954-1-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "NXP"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = "PCA9952TW/Q900,118"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = "568-10954-1-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "NXP"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = "PCA9952TW/Q900,118"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = "568-10954-1-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "NXP"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = "PCA9952TW/Q900,118"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = "*"; VariantName = "[No Variations]"
+Added Component: Designator=C25(0805_)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Digikey ref"; Value = "490-10511-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Murata"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = "GRM21BR61A226ME51L"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Rated voltage"; Value = "10V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "22u"; VariantName = "[No Variations]"
+Added Component: Designator=L2(0805_)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "current"; Value = "1A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Digikey ref"; Value = "587-2903-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = "1904336"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Taiyo Yuden"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = "BRC2012T1R0M"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "1u"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=3V3 Pin=C25-1
+Added Pin To Net: NetName=GND Pin=C25-2
+Added Pin To Net: NetName=NetC4_1 Pin=L2-1
+Added Pin To Net: NetName=3V3 Pin=L2-2
+Added Member To Class: ClassName=U_MCU Member=Component C25 22u
+Added Member To Class: ClassName=U_MCU Member=Component L2 Inductor

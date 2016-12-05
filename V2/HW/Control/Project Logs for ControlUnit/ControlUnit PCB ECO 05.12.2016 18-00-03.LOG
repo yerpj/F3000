@@ -1,0 +1,42 @@
+Removed Pin From Net: NetName=LED_OIL Pin=U3-11
+Removed Pin From Net: NetName=7S_A Pin=U3-12
+Removed Pin From Net: NetName=7S_B Pin=U3-13
+Removed Pin From Net: NetName=7S_C Pin=U3-14
+Removed Pin From Net: NetName=7S_D Pin=U3-15
+Removed Pin From Net: NetName=7S_E Pin=U3-16
+Removed Pin From Net: NetName=7S_F Pin=U3-17
+Removed Pin From Net: NetName=7S_G Pin=U3-18
+Removed Pin From Net: NetName=7S_DP Pin=U3-20
+Removed Pin From Net: NetName=LED_TEMP1 Pin=U3-21
+Removed Pin From Net: NetName=LED_TEMP2 Pin=U3-22
+Removed Pin From Net: NetName=LED_TEMP3 Pin=U3-23
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = "568-10954-1-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "NXP"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = "PCA9952TW/Q900,118"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = "568-10954-1-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "NXP"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = "PCA9952TW/Q900,118"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = "568-10954-1-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "NXP"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = "PCA9952TW/Q900,118"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = "*"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=7S_E Pin=U3-11
+Added Pin To Net: NetName=7S_D Pin=U3-12
+Added Pin To Net: NetName=7S_C Pin=U3-13
+Added Pin To Net: NetName=7S_DP Pin=U3-14
+Added Pin To Net: NetName=LED_TEMP1 Pin=U3-15
+Added Pin To Net: NetName=LED_TEMP2 Pin=U3-16
+Added Pin To Net: NetName=LED_TEMP3 Pin=U3-17
+Added Pin To Net: NetName=7S_B Pin=U3-18
+Added Pin To Net: NetName=7S_A Pin=U3-20
+Added Pin To Net: NetName=7S_F Pin=U3-21
+Added Pin To Net: NetName=7S_G Pin=U3-22
+Added Pin To Net: NetName=LED_OIL Pin=U3-23

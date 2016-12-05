@@ -1,0 +1,24 @@
+Removed Pin From Net: NetName=BARGRAPH_LED11 Pin=U7-11
+Removed Pin From Net: NetName=BARGRAPH_LED10 Pin=U7-12
+Removed Pin From Net: NetName=BARGRAPH_LED9 Pin=U7-13
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = "568-10954-1-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "NXP"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = "PCA9952TW/Q900,118"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = "568-10954-1-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "NXP"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = "PCA9952TW/Q900,118"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = "568-10954-1-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = "*"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "NXP"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = "PCA9952TW/Q900,118"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = "*"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=BARGRAPH_LED11 Pin=U6-21
+Added Pin To Net: NetName=BARGRAPH_LED10 Pin=U6-22
+Added Pin To Net: NetName=BARGRAPH_LED9 Pin=U6-23
