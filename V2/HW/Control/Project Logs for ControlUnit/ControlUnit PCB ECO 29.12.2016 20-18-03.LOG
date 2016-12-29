@@ -1,0 +1,23 @@
+Added Pin To Net: NetName=VIN Pin=C26-2
+Added Pin To Net: NetName=3V3 Pin=C27-1
+Added Pin To Net: NetName=VIN Pin=U8-1
+Added Pin To Net: NetName=IN_NEUTRE_IN Pin=U8-3
+Added Pin To Net: NetName=IN_ROT_IN Pin=U8-5
+Added Pin To Net: NetName=IN_OIL_IN Pin=U8-7
+Added Pin To Net: NetName=POS2_IN Pin=U8-9
+Added Pin To Net: NetName=RAPPORT3_IN Pin=U8-11
+Added Pin To Net: NetName=GND Pin=U8-13
+Added Pin To Net: NetName=IN_ACCEL_IN Pin=U8-14
+Added Pin To Net: NetName=3V3 Pin=U8-16
+Added Pin To Net: NetName=ACCEL_IN_L Pin=U8-15
+Added Net: Name=ACCEL_IN_L
+Added Pin To Net: NetName=NEUTRE_IN_L Pin=U8-2
+Added Net: Name=NEUTRE_IN_L
+Added Pin To Net: NetName=OIL_IN_L Pin=U8-6
+Added Net: Name=OIL_IN_L
+Added Pin To Net: NetName=POS2_IN_L Pin=U8-10
+Added Net: Name=POS2_IN_L
+Added Pin To Net: NetName=RAPPORT3_IN_L Pin=U8-12
+Added Net: Name=RAPPORT3_IN_L
+Added Pin To Net: NetName=ROT_IN_L Pin=U8-4
+Added Net: Name=ROT_IN_L
