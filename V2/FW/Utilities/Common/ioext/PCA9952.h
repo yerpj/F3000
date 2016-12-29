@@ -64,5 +64,7 @@
 uint8_t PCA9952_Init(I2C_List_Typedef I2Cx,uint8_t devAddr);
 uint8_t PCA9952_read_reg(uint8_t DevAddr, uint8_t reg, uint8_t *buf, uint8_t count);
 uint8_t PCA9952_write_reg(uint8_t DevAddr, uint8_t reg, uint8_t value);
+uint8_t PCA9952_write_burst(uint8_t DevAddr, uint8_t reg, uint8_t *buf,uint8_t count);
+uint8_t PCA9952_LED_Control(uint8_t DevAddr,uint16_t mask);
 
 #endif /* __PCA9952_H__ */

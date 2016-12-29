@@ -8,6 +8,8 @@ uint8_t NXS_EUI64[8];
 
 uint8_t str[300];
 
+xTaskHandle AppTaskHandle,configTaskHandle,PeriodicTaskHandle;
+
 void ToggleLed1(void * pvParameters)
 {
   uint32_t led_value=1, direction=0, max=20;
@@ -35,6 +37,37 @@ void ToggleLed1(void * pvParameters)
   }
 }
 
+void F3000_Conf(void * pvParameters)
+{
+  while(1)
+  {
+    vTaskDelay(100);
+  }
+}
+
+void F3000_Periodic(void * pvParameters)
+{
+  while(1)
+  {
+    vTaskDelay(100);
+    //check MODE buttons
+    //handle temperature sensor
+    //handle OIL sensor
+    //handle bargraph?
+    //handle STOP button
+  }
+}
+
+void F3000_App(void * pvParameters)
+{
+  while(1)
+  {
+    vTaskDelay(100);
+  }
+}
+
+
+
 void main(void)
 {
   /* System function that updates the SystemCoreClock variable. */
@@ -49,6 +82,10 @@ void main(void)
   PCA9952_Init(BUS_I2C3,PCA9952_MAIN_ADDR);
   
   xTaskCreate(ToggleLed1, "LED1", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, NULL);
+  xTaskCreate(F3000_App, "Application", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &AppTaskHandle);
+  xTaskCreate(F3000_Periodic, "PeriodicTask", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &PeriodicTaskHandle);
+  xTaskCreate(F3000_Conf, "Config", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &configTaskHandle);
+  vTaskSuspend(configTaskHandle);
   
   
   vTaskStartScheduler();
