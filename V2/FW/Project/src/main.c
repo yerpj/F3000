@@ -46,6 +46,7 @@ void main(void)
   EUI64_getNXSFormat(NXS_EUI64);
   LEDs_Init();
   ITS_Init(NULL,0);
+  PCA9952_Init(BUS_I2C3,PCA9952_MAIN_ADDR);
   
   xTaskCreate(ToggleLed1, "LED1", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, NULL);
   

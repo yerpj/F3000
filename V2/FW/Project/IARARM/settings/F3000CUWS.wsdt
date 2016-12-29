@@ -23,9 +23,24 @@
         <ColumnWidth3>93</ColumnWidth3>
       </Build>
       <TerminalIO/>
+      <Find-All-Declarations>
+        <ColumnWidth0>664</ColumnWidth0>
+        <ColumnWidth1>94</ColumnWidth1>
+        <ColumnWidth2>1138</ColumnWidth2>
+      </Find-All-Declarations>
+      <Select-Ambiguous-Definitions>
+        <ColumnWidth0>664</ColumnWidth0>
+        <ColumnWidth1>94</ColumnWidth1>
+        <ColumnWidth2>1138</ColumnWidth2>
+      </Select-Ambiguous-Definitions>
+      <Find-All-References>
+        <ColumnWidth0>664</ColumnWidth0>
+        <ColumnWidth1>94</ColumnWidth1>
+        <ColumnWidth2>1138</ColumnWidth2>
+      </Find-All-References>
     </Static>
     <Windows>
-      <Wnd2>
+      <Wnd0>
         <Tabs>
           <Tab>
             <Identity>TabID-21296-24429</Identity>
@@ -37,8 +52,10 @@
                 <ExpandedNode>F3000CU/CU</ExpandedNode>
                 <ExpandedNode>F3000CU/CU/ITS</ExpandedNode>
                 <ExpandedNode>F3000CU/Common</ExpandedNode>
+                <ExpandedNode>F3000CU/Common/I2C</ExpandedNode>
                 <ExpandedNode>F3000CU/Common/Serial</ExpandedNode>
                 <ExpandedNode>F3000CU/Common/UID</ExpandedNode>
+                <ExpandedNode>F3000CU/Common/ioext</ExpandedNode>
                 <ExpandedNode>F3000CU/FreeRTOS</ExpandedNode>
                 <ExpandedNode>F3000CU/StdPeriphLib</ExpandedNode>
                 <ExpandedNode>F3000CU/User</ExpandedNode>
@@ -48,8 +65,8 @@
           </Tab>
         </Tabs>
         <SelectedTab>0</SelectedTab>
-      </Wnd2>
-      <Wnd3>
+      </Wnd0>
+      <Wnd1>
         <Tabs>
           <Tab>
             <Identity>TabID-7432-26326</Identity>
@@ -57,72 +74,30 @@
             <Factory>Build</Factory>
             <Session/>
           </Tab>
+          <Tab>
+            <Identity>TabID-22931-17626</Identity>
+            <TabName>Find All Declarations</TabName>
+            <Factory>Find-All-Declarations</Factory>
+            <Session/>
+          </Tab>
+          <Tab>
+            <Identity>TabID-24521-19438</Identity>
+            <TabName>Ambiguous Definitions</TabName>
+            <Factory>Select-Ambiguous-Definitions</Factory>
+            <Session/>
+          </Tab>
+          <Tab>
+            <Identity>TabID-4195-20228</Identity>
+            <TabName>Find All References</TabName>
+            <Factory>Find-All-References</Factory>
+            <Session/>
+          </Tab>
         </Tabs>
         <SelectedTab>0</SelectedTab>
-      </Wnd3>
+      </Wnd1>
     </Windows>
     <Editor>
       <Pane>
-        <Tab>
-          <Factory>TextEditor</Factory>
-          <Filename>$WS_DIR$\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F2xx\stm32f2xx.h</Filename>
-          <XPos>0</XPos>
-          <YPos>0</YPos>
-          <SelStart>0</SelStart>
-          <SelEnd>0</SelEnd>
-          <XPos2>0</XPos2>
-          <YPos2>212</YPos2>
-          <SelStart2>15883</SelStart2>
-          <SelEnd2>15883</SelEnd2>
-        </Tab>
-        <Tab>
-          <Factory>TextEditor</Factory>
-          <Filename>$WS_DIR$\..\inc\main.h</Filename>
-          <XPos>0</XPos>
-          <YPos>0</YPos>
-          <SelStart>0</SelStart>
-          <SelEnd>0</SelEnd>
-          <XPos2>0</XPos2>
-          <YPos2>0</YPos2>
-          <SelStart2>98</SelStart2>
-          <SelEnd2>111</SelEnd2>
-        </Tab>
-        <Tab>
-          <Factory>TextEditor</Factory>
-          <Filename>$WS_DIR$\..\..\Utilities\Common\I2C\I2C.h</Filename>
-          <XPos>0</XPos>
-          <YPos>0</YPos>
-          <SelStart>0</SelStart>
-          <SelEnd>0</SelEnd>
-          <XPos2>0</XPos2>
-          <YPos2>0</YPos2>
-          <SelStart2>122</SelStart2>
-          <SelEnd2>122</SelEnd2>
-        </Tab>
-        <Tab>
-          <Factory>TextEditor</Factory>
-          <Filename>$WS_DIR$\..\..\Utilities\CU\CU.h</Filename>
-          <XPos>0</XPos>
-          <YPos>0</YPos>
-          <SelStart>0</SelStart>
-          <SelEnd>0</SelEnd>
-          <XPos2>0</XPos2>
-          <YPos2>87</YPos2>
-          <SelStart2>333</SelStart2>
-          <SelEnd2>333</SelEnd2>
-        </Tab>
-        <Tab>
-          <Factory>TextEditor</Factory>
-          <Filename>$WS_DIR$\..\..\Utilities\CU\CU.c</Filename>
-          <XPos>0</XPos>
-          <YPos>0</YPos>
-          <SelStart>0</SelStart>
-          <SelEnd>0</SelEnd>
-          <XPos2>0</XPos2>
-          <YPos2>55</YPos2>
-          <SelStart2>1708</SelStart2>
-          <SelEnd2>1708</SelEnd2>
-        </Tab>
         <Tab>
           <Factory>TextEditor</Factory>
           <Filename>$WS_DIR$\..\..\Utilities\Common\Serial\serial.c</Filename>
@@ -155,11 +130,10 @@
           <SelStart>0</SelStart>
           <SelEnd>0</SelEnd>
           <XPos2>0</XPos2>
-          <YPos2>221</YPos2>
-          <SelStart2>7561</SelStart2>
-          <SelEnd2>7561</SelEnd2>
+          <YPos2>233</YPos2>
+          <SelStart2>7537</SelStart2>
+          <SelEnd2>7537</SelEnd2>
         </Tab>
-        <ActiveTab>7</ActiveTab>
         <Tab>
           <Factory>TextEditor</Factory>
           <Filename>$WS_DIR$\..\inc\stm32f2xx_it.h</Filename>
@@ -183,18 +157,6 @@
           <YPos2>0</YPos2>
           <SelStart2>111</SelStart2>
           <SelEnd2>111</SelEnd2>
-        </Tab>
-        <Tab>
-          <Factory>TextEditor</Factory>
-          <Filename>$WS_DIR$\..\..\Utilities\Third_Party\FreeRTOS_v9.0.0\tasks.c</Filename>
-          <XPos>0</XPos>
-          <YPos>0</YPos>
-          <SelStart>0</SelStart>
-          <SelEnd>0</SelEnd>
-          <XPos2>0</XPos2>
-          <YPos2>2786</YPos2>
-          <SelStart2>94555</SelStart2>
-          <SelEnd2>94555</SelEnd2>
         </Tab>
         <Tab>
           <Factory>TextEditor</Factory>
@@ -240,21 +202,9 @@
           <SelStart>0</SelStart>
           <SelEnd>0</SelEnd>
           <XPos2>0</XPos2>
-          <YPos2>268</YPos2>
-          <SelStart2>0</SelStart2>
-          <SelEnd2>0</SelEnd2>
-        </Tab>
-        <Tab>
-          <Factory>TextEditor</Factory>
-          <Filename>$WS_DIR$\..\src\main.c</Filename>
-          <XPos>0</XPos>
-          <YPos>0</YPos>
-          <SelStart>0</SelStart>
-          <SelEnd>0</SelEnd>
-          <XPos2>0</XPos2>
-          <YPos2>8</YPos2>
-          <SelStart2>646</SelStart2>
-          <SelEnd2>646</SelEnd2>
+          <YPos2>75</YPos2>
+          <SelStart2>3545</SelStart2>
+          <SelEnd2>3557</SelEnd2>
         </Tab>
         <Tab>
           <Factory>TextEditor</Factory>
@@ -267,6 +217,187 @@
           <YPos2>488</YPos2>
           <SelStart2>20920</SelStart2>
           <SelEnd2>20920</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Utilities\CU\ADC\ADC.c</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>7</YPos2>
+          <SelStart2>420</SelStart2>
+          <SelEnd2>420</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Utilities\CU\ITS\internal_temp_sensor.c</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>4</YPos2>
+          <SelStart2>929</SelStart2>
+          <SelEnd2>929</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F2xx\system_stm32f2xx.c</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>87</YPos2>
+          <SelStart2>6742</SelStart2>
+          <SelEnd2>6742</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Utilities\Common\ioext\PCA9952.c</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>9</YPos2>
+          <SelStart2>815</SelStart2>
+          <SelEnd2>815</SelEnd2>
+        </Tab>
+        <ActiveTab>13</ActiveTab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Utilities\Common\ioext\PCA9952.h</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>21</YPos2>
+          <SelStart2>1894</SelStart2>
+          <SelEnd2>1905</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Utilities\Common\I2C\I2C.c</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>65</YPos2>
+          <SelStart2>2600</SelStart2>
+          <SelEnd2>2600</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Utilities\Common\commontypes.h</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>0</YPos2>
+          <SelStart2>109</SelStart2>
+          <SelEnd2>117</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\inc\main.h</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>0</YPos2>
+          <SelStart2>357</SelStart2>
+          <SelEnd2>357</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Utilities\CU\CU.h</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>162</YPos2>
+          <SelStart2>7649</SelStart2>
+          <SelEnd2>7649</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Utilities\CU\CU.c</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>0</YPos2>
+          <SelStart2>2565</SelStart2>
+          <SelEnd2>2565</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Utilities\Common\UID\UID.h</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>0</YPos2>
+          <SelStart2>0</SelStart2>
+          <SelEnd2>0</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F2xx\stm32f2xx.h</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>635</YPos2>
+          <SelStart2>35709</SelStart2>
+          <SelEnd2>35709</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Utilities\Common\I2C\I2C.h</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>0</YPos2>
+          <SelStart2>122</SelStart2>
+          <SelEnd2>122</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\src\main.c</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>2</YPos2>
+          <SelStart2>646</SelStart2>
+          <SelEnd2>646</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\..\..\Utilities\Third_Party\FreeRTOS_v9.0.0\tasks.c</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>3356</YPos2>
+          <SelStart2>113302</SelStart2>
+          <SelEnd2>113302</SelEnd2>
         </Tab>
       </Pane>
       <ActivePane>0</ActivePane>
@@ -294,11 +425,11 @@
       <Left>
         <Row0>
           <Sizes>
-            <Wnd2>
+            <Wnd0>
               <Rect>
                 <Top>-2</Top>
                 <Left>-2</Left>
-                <Bottom>596</Bottom>
+                <Bottom>744</Bottom>
                 <Right>483</Right>
                 <x>-2</x>
                 <y>-2</y>
@@ -307,9 +438,9 @@
                 <sizeHorzCX>104167</sizeHorzCX>
                 <sizeHorzCY>200401</sizeHorzCY>
                 <sizeVertCX>252604</sizeVertCX>
-                <sizeVertCY>599198</sizeVertCY>
+                <sizeVertCY>747495</sizeVertCY>
               </Rect>
-            </Wnd2>
+            </Wnd0>
           </Sizes>
         </Row0>
       </Left>
@@ -321,22 +452,22 @@
       <Bottom>
         <Row0>
           <Sizes>
-            <Wnd3>
+            <Wnd1>
               <Rect>
                 <Top>-2</Top>
                 <Left>-2</Left>
-                <Bottom>357</Bottom>
+                <Bottom>209</Bottom>
                 <Right>1922</Right>
                 <x>-2</x>
                 <y>-2</y>
                 <xscreen>1924</xscreen>
-                <yscreen>359</yscreen>
+                <yscreen>211</yscreen>
                 <sizeHorzCX>1002083</sizeHorzCX>
-                <sizeHorzCY>359719</sizeHorzCY>
+                <sizeHorzCY>211423</sizeHorzCY>
                 <sizeVertCX>104167</sizeVertCX>
                 <sizeVertCY>200401</sizeVertCY>
               </Rect>
-            </Wnd3>
+            </Wnd1>
           </Sizes>
         </Row0>
       </Bottom>

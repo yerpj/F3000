@@ -8,7 +8,7 @@ extern I2C_TypeDef *I2C_PERIPH[];
 
 extern const uint16_t I2C_SCL_PIN[I2Cn];
 extern GPIO_TypeDef* I2C_SCL_GPIO_PORT[I2Cn];
-uint8_t I2C_Inited_flag[I2Cn]={0,0};
+uint8_t I2C_Inited_flag[I2Cn]={0};
 
 
 uint8_t I2C_Driver_Init(I2C_List_Typedef I2Cx)

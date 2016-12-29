@@ -15,6 +15,7 @@
 #include "semphr.h" 
 
 #include "commonDefs.h"
+#include "commontypes.h"
 #include "strbuf.h"
 #include "console.h"
 
@@ -22,5 +23,6 @@
 #include "CLI.h"
 #include "UID.h"
 #include "internal_temp_sensor.h"
+#include "PCA9952.h"
 
 #endif /* __MAIN_H */

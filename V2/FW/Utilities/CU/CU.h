@@ -3,6 +3,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f2xx.h"
+#include "commontypes.h"
 
 
 typedef enum 
@@ -141,6 +142,59 @@ typedef enum
  * @brief Definition for Internal Temperature Sensor
  */
 #define ITS_ADC_CHANNEL                         ADC_Channel_16
+
+#define I2Cn    3
+
+/* I2C io extenders */
+#ifdef USE_BREADBOARD
+  #define PCA9952_I2C_BUS                      BUS_I2C3
+  #define PCA9952_I2C                          I2C3
+  #define PCA9952_I2C_CLK                      RCC_APB1Periph_I2C3
+  #define PCA9952_I2C_SCL_PIN                  GPIO_Pin_8
+  #define PCA9952_I2C_SCL_GPIO_PORT            GPIOA
+  #define PCA9952_I2C_SCL_GPIO_CLK             RCC_AHB1Periph_GPIOA
+  #define PCA9952_I2C_SCL_SOURCE               GPIO_PinSource8
+  #define PCA9952_I2C_SCL_AF                   GPIO_AF_I2C3
+  #define PCA9952_I2C_SDA_PIN                  GPIO_Pin_9
+  #define PCA9952_I2C_SDA_GPIO_PORT            GPIOC
+  #define PCA9952_I2C_SDA_GPIO_CLK             RCC_AHB1Periph_GPIOC
+  #define PCA9952_I2C_SDA_SOURCE               GPIO_PinSource9
+  #define PCA9952_I2C_SDA_AF                   GPIO_AF_I2C3
+#else /* USE_BREADBOARD */
+  #define PCA9952_I2C_BUS                      BUS_I2C1
+  #define PCA9952_I2C                          I2C1
+  #define PCA9952_I2C_CLK                      RCC_APB1Periph_I2C1
+  #define PCA9952_I2C_SCL_PIN                  GPIO_Pin_8
+  #define PCA9952_I2C_SCL_GPIO_PORT            GPIOB
+  #define PCA9952_I2C_SCL_GPIO_CLK             RCC_AHB1Periph_GPIOB
+  #define PCA9952_I2C_SCL_SOURCE               GPIO_PinSource8
+  #define PCA9952_I2C_SCL_AF                   GPIO_AF_I2C1
+  #define PCA9952_I2C_SDA_PIN                  GPIO_Pin_9
+  #define PCA9952_I2C_SDA_GPIO_PORT            GPIOB
+  #define PCA9952_I2C_SDA_GPIO_CLK             RCC_AHB1Periph_GPIOB
+  #define PCA9952_I2C_SDA_SOURCE               GPIO_PinSource9
+  #define PCA9952_I2C_SDA_AF                   GPIO_AF_I2C1
+#endif /* USE_BREADBOARD */
+
+#ifdef USE_BREADBOARD
+  #define PCA9952_I2C_SPEED                    10000  
+#else /* USE_BREADBOARD */
+  #define PCA9952_I2C_SPEED                    95000  
+#endif /* USE_BREADBOARD */
+    
+#ifdef USE_CU
+#define PCA9952_RST_PIN                      GPIO_Pin_12
+#define PCA9952_RST_CLK                      RCC_AHB1Periph_GPIOC    
+#define PCA9952_RST_GPIO_PORT                GPIOC
+#endif /* USE_CU */
+
+#ifdef USE_BREADBOARD
+  #define PCA9952_MAIN_ADDR                     (0x60<<1)
+#else /* USE_BREADBOARD */
+  #define PCA9952_MAIN_ADDR                     0x62 
+  #define PCA9952_BAR1_ADDR                     0x60 
+  #define PCA9952_BAR2_ADDR                     0x61 
+#endif /* USE_BREADBOARD */
     
 
 void LEDs_Init(void);
@@ -153,6 +207,7 @@ void CU_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct);
 void CU_RNGInit(void);
 uint32_t CU_RandomValue(void);
 uint8_t Console_LowLevelInit(void);
+void I2C_Bus_Init(I2C_List_Typedef I2Cx);
 
 
 

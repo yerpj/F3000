@@ -6,31 +6,32 @@ const uint16_t GPIO_PIN[IOn] = {LED1_PIN, LED2_PIN, LED3_PIN};
 const uint32_t GPIO_CLK[IOn] = {LED1_GPIO_CLK, LED2_GPIO_CLK, LED3_GPIO_CLK};
 
 USART_TypeDef* COM_USART[COMn] = {EVAL_COM1,EVAL_COM2}; 
-
 GPIO_TypeDef* COM_TX_PORT[COMn] = {EVAL_COM1_TX_GPIO_PORT,EVAL_COM2_TX_GPIO_PORT};
- 
 GPIO_TypeDef* COM_RX_PORT[COMn] = {EVAL_COM1_RX_GPIO_PORT,EVAL_COM2_RX_GPIO_PORT};
-
 const uint32_t COM_USART_CLK[COMn] = {EVAL_COM1_CLK,EVAL_COM2_CLK};
-
 const uint32_t COM_TX_PORT_CLK[COMn] = {EVAL_COM1_TX_GPIO_CLK,EVAL_COM2_TX_GPIO_CLK};
- 
 const uint32_t COM_RX_PORT_CLK[COMn] = {EVAL_COM1_RX_GPIO_CLK,EVAL_COM2_RX_GPIO_CLK};
-
 const uint16_t COM_TX_PIN[COMn] = {EVAL_COM1_TX_PIN,EVAL_COM2_TX_PIN};
-
 const uint16_t COM_RX_PIN[COMn] = {EVAL_COM1_RX_PIN,EVAL_COM2_RX_PIN};
- 
 const uint8_t COM_TX_PIN_SOURCE[COMn] = {EVAL_COM1_TX_SOURCE,EVAL_COM2_TX_SOURCE};
-
 const uint8_t COM_RX_PIN_SOURCE[COMn] = {EVAL_COM1_RX_SOURCE,EVAL_COM2_RX_SOURCE};
- 
 const uint8_t COM_TX_AF[COMn] = {EVAL_COM1_TX_AF,EVAL_COM2_TX_AF};
- 
 const uint8_t COM_RX_AF[COMn] = {EVAL_COM1_RX_AF,EVAL_COM2_RX_AF};
-
 const uint16_t COM_IRQn[COMn] = {EVAL_COM1_IRQn, EVAL_COM2_IRQn};
 
+I2C_TypeDef * I2C_PERIPH[I2Cn] = {PCA9952_I2C,PCA9952_I2C,PCA9952_I2C};
+const uint32_t I2C_CLK[I2Cn] = {PCA9952_I2C_CLK,PCA9952_I2C_CLK,PCA9952_I2C_CLK};
+const uint16_t I2C_SCL_PIN[I2Cn] = {PCA9952_I2C_SCL_PIN,PCA9952_I2C_SCL_PIN,PCA9952_I2C_SCL_PIN};
+GPIO_TypeDef* I2C_SCL_GPIO_PORT[I2Cn] = {PCA9952_I2C_SCL_GPIO_PORT,PCA9952_I2C_SCL_GPIO_PORT,PCA9952_I2C_SCL_GPIO_PORT};
+const uint32_t I2C_SCL_GPIO_CLK[I2Cn] = {PCA9952_I2C_SCL_GPIO_CLK,PCA9952_I2C_SCL_GPIO_CLK,PCA9952_I2C_SCL_GPIO_CLK};
+const uint8_t I2C_SCL_SOURCE[I2Cn] = {PCA9952_I2C_SCL_SOURCE,PCA9952_I2C_SCL_SOURCE,PCA9952_I2C_SCL_SOURCE};
+const uint8_t I2C_SCL_AF[I2Cn] = {PCA9952_I2C_SCL_AF,PCA9952_I2C_SCL_AF,PCA9952_I2C_SCL_AF};
+const uint16_t I2C_SDA_PIN[I2Cn] = {PCA9952_I2C_SDA_PIN,PCA9952_I2C_SDA_PIN,PCA9952_I2C_SDA_PIN};
+GPIO_TypeDef* I2C_SDA_GPIO_PORT[I2Cn] = {PCA9952_I2C_SDA_GPIO_PORT,PCA9952_I2C_SDA_GPIO_PORT,PCA9952_I2C_SDA_GPIO_PORT};
+const uint32_t I2C_SDA_GPIO_CLK[I2Cn] = {PCA9952_I2C_SDA_GPIO_CLK,PCA9952_I2C_SDA_GPIO_CLK,PCA9952_I2C_SDA_GPIO_CLK};
+const uint8_t I2C_SDA_SOURCE[I2Cn] = {PCA9952_I2C_SDA_SOURCE,PCA9952_I2C_SDA_SOURCE,PCA9952_I2C_SDA_SOURCE};
+const uint8_t I2C_SDA_AF[I2Cn] = {PCA9952_I2C_SDA_AF,PCA9952_I2C_SDA_AF,PCA9952_I2C_SDA_AF};
+const uint32_t I2C_SPEED[I2Cn] = {PCA9952_I2C_SPEED,PCA9952_I2C_SPEED,PCA9952_I2C_SPEED};
 
 void Console_Rx_Task(void * pvParameters);
 static xSemaphoreHandle Serial_rx_sem;
@@ -314,6 +315,64 @@ void NCP020_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct)
   
   /* Enable USART */
   USART_Cmd(COM_USART[COM], ENABLE);
+}
+
+void I2C_Bus_Init(I2C_List_Typedef I2Cx)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+  I2C_InitTypeDef I2C_InitStructure;
+
+  /* Enable I2C and I2C_GPIO_PORT & Alternate Function clocks */
+  RCC_APB1PeriphClockCmd(I2C_CLK[I2Cx], ENABLE);
+  RCC_AHB1PeriphClockCmd(I2C_SCL_GPIO_CLK[I2Cx] | I2C_SDA_GPIO_CLK[I2Cx], ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+  
+  /* Reset I2C IP */
+  RCC_APB1PeriphResetCmd(I2C_CLK[I2Cx], ENABLE);
+  /* Release reset signal of I2C  */
+  RCC_APB1PeriphResetCmd(I2C_CLK[I2Cx], DISABLE);
+  
+  /* Connect  I2C_SCL*/
+  GPIO_PinAFConfig(I2C_SCL_GPIO_PORT[I2Cx], I2C_SCL_SOURCE[I2Cx], I2C_SCL_AF[I2Cx]);
+  /* Connect  I2C_SDA*/
+  GPIO_PinAFConfig(I2C_SDA_GPIO_PORT[I2Cx], I2C_SDA_SOURCE[I2Cx], I2C_SDA_AF[I2Cx]); 
+  
+  /* I2C SCL and SDA pins configuration */
+  GPIO_InitStructure.GPIO_Pin = I2C_SCL_PIN[I2Cx];
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+#ifdef USE_BREADBOARD
+  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
+#else /* USE_BREADBOARD */
+  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+#endif /* USE_BREADBOARD */
+  
+  GPIO_Init(I2C_SCL_GPIO_PORT[I2Cx], &GPIO_InitStructure);
+
+  GPIO_InitStructure.GPIO_Pin = I2C_SDA_PIN[I2Cx];
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+#ifdef USE_BREADBOARD
+  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
+#else /* USE_BREADBOARD */
+  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+#endif /* USE_BREADBOARD */
+  GPIO_Init(I2C_SDA_GPIO_PORT[I2Cx], &GPIO_InitStructure);    
+
+  /* I2C configuration */
+  I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;
+  I2C_InitStructure.I2C_DutyCycle = I2C_DutyCycle_2;
+  I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;
+  I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
+  I2C_InitStructure.I2C_ClockSpeed = I2C_SPEED[I2Cx];
+  
+  /* Enable the I2C peripheral */
+  I2C_Cmd(I2C_PERIPH[I2Cx], ENABLE);
+  
+  /* Initialize the I2C peripheral */
+  I2C_Init(I2C_PERIPH[I2Cx] , &I2C_InitStructure);
 }
 
 

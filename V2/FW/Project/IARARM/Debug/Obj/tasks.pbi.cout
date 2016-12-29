@@ -32,6 +32,8 @@ C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\Common\UID
 -I
+C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\Common\ioext
+-I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\libs
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\Third_Party\FreeRTOS_v9.0.0\portable\IAR\ARM_CM3
@@ -73,6 +75,8 @@ C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\Common\P
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\Common\Serial
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\Common\UID
+-I
+C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\Common\ioext
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\libs
 -I
@@ -280,7 +284,7 @@ C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\CMSIS\Include
 -D__HAS_LOCATED_WITH_INIT__=1
 -D__IAR_COMPILERBASE__=593164
 -D__DATE__="Dec 29 2016"
--D__TIME__="14:52:26"
+-D__TIME__="15:54:34"
 -D__STDC__=1
 -D__STDC_VERSION__=199901L
 -D__STDC_HOSTED__=1

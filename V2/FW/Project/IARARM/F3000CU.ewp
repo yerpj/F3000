@@ -316,6 +316,7 @@
           <state>$PROJ_DIR$\..\..\Utilities\Common\PushButton</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common\Serial</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common\UID</state>
+          <state>$PROJ_DIR$\..\..\Utilities\Common\ioext</state>
           <state>$PROJ_DIR$\..\..\Utilities\libs</state>
           <state>$PROJ_DIR$\..\..\Utilities\Third_Party\FreeRTOS_v9.0.0\portable\IAR\ARM_CM3</state>
           <state>$PROJ_DIR$\..\..\Utilities\Third_Party\FreeRTOS_v9.0.0\include</state>
@@ -1888,6 +1889,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\Utilities\Common\I2C\I2C.h</name>
+      </file>
+    </group>
+    <group>
+      <name>ioext</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\Common\ioext\PCA9952.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\Common\ioext\PCA9952.h</name>
       </file>
     </group>
     <group>
