@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
 PCB File : C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\HW\Control\ControlUnit.PcbDoc
-Date     : 27.12.2016
-Time     : 14:44:24
+Date     : 30.12.2016
+Time     : 10:38:35
 
 Processing Rule : Clearance Constraint (Gap=0.15mm) (All),(All)
 Rule Violations :0
@@ -13,7 +13,21 @@ Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
 Rule Violations :0
 
 Processing Rule : Un-Routed Net Constraint ( (All) )
-Rule Violations :0
+   Violation between Un-Routed Net Constraint: Net VIN Between Pad U8-1(228.555mm,25mm) on Top Layer And Pad C26-2(230.249mm,46.975mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net VIN Between Pad D32-2(47.18mm,17mm) on Top Layer And Pad U8-1(228.555mm,25mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C26-1(230.249mm,45.975mm) on Top Layer And Pad C27-2(236.249mm,46.975mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U8-13(232.365mm,31mm) on Top Layer And Pad U8-8(237.445mm,25mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J7-1(155.11mm,-0.656mm) on Multi-Layer And Pad U8-8(237.445mm,25mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C26-1(230.249mm,45.975mm) on Top Layer And Pad U8-13(232.365mm,31mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net 3V3 Between Pad U8-16(228.555mm,31mm) on Top Layer And Pad C27-1(236.249mm,45.975mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net 3V3 Between Pad D28-1(141.857mm,28.627mm) on Multi-Layer And Pad U8-16(228.555mm,31mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net IN_ACCEL_IN Between Pad J9-17(89.255mm,19.234mm) on Multi-Layer And Pad U8-14(231.095mm,31mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net IN_NEUTRE_IN Between Pad J9-3(71.475mm,19.234mm) on Multi-Layer And Pad U8-3(231.095mm,25mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net IN_OIL_IN Between Pad J9-9(79.095mm,19.234mm) on Multi-Layer And Pad U8-7(236.175mm,25mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net IN_ROT_IN Between Pad J9-5(74.015mm,19.234mm) on Multi-Layer And Pad U8-5(233.635mm,25mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net POS2_IN Between Pad J9-11(81.635mm,19.234mm) on Multi-Layer And Pad U8-9(237.445mm,31mm) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net RAPPORT3_IN Between Pad J9-15(86.715mm,19.234mm) on Multi-Layer And Pad U8-11(234.905mm,31mm) on Top Layer 
+Rule Violations :14
 
 Processing Rule : Width Constraint (Min=0.2mm) (Max=10mm) (Preferred=0.3mm) (All)
 Rule Violations :0
@@ -49,5 +63,5 @@ Processing Rule : Silk primitive without silk layer
 Rule Violations :0
 
 
-Violations Detected : 0
-Time Elapsed        : 00:00:01
+Violations Detected : 14
+Time Elapsed        : 00:00:02
