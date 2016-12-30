@@ -5,7 +5,7 @@
 
 
 
-void timer_set_alarm(uint8_t channel, uint32_t delta_t,uint16_t (*cb)(void));
+void timer_set_alarm_us(uint8_t channel, uint32_t delta_t,uint16_t (*cb)(void));
 void timer_unset_alarm(uint8_t channel);
 void timer_init(void);
 void timer_blocking_wait(uint32_t milliseconds);

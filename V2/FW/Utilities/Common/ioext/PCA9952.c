@@ -8,14 +8,8 @@ uint8_t PCA9952_Init(I2C_List_Typedef I2Cx,uint8_t devAddr)
 {
   uint8_t tmp;
   I2C_Driver_Init(I2Cx);
-  
-#ifdef USE_BREADBOARD
-  //no RST pin accessible
-#else /* USE_BREADBOARD */
-  //do not forget to assign RST pin!
-#endif /* USE_BREADBOARD */
-  
-  //software reset?
+    
+  //software reset
   
   //verify MODE2==0x05 
   if(PCA9952_read_reg(devAddr,REG_MODE2,&tmp,1))
@@ -25,7 +19,7 @@ uint8_t PCA9952_Init(I2C_List_Typedef I2Cx,uint8_t devAddr)
     return 1;*/
   
   PCA9952_write_reg(devAddr,REG_MODE2,0x25);
-  PCA9952_write_reg(devAddr,REG_IREFALL,20);
+  PCA9952_write_reg(devAddr,REG_IREFALL,10);
   
   PCA9952_write_reg(devAddr,REG_LEDOUT0,0xAA);
   PCA9952_write_reg(devAddr,REG_LEDOUT1,0xAA);
@@ -33,9 +27,9 @@ uint8_t PCA9952_Init(I2C_List_Typedef I2Cx,uint8_t devAddr)
   PCA9952_write_reg(devAddr,REG_LEDOUT3,0xAA);
   
   //0x2409 is a mask that enables RED leds only
-  PCA9952_LED_Control(devAddr,0x2409);
-  PCA9952_LED_Control(devAddr,0x2409<<1);
-  PCA9952_LED_Control(devAddr,0x2409<<2);
+  //PCA9952_LED_Control(devAddr,0x2409);
+  //PCA9952_LED_Control(devAddr,0x2409<<1);
+  //PCA9952_LED_Control(devAddr,0x2409<<2);
   
 }
 
@@ -50,7 +44,9 @@ uint8_t PCA9952_LED_Control(uint8_t DevAddr,uint16_t mask)
     else
       values[i]=0x00;
   }
-  PCA9952_write_burst(DevAddr,REG_PWM0,values,16);
+  if(PCA9952_write_burst(DevAddr,REG_PWM0,values,16))
+    return 1;
+  return 0;
 }
 
 uint8_t PCA9952_write_reg(uint8_t DevAddr, uint8_t reg, uint8_t value)

@@ -13,7 +13,8 @@ uint16_t dummyCB(void)
   return 0;
 }
 
-void timer_set_alarm(uint8_t channel, uint32_t delta_t,uint16_t (*cb)(void))
+  
+void timer_set_alarm_us(uint8_t channel, uint32_t delta_t /*[us], range:[0..65535]*/,uint16_t (*cb)(void))
 { 
   uint16_t CNT_Val;
   //CNT_Val=TIM_GetPrescaler(TIM2);

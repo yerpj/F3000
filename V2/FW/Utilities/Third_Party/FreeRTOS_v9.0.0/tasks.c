@@ -1939,6 +1939,13 @@ void vTaskEndScheduler( void )
 	xSchedulerRunning = pdFALSE;
 	vPortEndScheduler();
 }
+
+/*----------------------------------------------------------*/
+uint8_t vSchedulerIsRunning(void)
+{
+  /*returns the scheduler state*/
+  return xSchedulerRunning==pdTRUE?1:0;
+}
 /*----------------------------------------------------------*/
 
 void vTaskSuspendAll( void )

@@ -177,16 +177,10 @@ typedef enum
 #endif /* USE_BREADBOARD */
 
 #ifdef USE_BREADBOARD
-  #define PCA9952_I2C_SPEED                    10000  
+  #define PCA9952_I2C_SPEED                    50000  
 #else /* USE_BREADBOARD */
   #define PCA9952_I2C_SPEED                    95000  
 #endif /* USE_BREADBOARD */
-    
-#ifdef USE_CU
-#define PCA9952_RST_PIN                      GPIO_Pin_12
-#define PCA9952_RST_CLK                      RCC_AHB1Periph_GPIOC    
-#define PCA9952_RST_GPIO_PORT                GPIOC
-#endif /* USE_CU */
 
 #ifdef USE_BREADBOARD
   #define PCA9952_MAIN_ADDR                     (0x60<<1)
@@ -195,6 +189,86 @@ typedef enum
   #define PCA9952_BAR1_ADDR                     0x60 
   #define PCA9952_BAR2_ADDR                     0x61 
 #endif /* USE_BREADBOARD */
+
+#define CU_REGIME_INPUT                         0x0001
+#define CU_OIL_INPUT                            0x0002
+#define CU_EMBRAY_INPUT                         0x0004
+#define CU_GAZ_INPUT                            0x0008
+#define CU_NEUTRAL_INPUT                        0x0010
+#define CU_RAPPORTp_INPUT                       0x0020
+#define CU_RAPPORTm_INPUT                       0x0040
+#define CU_P2_INPUT                             0x0080
+#define CU_P1_INPUT                             0x0100
+#define CU_RESERVED_INPUT                       0x0200
+#define CU_PALG_INPUT                           0x0400
+#define CU_PALD_INPUT                           0x0800
+#define CU_MODE0_INPUT                          0x1000
+#define CU_MODE1_INPUT                          0x2000
+
+#define REGIME_INPUT_PIN                                GPIO_Pin_6
+#define REGIME_INPUT_GPIO_PORT                          GPIOC
+#define REGIME_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOC 
+
+#define OIL_INPUT_PIN                                   GPIO_Pin_6
+#define OIL_INPUT_GPIO_PORT                             GPIOC
+#define OIL_INPUT_GPIO_CLK                              RCC_AHB1Periph_GPIOC 
+
+#define EMBRAY_INPUT_PIN                                GPIO_Pin_6
+#define EMBRAY_INPUT_GPIO_PORT                          GPIOC
+#define EMBRAY_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOC 
+
+#define GAZ_INPUT_PIN                                   GPIO_Pin_6
+#define GAZ_INPUT_GPIO_PORT                             GPIOC
+#define GAZ_INPUT_GPIO_CLK                              RCC_AHB1Periph_GPIOC 
+
+#define NEUTRAL_INPUT_PIN                               GPIO_Pin_10
+#define NEUTRAL_INPUT_GPIO_PORT                         GPIOB
+#define NEUTRAL_INPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOB
+
+#define RAPPORTp_INPUT_PIN                              GPIO_Pin_6
+#define RAPPORTp_INPUT_GPIO_PORT                        GPIOC
+#define RAPPORTp_INPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+
+#define RAPPORTm_INPUT_PIN                              GPIO_Pin_6
+#define RAPPORTm_INPUT_GPIO_PORT                        GPIOC
+#define RAPPORTm_INPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+
+#define P2_INPUT_PIN                                    GPIO_Pin_6
+#define P2_INPUT_GPIO_PORT                              GPIOC
+#define P2_INPUT_GPIO_CLK                               RCC_AHB1Periph_GPIOC 
+
+#define P1_INPUT_PIN                                    GPIO_Pin_6
+#define P1_INPUT_GPIO_PORT                              GPIOC
+#define P1_INPUT_GPIO_CLK                               RCC_AHB1Periph_GPIOC 
+
+#define RESERVED_INPUT_PIN                              GPIO_Pin_6
+#define RESERVED_INPUT_GPIO_PORT                        GPIOC
+#define RESERVED_INPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+
+#define PALG_INPUT_PIN                                  GPIO_Pin_6
+#define PALG_INPUT_GPIO_PORT                            GPIOC
+#define PALG_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOC
+
+#define PALD_INPUT_PIN                                  GPIO_Pin_0
+#define PALD_INPUT_GPIO_PORT                            GPIOC
+#define PALD_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOC 
+
+#define MODE0_INPUT_PIN                                 GPIO_Pin_8
+#define MODE0_INPUT_GPIO_PORT                           GPIOC
+#define MODE0_INPUT_GPIO_CLK                            RCC_AHB1Periph_GPIOC 
+
+#define MODE1_INPUT_PIN                                 GPIO_Pin_6              
+#define MODE1_INPUT_GPIO_PORT                           GPIOC
+#define MODE1_INPUT_GPIO_CLK                            RCC_AHB1Periph_GPIOC 
+
+#define MOTEURm_OUTPUT_PIN                              GPIO_Pin_0
+#define MOTEURm_OUTPUT_GPIO_PORT                        GPIOB
+#define MOTEURm_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOB
+
+#define MOTEURp_OUTPUT_PIN                              GPIO_Pin_4              
+#define MOTEURp_OUTPUT_GPIO_PORT                        GPIOC
+#define MOTEURp_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+
     
 
 void LEDs_Init(void);
@@ -208,6 +282,8 @@ void CU_RNGInit(void);
 uint32_t CU_RandomValue(void);
 uint8_t Console_LowLevelInit(void);
 void I2C_Bus_Init(I2C_List_Typedef I2Cx);
+uint16_t CU_ReadInputsRaw(void);
+uint8_t CU_IOInit(void);
 
 
 

@@ -173,28 +173,35 @@ uint8_t I2C_write_burst(I2C_TypeDef* I2Cx, uint8_t DevAddr, uint8_t reg, uint8_t
      return 1;
   
   Timed(I2C_GetFlagStatus(I2Cx, I2C_FLAG_BUSY));
+  if(bus_error)
+    return 1;
   
   I2C_GenerateSTART(I2Cx, ENABLE);
   Timed(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_MODE_SELECT));
+  if(bus_error)
+    return 1;
           
   I2C_Send7bitAddress(I2Cx,DevAddr, I2C_Direction_Transmitter);
   Timed(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));
+  if(bus_error)
+    return 1;
   
   I2C_SendData(I2Cx, reg);
   Timed(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+  if(bus_error)
+    return 1;
   
   for(i=0;i<count;i++)
   {
     I2C_SendData(I2Cx, data[i]);
     Timed(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+    if(bus_error)
+    return 1;
   }
   
   I2C_GenerateSTOP(I2Cx, ENABLE);  
   
   xSemaphoreGive(I2C_sem);
-  
-  if(bus_error)
-    return 1;
   return 0;
 }
 #endif /* defined(I2Cn) */

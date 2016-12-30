@@ -33,86 +33,34 @@
 #include "semphr.h" 
 
 
-/* Private typedef -----------------------------------------------------------*/
-    
-    enum {
-      RECV_HEADER,
-      RECV_RESPONSE,
-      RECV_FOOTER,
-    };
-/* Private define ------------------------------------------------------------*/
-#define USART_BUFFER_LENGTH 256
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-    
-uint32_t TimerVal1=0;
-uint32_t TimerVal2=0;
-    
-uint8_t USART1_RXBuf[USART_BUFFER_LENGTH];
-extern xSemaphoreHandle s_xSemaphore;
-extern  xQueueHandle GSM_byte_rx_queue;
-extern  xQueueHandle RPI_byte_rx_queue;
 
-#ifdef BYPASS_GSM_SERIAL
-extern  xQueueHandle GSM_COM_downlink_queue, GSM_COM_uplink_queue;
-#endif /* BYPASS_GSM_SERIAL */
+    
+
+
 /* Private function prototypes -----------------------------------------------*/
 extern void xPortSysTickHandler(void); 
+
 extern uint16_t (*Timer2_OC_Ch1_callback)(void);
 extern uint16_t (*Timer2_OC_Ch2_callback)(void);
 extern uint16_t (*Timer2_OC_Ch3_callback)(void);
 
-extern  void (*PushButton_cb)(uint8_t);
-extern void (*NoiseSensor_cb)(uint16_t newvalue);
-extern void (*PhotoTransistor_cb)(uint16_t newvalue);
+uint8_t (*SysTick_Delay_cb)(void)=NULL;
 
-extern void (*Accel_int1_cb)(void);
-extern void (*Accel_int2_cb)(void);
-extern  uint16_t (*gdo0_cb)(void);
-extern  uint16_t (*gdo2_cb)(void);
-extern  uint16_t (*GSM_COM_RX_cb)(uint8_t *, uint32_t);
-extern void (*GSM_rx_cb)(uint8_t character);
-extern void DebugBSP_Rpi_RX_Callback(uint8_t c);
-extern void DistanceSensorPulseCallback(uint8_t pulse, uint8_t State);
-extern void (*NGP02x_Console_IRQ_cb)(void);
 
 uint32_t Delay_ms_tick=0;
-#ifdef USE_NOVADEV
-extern uint32_t DistanceSensorPulse1_ms;
-extern uint32_t DistanceSensorPulse2_ms;
-#endif /* USE_NOVADEV */
-uint32_t Tick_Delta_t_timer=0;
-uint32_t Delta_t_timer1=0;
-uint32_t Delta_t_timer2=0;
+uint32_t SysTick_Delay_ms=0;
+
+
 
 extern void DMA2_Stream0_cb(void);
 
-#if defined(USE_NOLCNP010) || defined(USE_OLCN011) || defined(USE_OLCN013)
-extern void (*DigitalInput_cb)(uint8_t state);
-extern void (*DALI_RX_PIN_cb)(uint8_t ,uint32_t);
-extern void (*SerialCB)(uint8_t);
-extern void (*Sable_X_RX_CB)(uint8_t);
-
-extern void (*DALI_TX_PIN_cb)(void);
-#endif /* defined(USE_NOLCNP010) || defined(USE_OLCN011) || defined(USE_OLCN013) */
-
-#if defined(USE_NGP022)
-extern void (*Sable_X_RX_CB)(uint8_t);
-#endif /* defined(USE_NGP022) */
-
-#if defined(USE_NODE)
-extern void Node_Console_cb(void);
-#endif  /* defined(USE_NODE) */
-
-#if defined(USE_NC030_TESTER)
-extern void NC030_Tester_Console_cb(void);
-#endif  /* defined(USE_NC030_TESTER) */
-
-#ifdef USE_NOVAPROGRAMMER
-extern void (*SerialCB)(uint8_t);
-#endif /* USE_NOVAPROGRAMMER */
 
 /* Private functions ---------------------------------------------------------*/
+void setSysTick_Delay_Timer(uint32_t Delayms,uint8_t (*cb)(void))
+{
+  SysTick_Delay_cb=cb;
+  SysTick_Delay_ms=Delayms;
+}
 
 void printErrorMsg(const char * errMsg) { while(*errMsg != '\0'){ ITM_SendChar(*errMsg); ++errMsg; } }
 
@@ -163,7 +111,6 @@ void NMI_Handler(void)
   * @param  None
   * @retval None
   */
-
 
 void HardFault_Handler(void)
 {
@@ -253,7 +200,16 @@ void SysTick_Handler(void)
 {
   xPortSysTickHandler(); 
   Delay_ms_tick++;
-  Tick_Delta_t_timer++;
+  if(SysTick_Delay_ms)
+  {
+    SysTick_Delay_ms--;
+    if(SysTick_Delay_ms==0 && SysTick_Delay_cb)
+    {
+      SysTick_Delay_cb();
+      SysTick_Delay_cb=0;
+    }
+    
+  }
 }
 
 void DMA2_Stream0_IRQHandler(void)
@@ -265,6 +221,43 @@ void DMA2_Stream0_IRQHandler(void)
     DMA_ClearITPendingBit(DMA2_Stream0, DMA_IT_TCIF0);  
     if(DMA2_Stream0_cb)
       DMA2_Stream0_cb();
+  }
+}
+
+void TIM2_IRQHandler()
+{
+  
+  if (TIM_GetITStatus(TIM2, TIM_IT_CC1) != RESET)
+  {
+    //Delta_t_timer1=Tick_Delta_t_timer;
+    TIM_ClearITPendingBit(TIM2,TIM_IT_CC1);
+
+    TIM_Cmd(TIM2, DISABLE);
+    TIM_ITConfig(TIM2, TIM_IT_CC1 , DISABLE);
+    
+    Timer2_OC_Ch1_callback();
+  }
+  if (TIM_GetITStatus(TIM2, TIM_IT_CC2) != RESET)
+  {
+    //Delta_t_timer2=Tick_Delta_t_timer;
+    TIM_ClearITPendingBit(TIM2,TIM_IT_CC2);
+
+    TIM_Cmd(TIM2, DISABLE);
+    TIM_ITConfig(TIM2, TIM_IT_CC2 , DISABLE);
+    
+    Timer2_OC_Ch2_callback();
+    TIM_SetCounter(TIM2,0);
+  }
+  if (TIM_GetITStatus(TIM2, TIM_IT_CC3) != RESET)
+  {
+    //Delta_t_timer2=Tick_Delta_t_timer;
+    TIM_ClearITPendingBit(TIM2,TIM_IT_CC3);
+
+    TIM_Cmd(TIM2, DISABLE);
+    TIM_ITConfig(TIM2, TIM_IT_CC3 , DISABLE);
+    
+    Timer2_OC_Ch3_callback();
+    TIM_SetCounter(TIM2,0);
   }
 }
 

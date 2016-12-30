@@ -1167,6 +1167,11 @@ void vTaskStartScheduler( void ) PRIVILEGED_FUNCTION;
  */
 void vTaskEndScheduler( void ) PRIVILEGED_FUNCTION;
 
+
+
+/*returns the scheduler state. custom function implemented by JRY, 30 dec. 2016*/
+uint8_t vSchedulerIsRunning(void);
+
 /**
  * task. h
  * <pre>void vTaskSuspendAll( void );</pre>

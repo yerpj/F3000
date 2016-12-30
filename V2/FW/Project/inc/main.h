@@ -12,7 +12,6 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h" 
-#include "semphr.h" 
 
 #include "commonDefs.h"
 #include "commontypes.h"
@@ -24,5 +23,7 @@
 #include "UID.h"
 #include "internal_temp_sensor.h"
 #include "PCA9952.h"
+#include "gear.h"
+#include "timer.h"
 
 #endif /* __MAIN_H */

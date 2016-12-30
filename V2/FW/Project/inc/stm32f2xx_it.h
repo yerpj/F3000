@@ -45,6 +45,8 @@ void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
 
+void setSysTick_Delay_Timer(uint32_t Delayms,uint8_t (*cb)(void));
+
 #ifdef __cplusplus
 }
 #endif

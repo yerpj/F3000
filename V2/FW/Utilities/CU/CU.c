@@ -375,4 +375,133 @@ void I2C_Bus_Init(I2C_List_Typedef I2Cx)
   I2C_Init(I2C_PERIPH[I2Cx] , &I2C_InitStructure);
 }
 
+uint8_t CU_IOInit(void)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+  
+  /* INPUTS */
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  
+  //-->REGIME_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(REGIME_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =REGIME_INPUT_PIN;
+  GPIO_Init(REGIME_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->OIL_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(OIL_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =OIL_INPUT_PIN;
+  GPIO_Init(OIL_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->EMBRAY_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(EMBRAY_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =EMBRAY_INPUT_PIN;
+  GPIO_Init(EMBRAY_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->GAZ_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(GAZ_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =GAZ_INPUT_PIN;
+  GPIO_Init(GAZ_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->NEUTRAL_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(NEUTRAL_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =NEUTRAL_INPUT_PIN;
+  GPIO_Init(NEUTRAL_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->RAPPORTp_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(RAPPORTp_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =RAPPORTp_INPUT_PIN;
+  GPIO_Init(RAPPORTp_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->RAPPORTm_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(RAPPORTm_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =RAPPORTm_INPUT_PIN;
+  GPIO_Init(RAPPORTm_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->P2_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(P2_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =P2_INPUT_PIN;
+  GPIO_Init(P2_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->P1_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(P1_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =P1_INPUT_PIN;
+  GPIO_Init(P1_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->RESERVED_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(RESERVED_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =RESERVED_INPUT_PIN;
+  GPIO_Init(RESERVED_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->PALG_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(PALG_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =PALG_INPUT_PIN;
+  GPIO_Init(PALG_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->PALD_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(PALD_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =PALD_INPUT_PIN;
+  GPIO_Init(PALD_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->MODE0_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(MODE0_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =MODE0_INPUT_PIN;
+  GPIO_Init(MODE0_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->MODE1_INPUT_PIN
+  RCC_AHB1PeriphClockCmd(MODE1_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =MODE1_INPUT_PIN;
+  GPIO_Init(MODE1_INPUT_GPIO_PORT, &GPIO_InitStructure);
+
+}
+
+uint16_t CU_ReadInputsRaw(void)
+{
+  uint16_t InputMask=0x0000;
+  
+  if(GPIO_ReadInputDataBit(REGIME_INPUT_GPIO_PORT,REGIME_INPUT_PIN))
+    InputMask |= CU_REGIME_INPUT;
+  
+  if(GPIO_ReadInputDataBit(OIL_INPUT_GPIO_PORT,OIL_INPUT_PIN))
+    InputMask |= CU_OIL_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(EMBRAY_INPUT_GPIO_PORT,EMBRAY_INPUT_PIN))
+    InputMask |= CU_EMBRAY_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(GAZ_INPUT_GPIO_PORT,GAZ_INPUT_PIN))
+    InputMask |= CU_GAZ_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(NEUTRAL_INPUT_GPIO_PORT,NEUTRAL_INPUT_PIN))
+    InputMask |= CU_NEUTRAL_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(RAPPORTp_INPUT_GPIO_PORT,RAPPORTp_INPUT_PIN))
+    InputMask |= CU_RAPPORTp_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(RAPPORTm_INPUT_GPIO_PORT,RAPPORTm_INPUT_PIN))
+    InputMask |= CU_RAPPORTm_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(P2_INPUT_GPIO_PORT,P2_INPUT_PIN))
+    InputMask |= CU_P2_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(P1_INPUT_GPIO_PORT,P1_INPUT_PIN))
+    InputMask |= CU_P1_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(RESERVED_INPUT_GPIO_PORT,RESERVED_INPUT_PIN))
+    InputMask |= CU_RESERVED_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(PALG_INPUT_GPIO_PORT,PALG_INPUT_PIN))
+    InputMask |= CU_PALG_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(PALD_INPUT_GPIO_PORT,PALD_INPUT_PIN))
+    InputMask |= CU_PALD_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(MODE0_INPUT_GPIO_PORT,MODE0_INPUT_PIN))
+    InputMask |= CU_MODE0_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(MODE1_INPUT_GPIO_PORT,MODE1_INPUT_PIN))
+    InputMask |= CU_MODE1_INPUT;   
+  return InputMask;
+}
+
 
