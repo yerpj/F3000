@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
 PCB File : C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\HW\Control\ControlUnit.PcbDoc
 Date     : 02.01.2017
-Time     : 14:56:12
+Time     : 16:22:03
 
 Processing Rule : Clearance Constraint (Gap=0.15mm) (All),(All)
 Rule Violations :0
@@ -58,35 +58,35 @@ Processing Rule : Matched Lengths(Tolerance=1.5mm) (All)
 Rule Violations :0
 
 Processing Rule : Component Clearance Constraint ( Horizontal Gap = 0.05mm, Vertical Gap = 0.05mm ) (All),(All) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D6-led (46.972mm,21.448mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D4-led (46.972mm,26.948mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D3-led (92.365mm,38.744mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D1-led (46.972mm,32.448mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D31-led (158.307mm,6.744mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D30-led (153.176mm,14.643mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D29-led (147.248mm,21.964mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D28-led (140.587mm,28.627mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D27-led (133.266mm,34.554mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D26-led (125.365mm,39.687mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D25-led (116.971mm,43.963mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D24-led (108.176mm,47.339mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D23-led (99.077mm,49.778mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D22-led (89.772mm,51.251mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D21-led (80.365mm,51.744mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D20-led (70.957mm,51.251mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D19-led (61.653mm,49.778mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D18-led (52.553mm,47.339mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D17-led (43.759mm,43.961mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D16-led (35.365mm,39.685mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D15-led (27.464mm,34.554mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D14-led (20.143mm,28.625mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D13-led (13.482mm,21.962mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D12-led (7.553mm,14.643mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D11-led (2.423mm,6.742mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D8-led (92.365mm,26.244mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D7-led (68.365mm,23.744mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
-   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D5-led (92.365mm,31.744mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
    Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D2-led (68.365mm,38.744mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D5-led (92.365mm,31.744mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D7-led (68.365mm,23.744mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D8-led (92.365mm,26.244mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D11-led (2.423mm,6.742mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D12-led (7.553mm,14.643mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D13-led (13.482mm,21.962mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D14-led (20.143mm,28.625mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D15-led (27.464mm,34.554mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D16-led (35.365mm,39.685mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D17-led (43.759mm,43.961mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D18-led (52.553mm,47.339mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D19-led (61.653mm,49.778mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D20-led (70.957mm,51.251mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D21-led (80.365mm,51.744mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D22-led (89.772mm,51.251mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D23-led (99.077mm,49.778mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D24-led (108.176mm,47.339mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D25-led (116.971mm,43.963mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D26-led (125.365mm,39.687mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D27-led (133.266mm,34.554mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D28-led (140.587mm,28.627mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D29-led (147.248mm,21.964mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D30-led (153.176mm,14.643mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D31-led (158.307mm,6.744mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D1-led (46.972mm,32.448mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D3-led (92.365mm,38.744mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D4-led (46.972mm,26.948mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
+   Violation between Component Clearance Constraint: (Collision < 0.05mm) Between Small Component D6-led (46.972mm,21.448mm) on Top Layer And 3D STEP boitier_ledHolesRelaxed (Mechanical 1)  Standoff=-14.9mm  Overall=9.1mm  (203.15mm, 125.3mm) 
 Rule Violations :29
 
 Processing Rule : Height Constraint (Min=0mm) (Max=30mm) (Prefered=12.7mm) (All)
@@ -97,4 +97,4 @@ Rule Violations :0
 
 
 Violations Detected : 29
-Time Elapsed        : 00:00:03
+Time Elapsed        : 00:00:02

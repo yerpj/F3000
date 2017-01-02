@@ -24,6 +24,8 @@ C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\Common\CLI
 -I
+C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\Common\Bluetooth
+-I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\Common\Console
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\Common\I2C
@@ -69,6 +71,8 @@ C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\CU\timer
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\Common
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\Common\CLI
+-I
+C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\Common\Bluetooth
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\Common\Console
 -I
@@ -287,8 +291,8 @@ C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\CMSIS\Include
 -D__HAS_LOCATED_DECLARATION__=1
 -D__HAS_LOCATED_WITH_INIT__=1
 -D__IAR_COMPILERBASE__=593164
--D__DATE__="Dec 30 2016"
--D__TIME__="17:03:07"
+-D__DATE__="Jan  2 2017"
+-D__TIME__="16:05:57"
 -D__STDC__=1
 -D__STDC_VERSION__=199901L
 -D__STDC_HOSTED__=1

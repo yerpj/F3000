@@ -1,0 +1,18 @@
+Added Component: Designator=TP1(TP_PogoPin)
+Add component. Clean all parameters for all variants
+Added Component: Designator=TP2(TP_PogoPin)
+Add component. Clean all parameters for all variants
+Added Component: Designator=TP3(TP_PogoPin)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=NetTP1_1 Pin=TP1-1
+Added Pin To Net: NetName=NetTP1_1 Pin=U2-57
+Added Net: Name=NetTP1_1
+Added Pin To Net: NetName=NetTP2_1 Pin=TP2-1
+Added Pin To Net: NetName=NetTP2_1 Pin=U2-58
+Added Net: Name=NetTP2_1
+Added Pin To Net: NetName=NetTP3_1 Pin=TP3-1
+Added Pin To Net: NetName=NetTP3_1 Pin=U2-59
+Added Net: Name=NetTP3_1
+Added Member To Class: ClassName=U_MCU Member=Component TP1 TP
+Added Member To Class: ClassName=U_MCU Member=Component TP2 TP
+Added Member To Class: ClassName=U_MCU Member=Component TP3 TP

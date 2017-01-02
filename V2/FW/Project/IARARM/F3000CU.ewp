@@ -312,6 +312,7 @@
           <state>$PROJ_DIR$\..\..\Utilities\CU\timer</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common\CLI</state>
+          <state>$PROJ_DIR$\..\..\Utilities\Common\Bluetooth</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common\Console</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common\I2C</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common\PushButton</state>
@@ -1865,6 +1866,15 @@
   </group>
   <group>
     <name>Common</name>
+    <group>
+      <name>Bluetooth</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\Common\Bluetooth\STBT.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\Common\Bluetooth\STBT.h</name>
+      </file>
+    </group>
     <group>
       <name>CLI</name>
       <file>

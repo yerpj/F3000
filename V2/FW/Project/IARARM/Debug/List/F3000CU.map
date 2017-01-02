@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ELF Linker V6.50.6.4896/W32 for ARM               30/Dec/2016  17:17:19 #
+# IAR ELF Linker V6.50.6.4896/W32 for ARM               02/Jan/2017  16:08:58 #
 # Copyright 2007-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Output file  =  C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\ #
@@ -17,6 +17,8 @@
 #                    V2\FW\Project\IARARM\Debug\Obj\I2C.o                     #
 #                    C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\ #
 #                    V2\FW\Project\IARARM\Debug\Obj\PCA9952.o                 #
+#                    C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\ #
+#                    V2\FW\Project\IARARM\Debug\Obj\STBT.o                    #
 #                    C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\ #
 #                    V2\FW\Project\IARARM\Debug\Obj\UID.o                     #
 #                    C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\ #
