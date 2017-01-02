@@ -17,5 +17,6 @@ void STBT_SendLine(uint8_t *str, uint32_t length);
 void STBT_Task(void * pvParameters);
 uint8_t STBT_SPP_Active(void);
 uint8_t STBT_SPP_Send(uint8_t *str);
+void STBT_ConsoleOutput(uint8_t *str);
 
 #endif /*__STBT_H__*/

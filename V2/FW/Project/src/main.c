@@ -90,6 +90,7 @@ void F3000_App(void * pvParameters)
     while(gear_isMoving())
       vTaskDelay(50);
     vTaskDelay(1000);
+    console_log("Hello from F3000");
   }
 }
 
@@ -107,6 +108,9 @@ void main(void)
   ITS_Init(NULL,0);
   PCA9952_Init(BUS_I2C3,PCA9952_MAIN_ADDR);
   CU_IOInit();
+  
+  STBT_Init(COM2);
+  console_Init(STBT_ConsoleOutput);
   
   //xTaskCreate(ToggleLed1, "LED1", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, NULL);
   xTaskCreate(F3000_App, "Application", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &AppTaskHandle);

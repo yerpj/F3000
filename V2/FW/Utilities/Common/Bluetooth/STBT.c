@@ -16,13 +16,25 @@ STBT_State_TypeDef BT_State;
 
 //uint8_t BTstr[50];
 
-
+void STBT_ConsoleOutput(uint8_t *str)
+{
+  STBT_SPP_Send(str);
+}
 
 void STBT_Init(COM_TypeDef SerialCOM)
 {
+  USART_InitTypeDef USART_InitStruct;
   BT_State=Active_Command_mode;
   BTCOM=SerialCOM;
-  Serial_COMInit(SerialCOM);
+  
+  USART_InitStruct.USART_BaudRate=115200;
+  USART_InitStruct.USART_HardwareFlowControl=USART_HardwareFlowControl_None;
+  USART_InitStruct.USART_Mode=USART_Mode_Rx|USART_Mode_Tx;
+  USART_InitStruct.USART_Parity=USART_Parity_No;
+  USART_InitStruct.USART_StopBits=USART_StopBits_1;
+  USART_InitStruct.USART_WordLength=USART_WordLength_8b;
+  
+  CU_COMInit(SerialCOM,&USART_InitStruct);
   vSemaphoreCreateBinary(BT_UART_sem);
   BT_UART_RX_Queue = xQueueCreate( 50, sizeof( uint8_t ) );
 
@@ -80,8 +92,8 @@ void STBT_Task(void * pvParameters)
 {
   uint32_t numbytesread,numbyteswritten;
   /*Update the module name*/
-  //STBT_Send("AT+AB Config DeviceName=LaVue Logger\n");
-  //vTaskDelay(100);
+  STBT_Send("AT+AB Config DeviceName=F3000\n");
+  vTaskDelay(100);
   /*Reset the BT module*/
   STBT_Send("AT+AB Reset \n");
   vTaskDelay(7000);
@@ -111,19 +123,19 @@ void STBT_Task(void * pvParameters)
             if(strstr(BTRXedStr,"SPPConnectionClosed"))
             {
               BT_State=Active_Command_mode;           
-              STM_EVAL_LEDOff(LED2);
+              //STM_EVAL_LEDOff(LED2);
               //fr = f_close(&fd);
             }
             else if(strstr(BTRXedStr,"ConnectionDown"))
             {
               BT_State=Active_Command_mode;           
-              STM_EVAL_LEDOff(LED2);
+              //STM_EVAL_LEDOff(LED2);
               //fr = f_close(&fd);
             }
             else if(strstr(BTRXedStr,"CommandMode"))
             {
               BT_State=Active_Command_mode;           
-              STM_EVAL_LEDOff(LED2);
+              //STM_EVAL_LEDOff(LED2);
               //fr = f_close(&fd);
             }
             BTRXedStrPtr=STBT_RXSTR_MAXLENGTH-1;
@@ -131,7 +143,7 @@ void STBT_Task(void * pvParameters)
         }
         else
         {
-          xQueueSendToBack( UI_RX_Queue, &BTRXedStr[BTRXedStrPtr], NULL );
+          //xQueueSendToBack( UI_RX_Queue, &BTRXedStr[BTRXedStrPtr], NULL );
         }
         break;
       case Active_Command_mode:
@@ -143,7 +155,7 @@ void STBT_Task(void * pvParameters)
             if(strstr(BTRXedStr,"BypassMode"))
             {
               BT_State=Active_Bypass_mode;              
-              STM_EVAL_LEDOn(LED2);
+              //STM_EVAL_LEDOn(LED2);
               //fr = f_open(&fd,"BTlog.txt", FA_WRITE| FA_OPEN_ALWAYS);
               //fr = f_lseek(&fd, f_size(&fd));
             }

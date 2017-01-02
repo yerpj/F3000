@@ -44,6 +44,9 @@ extern uint16_t (*Timer2_OC_Ch1_callback)(void);
 extern uint16_t (*Timer2_OC_Ch2_callback)(void);
 extern uint16_t (*Timer2_OC_Ch3_callback)(void);
 
+
+extern void STBT_USART_RX_Callback(uint8_t rxchar);
+
 uint8_t (*SysTick_Delay_cb)(void)=NULL;
 
 
@@ -221,6 +224,16 @@ void DMA2_Stream0_IRQHandler(void)
     DMA_ClearITPendingBit(DMA2_Stream0, DMA_IT_TCIF0);  
     if(DMA2_Stream0_cb)
       DMA2_Stream0_cb();
+  }
+}
+
+void USART3_IRQHandler(void)
+{
+  if(USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)
+  {
+    USART_ClearITPendingBit(USART3, USART_IT_RXNE);
+    STBT_USART_RX_Callback(USART_ReceiveData(USART3));
+    //Elite_LPRP_USART_RX_Callback(USART_ReceiveData(USART3));
   }
 }
 

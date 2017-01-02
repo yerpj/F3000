@@ -261,7 +261,7 @@ void Console_Rx_Task(void * pvParameters)
   *   contains the configuration information for the specified USART peripheral.
   * @retval None
   */
-void NCP020_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct)
+void CU_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
   NVIC_InitTypeDef NVIC_InitStructure;

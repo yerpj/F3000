@@ -25,5 +25,6 @@
 #include "PCA9952.h"
 #include "gear.h"
 #include "timer.h"
+#include "STBT.h"
 
 #endif /* __MAIN_H */
