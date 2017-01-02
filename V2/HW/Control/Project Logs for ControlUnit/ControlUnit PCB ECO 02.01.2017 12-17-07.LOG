@@ -1,0 +1,7 @@
+Removed Pin From Net: NetName=Temp Pin=J9-6
+Removed Pin From Net: NetName=Temp Pin=R29-1
+Added Pin To Net: NetName=Temp Pin=U2-26
+Change Net Name : Old Net Name=Temp New Net Name=Temp_in
+Added Pin To Net: NetName=TEMP Pin=J9-6
+Added Pin To Net: NetName=TEMP Pin=R29-1
+Added Net: Name=TEMP

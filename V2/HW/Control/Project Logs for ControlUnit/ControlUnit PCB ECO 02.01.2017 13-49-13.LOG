@@ -1,0 +1,50 @@
+Add component (AddParameter): Name = "Digikey ref"; Value = "445-4964-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "TDK Corp"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = "C1005X5R1E104K050BC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "100n"; VariantName = "[No Variations]"
+Added Component: Designator=C31(0402_)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Digikey ref"; Value = "445-4964-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "TDK Corp"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = "C1005X5R1E104K050BC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "100n"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Digikey ref"; Value = "445-4964-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "TDK Corp"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = "C1005X5R1E104K050BC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "100n"; VariantName = "[No Variations]"
+Added Component: Designator=C32(0402_)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Digikey ref"; Value = "445-4964-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "TDK Corp"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = "C1005X5R1E104K050BC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "100n"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C31-1
+Added Pin To Net: NetName=VIN Pin=C31-2
+Added Pin To Net: NetName=3V3 Pin=C32-1
+Added Pin To Net: NetName=GND Pin=C32-2
+Added Pin To Net: NetName=VIN Pin=U10-1
+Added Pin To Net: NetName=MOT- Pin=U10-2
+Added Pin To Net: NetName=MOT+ Pin=U10-4
+Added Pin To Net: NetName=STOP Pin=U10-6
+Added Pin To Net: NetName=GND Pin=U10-8
+Added Pin To Net: NetName=GND Pin=U10-9
+Added Pin To Net: NetName=GND Pin=U10-11
+Added Pin To Net: NetName=GND Pin=U10-13
+Added Pin To Net: NetName=GND Pin=U10-14
+Added Pin To Net: NetName=3V3 Pin=U10-16
+Added Pin To Net: NetName=Mot+_out Pin=U10-5
+Added Net: Name=Mot+_out
+Added Pin To Net: NetName=Mot-_out Pin=U10-3
+Added Net: Name=Mot-_out
+Added Pin To Net: NetName=Stop_out Pin=U10-7
+Added Net: Name=Stop_out
+Added Member To Class: ClassName=U_MCU Member=Component C31 100n
+Added Member To Class: ClassName=U_MCU Member=Component C32 100n

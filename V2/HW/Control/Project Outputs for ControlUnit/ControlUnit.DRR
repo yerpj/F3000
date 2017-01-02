@@ -1,0 +1,20 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: ControlUnit.PcbDoc   02.01.2017  14:57:37
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : ControlUnit.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      0.15mm (6mil)                                             Round             14        PTH        140.49mm (5.53inch)
+T2      0.3mm (12mil)                                             Round             114       PTH        714.08mm (28.11inch)
+T3      0.5mm (20mil)                                             Round             28        PTH        192.37mm (7.57inch)
+T4      0.762mm (30mil)                                           Round             10        PTH        35.56mm (1.40inch)
+T5      0.9mm (35mil)                                             Round             27        PTH        135.12mm (5.32inch)
+T6      1mm (39mil)                                               Round             58        PTH        431.53mm (16.99inch)
+T7      1.2mm (47mil)                                             Round             2         PTH        14.00mm (0.55inch)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              253
+
+Total Processing Time (hh:mm:ss) : 00:00:00

@@ -1,0 +1,137 @@
+Removed Pin From Net: NetName=GND Pin=J4-1
+Removed Pin From Net: NetName=GND Pin=J4-4
+Removed Pin From Net: NetName=3V3 Pin=R4-2
+Removed Pin From Net: NetName=BUT_ST Pin=R26-2
+Change Component Comment : Designator=R4 Old Comment=1k New Comment=3k3
+Change Component Comment : Designator=R26 Old Comment=330R New Comment=8k2
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "value"; Value = "3k3"; VariantName = "[No Variations]"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "value"; Value = "3k3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "value"; Value = "8k2"; VariantName = "[No Variations]"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Digikey ref"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PartNum"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "value"; Value = "8k2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Digikey ref"; Value = "490-5915-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "4u7"; VariantName = "[No Variations]"
+Added Component: Designator=C30(0402_)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Digikey ref"; Value = "490-5915-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "4u7"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Digikey ref"; Value = "568-8043-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "NXP"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = "BZX384-C3V0,115"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Vz"; Value = "3.0V"; VariantName = "[No Variations]"
+Added Component: Designator=D34(SOD323)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Digikey ref"; Value = "568-8043-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "NXP"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = "BZX384-C3V0,115"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Vz"; Value = "3.0V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Digikey ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "1k8"; VariantName = "[No Variations]"
+Added Component: Designator=R29(0402_)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Digikey ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "1k8"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Digikey ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "3k3"; VariantName = "[No Variations]"
+Added Component: Designator=R30(0402_)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Digikey ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "status"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "value"; Value = "3k3"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C30-2
+Added Pin To Net: NetName=GND Pin=D34-1
+Added Pin To Net: NetName=BUT_ST Pin=D34-2
+Added Pin To Net: NetName=VIN Pin=J4-1
+Added Pin To Net: NetName=VIN Pin=J4-4
+Added Pin To Net: NetName=GND Pin=R4-1
+Added Pin To Net: NetName=BUT_ST Pin=R4-2
+Added Pin To Net: NetName=BUT_ST Pin=R26-1
+Added Pin To Net: NetName=GND Pin=R30-2
+Change Net Name : Old Net Name=MOT+_OUT New Net Name=MOT+
+Change Net Name : Old Net Name=MOT-_OUT New Net Name=MOT-
+Change Net Name : Old Net Name=RAPPORT2_IN New Net Name=Rapport-
+Change Net Name : Old Net Name=START_UC_OUT New Net Name=Gaz
+Change Net Name : Old Net Name=STOP_OUT New Net Name=STOP
+Added Pin To Net: NetName=CAME Pin=J9-12
+Added Pin To Net: NetName=CAME Pin=U8-6
+Added Pin To Net: NetName=CAME Pin=U8-7
+Added Net: Name=CAME
+Added Pin To Net: NetName=EMBRAY Pin=J9-10
+Added Pin To Net: NetName=EMBRAY Pin=U8-4
+Added Pin To Net: NetName=EMBRAY Pin=U8-5
+Added Net: Name=EMBRAY
+Added Pin To Net: NetName=Huile Pin=J9-9
+Added Pin To Net: NetName=Huile Pin=U8-11
+Added Pin To Net: NetName=Huile Pin=U8-12
+Added Net: Name=Huile
+Added Pin To Net: NetName=NEUTRE Pin=J9-3
+Added Pin To Net: NetName=NEUTRE Pin=U8-2
+Added Pin To Net: NetName=NEUTRE Pin=U8-3
+Added Net: Name=NEUTRE
+Added Pin To Net: NetName=Rapport+ Pin=J9-17
+Added Net: Name=Rapport+
+Added Pin To Net: NetName=Regime Pin=J9-5
+Added Pin To Net: NetName=Regime Pin=U8-14
+Added Pin To Net: NetName=Regime Pin=U8-15
+Added Net: Name=Regime
+Added Pin To Net: NetName=RESERVED Pin=J9-15
+Added Net: Name=RESERVED
+Added Pin To Net: NetName=Shifter Pin=J9-11
+Added Pin To Net: NetName=Shifter Pin=U8-9
+Added Pin To Net: NetName=Shifter Pin=U8-10
+Added Net: Name=Shifter
+Added Pin To Net: NetName=START Pin=J4-2
+Added Pin To Net: NetName=START Pin=J4-3
+Added Pin To Net: NetName=START Pin=J9-4
+Added Pin To Net: NetName=START Pin=R26-2
+Added Net: Name=START
+Added Pin To Net: NetName=Temp Pin=C30-1
+Added Pin To Net: NetName=Temp Pin=J9-6
+Added Pin To Net: NetName=Temp Pin=R29-1
+Added Pin To Net: NetName=Temp Pin=R29-2
+Added Pin To Net: NetName=Temp Pin=R30-1
+Added Net: Name=Temp
+Added Member To Class: ClassName=U_MCU Member=Component C30 4u7
+Added Member To Class: ClassName=U_MCU Member=Component D34 BZX384-C3V0
+Added Member To Class: ClassName=U_MCU Member=Component R29 1k8
+Added Member To Class: ClassName=U_MCU Member=Component R30 3k3

@@ -1,0 +1,6 @@
+Added Pin To Net: NetName=GND Pin=C28-1
+Added Pin To Net: NetName=VIN Pin=C28-2
+Added Pin To Net: NetName=3V3 Pin=C29-1
+Added Pin To Net: NetName=GND Pin=C29-2
+Added Pin To Net: NetName=VIN Pin=U9-1
+Added Pin To Net: NetName=3V3 Pin=U9-16

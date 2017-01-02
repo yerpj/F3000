@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=Regime_in Pin=U2-37
+Removed Pin From Net: NetName=Neutre_in Pin=U2-38
+Added Pin To Net: NetName=Neutre_in Pin=U2-37
+Added Pin To Net: NetName=Regime_in Pin=U2-38

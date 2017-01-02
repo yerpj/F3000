@@ -1,0 +1,19 @@
+Added Pin To Net: NetName=Rapport- Pin=U9-3
+Added Pin To Net: NetName=Rapport+ Pin=U9-5
+Added Pin To Net: NetName=Gaz Pin=U9-11
+Added Pin To Net: NetName=Gaz_in Pin=U9-12
+Added Net: Name=Gaz_in
+Added Pin To Net: NetName=Rapport+_in Pin=U9-4
+Added Net: Name=Rapport+_in
+Added Pin To Net: NetName=Rapport-_in Pin=U9-2
+Added Net: Name=Rapport-_in
+Added Pin To Net: NetName=Reserved1_in Pin=U9-6
+Added Net: Name=Reserved1_in
+Added Pin To Net: NetName=RESERVED1 Pin=J9-13
+Added Pin To Net: NetName=RESERVED1 Pin=U9-7
+Added Net: Name=RESERVED1
+Added Pin To Net: NetName=Reserved2_in Pin=U9-10
+Added Net: Name=Reserved2_in
+Added Pin To Net: NetName=RESERVED2 Pin=J9-15
+Added Pin To Net: NetName=RESERVED2 Pin=U9-9
+Added Net: Name=RESERVED2

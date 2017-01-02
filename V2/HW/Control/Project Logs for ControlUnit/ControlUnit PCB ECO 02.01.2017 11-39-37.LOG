@@ -1,0 +1,18 @@
+Removed Pin From Net: NetName=NEUTRE Pin=U8-2
+Removed Pin From Net: NetName=EMBRAY Pin=U8-4
+Removed Pin From Net: NetName=CAME Pin=U8-6
+Removed Pin From Net: NetName=Shifter Pin=U8-10
+Removed Pin From Net: NetName=Huile Pin=U8-12
+Removed Pin From Net: NetName=Regime Pin=U8-15
+Added Pin To Net: NetName=Came_in Pin=U8-6
+Added Net: Name=Came_in
+Added Pin To Net: NetName=Embray_in Pin=U8-4
+Added Net: Name=Embray_in
+Added Pin To Net: NetName=Huile_in Pin=U8-12
+Added Net: Name=Huile_in
+Added Pin To Net: NetName=Neutre_in Pin=U8-2
+Added Net: Name=Neutre_in
+Added Pin To Net: NetName=Regime_in Pin=U8-15
+Added Net: Name=Regime_in
+Added Pin To Net: NetName=Shifter_in Pin=U8-10
+Added Net: Name=Shifter_in

@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=RESERVED1 Pin=J9-13
+Removed Pin From Net: NetName=RESERVED2 Pin=J9-15
+Removed Pin From Net: NetName=Rapport- Pin=U9-3
+Removed Pin From Net: NetName=Rapport+ Pin=U9-5
+Removed Pin From Net: NetName=RESERVED1 Pin=U9-7
+Removed Pin From Net: NetName=RESERVED2 Pin=U9-9
+Removed Pin From Net: NetName=Gaz Pin=U9-11
+Added Pin To Net: NetName=RESERVED1 Pin=J9-7
+Added Pin To Net: NetName=RESERVED2 Pin=J9-13
+Added Pin To Net: NetName=GND Pin=U9-8
+Added Pin To Net: NetName=GND Pin=U9-13
+Added Pin To Net: NetName=RESERVED3 Pin=J9-15
+Added Net: Name=RESERVED3

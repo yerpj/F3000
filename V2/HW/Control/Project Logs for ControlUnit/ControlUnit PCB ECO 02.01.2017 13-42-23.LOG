@@ -1,0 +1,11 @@
+Add component (AddParameter): Name = "Digikey ref"; Value = "MC14504BDGOS-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "On Semi"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = "MC14504BDG"; VariantName = "[No Variations]"
+Added Component: Designator=U10(SOIC16)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Digikey ref"; Value = "MC14504BDGOS-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Farnell ref"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "On Semi"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PartNum"; Value = "MC14504BDG"; VariantName = "[No Variations]"
+Added Member To Class: ClassName=U_MCU Member=Component U10 MC14504B
