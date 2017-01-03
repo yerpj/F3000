@@ -92,7 +92,7 @@ void STBT_Task(void * pvParameters)
 {
   uint32_t numbytesread,numbyteswritten;
   /*Update the module name*/
-  STBT_Send("AT+AB Config DeviceName=F3000\n");
+  //STBT_Send("AT+AB Config DeviceName=F3000\n");
   vTaskDelay(100);
   /*Reset the BT module*/
   STBT_Send("AT+AB Reset \n");
