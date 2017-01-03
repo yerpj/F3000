@@ -33,11 +33,11 @@ const uint8_t I2C_SDA_SOURCE[I2Cn] = {PCA9952_I2C_SDA_SOURCE,PCA9952_I2C_SDA_SOU
 const uint8_t I2C_SDA_AF[I2Cn] = {PCA9952_I2C_SDA_AF,PCA9952_I2C_SDA_AF,PCA9952_I2C_SDA_AF};
 const uint32_t I2C_SPEED[I2Cn] = {PCA9952_I2C_SPEED,PCA9952_I2C_SPEED,PCA9952_I2C_SPEED};
 
-void Console_Rx_Task(void * pvParameters);
-static xSemaphoreHandle Serial_rx_sem;
-uint8_t NodeConsoleRXBuf[50];
-uint8_t NodeConsoleRXPtr=0;
-uint8_t NodeConsoleRXReady=0;
+//void Console_Rx_Task(void * pvParameters);
+//xSemaphoreHandle Console_rx_sem;
+//uint8_t ConsoleRXBuf[50];
+//uint8_t ConsoleRXPtr=0;
+//uint8_t ConsoleRXReady=0;
 
 void LEDs_Init(void)
 {
@@ -207,48 +207,12 @@ uint8_t Console_LowLevelInit(void)
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
   
-  vSemaphoreCreateBinary(Serial_rx_sem);
-  xTaskCreate(Console_Rx_Task, "ConsoleRX", 3*configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, NULL);
+  //vSemaphoreCreateBinary(Console_rx_sem);
+  //xTaskCreate(Console_Rx_Task, "ConsoleRX", 3*configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, NULL);
   
   /* Enable USART */
   USART_Cmd(CONSOLEPORT_USART, ENABLE);
   return 0;
-}
-
-void Node_Console_cb(void)
-{  
-  static portBASE_TYPE yield;
-  if(!NodeConsoleRXReady)
-  {
-    NodeConsoleRXBuf[NodeConsoleRXPtr++]=USART_ReceiveData(CONSOLEPORT_USART);
-    if(NodeConsoleRXPtr>49 || (NodeConsoleRXBuf[NodeConsoleRXPtr-1]=='\n') )
-    {
-      NodeConsoleRXReady=1;
-      xSemaphoreGiveFromISR(Serial_rx_sem, &yield);
-      NodeConsoleRXPtr=0;
-    }
-  }
-}
-
-void Console_Rx_Task(void * pvParameters)
-{
-  uint8_t tmpreg=0;
-  uint8_t i=0;
-  while (1) 
-  {
-    if (xSemaphoreTake(Serial_rx_sem, portMAX_DELAY) == pdTRUE) 
-    {
-      if(NodeConsoleRXReady)
-      { 
-        i=0;
-        while(NodeConsoleRXBuf[i]!='\n')
-          CLI_Input(NodeConsoleRXBuf[i++]);
-        CLI_Input(NodeConsoleRXBuf[i]);
-        NodeConsoleRXReady=0;
-      }
-    }
-  }
-  vTaskDelete(NULL);
 }
 
 /**
@@ -316,6 +280,27 @@ void CU_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct)
   /* Enable USART */
   USART_Cmd(COM_USART[COM], ENABLE);
 }
+
+/*void Console_Rx_Task(void * pvParameters)
+{
+  uint8_t tmpreg=0;
+  uint8_t i=0;
+  while (1) 
+  {
+    if (xSemaphoreTake(Console_rx_sem, portMAX_DELAY) == pdTRUE) 
+    {
+      if(ConsoleRXReady)
+      { 
+        i=0;
+        while(ConsoleRXBuf[i]!='\n')
+          CLI_Input(ConsoleRXBuf[i++]);
+        CLI_Input(ConsoleRXBuf[i]);
+        ConsoleRXReady=0;
+      }
+    }
+  }
+  vTaskDelete(NULL);
+}*/
 
 void I2C_Bus_Init(I2C_List_Typedef I2Cx)
 {

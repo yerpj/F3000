@@ -1,10 +1,10 @@
 #include "STBT.h"
+#include "semphr.h" 
+
 
 xSemaphoreHandle BT_UART_sem;
 QueueHandle_t BT_UART_RX_Queue;
-extern xSemaphoreHandle LogFileMutex;
-extern QueueHandle_t UI_RX_Queue;
-
+//extern xSemaphoreHandle LogFileMutex;
 
 uint8_t BTRXedStr[STBT_RXSTR_MAXLENGTH];
 uint32_t BTRXedStrPtr=0;
@@ -13,6 +13,7 @@ COM_TypeDef BTCOM=COM1;
 
 STBT_State_TypeDef BT_State;
 
+//extern xSemaphoreHandle Console_rx_sem;
 
 //uint8_t BTstr[50];
 
@@ -91,6 +92,7 @@ uint8_t STBT_SPP_Send(uint8_t *str)
 void STBT_Task(void * pvParameters)
 {
   uint32_t numbytesread,numbyteswritten;
+  uint8_t i=0;
   /*Update the module name*/
   //STBT_Send("AT+AB Config DeviceName=F3000\n");
   vTaskDelay(100);
@@ -104,83 +106,69 @@ void STBT_Task(void * pvParameters)
   vTaskDelay(100);
   for(;;)
   {
-    if(xQueueReceive( BT_UART_RX_Queue, &BTRXedStr[BTRXedStrPtr], portMAX_DELAY) )
+    if(xQueueReceive( BT_UART_RX_Queue, &BTRXedStr[BTRXedStrPtr++], portMAX_DELAY) )
     {
-#ifdef BRIDGE_BT_SERIAL
-      while( !(USART1->SR & 0x00000040) );
-      USART_SendData(USART1,BTRXedStr[BTRXedStrPtr]);
-#else /* BRIDGE_BT_SERIAL */
       switch(BT_State)
       {
       case Standby_mode:
         break;
       case Active_Bypass_mode:
-        if(BTRXedStr[BTRXedStrPtr]==0x0A && BTRXedStrPtr>0)
+        if( (BTRXedStr[BTRXedStrPtr-1]==0x0A) && (BTRXedStr[BTRXedStrPtr-2]==0x0D) && BTRXedStrPtr>2 )
         {
-          if(BTRXedStr[BTRXedStrPtr-1]==0x0D)
+          //new command received
+          if(strstr(BTRXedStr,"SPPConnectionClosed"))
           {
-            //new command received
-            if(strstr(BTRXedStr,"SPPConnectionClosed"))
-            {
-              BT_State=Active_Command_mode;           
-              //STM_EVAL_LEDOff(LED2);
-              //fr = f_close(&fd);
-            }
-            else if(strstr(BTRXedStr,"ConnectionDown"))
-            {
-              BT_State=Active_Command_mode;           
-              //STM_EVAL_LEDOff(LED2);
-              //fr = f_close(&fd);
-            }
-            else if(strstr(BTRXedStr,"CommandMode"))
-            {
-              BT_State=Active_Command_mode;           
-              //STM_EVAL_LEDOff(LED2);
-              //fr = f_close(&fd);
-            }
-            BTRXedStrPtr=STBT_RXSTR_MAXLENGTH-1;
+            BT_State=Active_Command_mode;           
           }
+          else if(strstr(BTRXedStr,"ConnectionDown"))
+          {
+            BT_State=Active_Command_mode;           
+          }
+          else if(strstr(BTRXedStr,"CommandMode"))
+          {
+            BT_State=Active_Command_mode;           
+          }
+          BTRXedStrPtr=0;
         }
         else
         {
-          //xQueueSendToBack( UI_RX_Queue, &BTRXedStr[BTRXedStrPtr], NULL );
-        }
-        break;
-      case Active_Command_mode:
-        if(BTRXedStr[BTRXedStrPtr]==0x0A && BTRXedStrPtr>0)
-        {
-          if(BTRXedStr[BTRXedStrPtr-1]==0x0D)
+          if(BTRXedStr[BTRXedStrPtr-1]=='#')
           {
-            //new command received
-            if(strstr(BTRXedStr,"BypassMode"))
-            {
-              BT_State=Active_Bypass_mode;              
-              //STM_EVAL_LEDOn(LED2);
-              //fr = f_open(&fd,"BTlog.txt", FA_WRITE| FA_OPEN_ALWAYS);
-              //fr = f_lseek(&fd, f_size(&fd));
-            }
-            else if(strstr(BTRXedStr,"SPPConnectionClosed"))
-            {
-              BT_State=Active_Command_mode;
-            }
-            else if(strstr(BTRXedStr,"CommandMode"))
-            {
-              BT_State=Active_Command_mode;
-            }
-            BTRXedStrPtr=STBT_RXSTR_MAXLENGTH-1;
+            BTRXedStrPtr-=1;//reduce pointer to end of relevant string
+            for(i=0;i<BTRXedStrPtr;i++)
+              CLI_Input(BTRXedStr[i]);
+            CLI_Input('\r');
+            CLI_Input('\n');
+            BTRXedStrPtr=0;
           }
         }
         break;
+      case Active_Command_mode:
+        if( (BTRXedStr[BTRXedStrPtr-1]==0x0A) && (BTRXedStr[BTRXedStrPtr-2]==0x0D) && BTRXedStrPtr>2 )
+        {
+          //new command received
+          if(strstr(BTRXedStr,"BypassMode"))
+          {
+            BT_State=Active_Bypass_mode;              
+          }
+          else if(strstr(BTRXedStr,"SPPConnectionClosed"))
+          {
+            BT_State=Active_Command_mode;
+          }
+          else if(strstr(BTRXedStr,"CommandMode"))
+          {
+            BT_State=Active_Command_mode;
+          }
+          BTRXedStrPtr=0;
+        }
+        break;
       default:break;
-      
-      
-      
       }
-#endif /* BRIDGE_BT_SERIAL */
     }
-    /*Update the RX str pointer*/
-    BTRXedStrPtr++;
-    BTRXedStrPtr%=STBT_RXSTR_MAXLENGTH;
+    
+    /*check the RX str pointer*/
+    if(BTRXedStrPtr==STBT_RXSTR_MAXLENGTH)
+      BTRXedStrPtr=0;
   }
 }
 

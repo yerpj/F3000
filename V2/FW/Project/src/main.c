@@ -90,8 +90,30 @@ void F3000_App(void * pvParameters)
     while(gear_isMoving())
       vTaskDelay(50);
     vTaskDelay(1000);
-    console_log("Hello from F3000");
   }
+}
+
+uint8_t F3000CLIInterpreter(uint8_t *raw)
+{
+  uint8_t *cmd=raw;
+  if(strstr(cmd,"SYS -g BuildDate")>0)
+  {
+      CLI_Output(__DATE__":"__TIME__);
+      return 0;
+  }
+  else if(strstr(cmd,"SYS -r")>0)
+  {
+    CLI_Output("Rebooting... Please unconnect and reconnect Bluetooth app");
+    vTaskDelay(2000);
+    NVIC_SystemReset();
+  }
+  else
+  {
+    CLI_Output("\r\nCommand ERROR");
+    return 1;
+  }
+  CLI_Output("\r\nDone");
+  return 0;
 }
 
 void main(void)
@@ -111,6 +133,7 @@ void main(void)
   
   STBT_Init(COM2);
   console_Init(STBT_ConsoleOutput);
+  CLI_Init(console_log,F3000CLIInterpreter);
   
   //xTaskCreate(ToggleLed1, "LED1", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, NULL);
   xTaskCreate(F3000_App, "Application", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &AppTaskHandle);
