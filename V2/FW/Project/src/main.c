@@ -98,8 +98,13 @@ uint8_t F3000CLIInterpreter(uint8_t *raw)
   uint8_t *cmd=raw;
   if(strstr(cmd,"SYS -g BuildDate")>0)
   {
-      CLI_Output(__DATE__":"__TIME__);
-      return 0;
+    CLI_Output(__DATE__":"__TIME__);
+    return 0;
+  }
+  if(strstr(cmd,"SYS -g Temp")>0)
+  {
+    CLI_Output("Temp: not yet measured");
+    return 0;
   }
   else if(strstr(cmd,"SYS -r")>0)
   {

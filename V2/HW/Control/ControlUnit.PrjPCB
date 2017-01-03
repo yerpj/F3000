@@ -105,6 +105,14 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=XHMJKBBS
 
+[ProjectVariant1]
+UniqueID=33B612BB-BA89-4515-B735-7016FC799813
+Description=Normal
+AllowFabrication=0
+ParameterCount=0
+VariationCount=0
+ParamVariationCount=0
+
 [GeneratedDocument1]
 DocumentPath=Project Outputs for ControlUnit\ControlUnit.DRR
 DItemRevisionGUID=
