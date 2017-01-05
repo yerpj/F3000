@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------
-Gerber File Extension Report For: ControlUnit.GBR   02.01.2017  16:21:46
+Gerber File Extension Report For: ControlUnit.GBR   04.01.2017  15:40:18
 ------------------------------------------------------------------------------------------
 
 
@@ -10,6 +10,7 @@ Layer Extension     Layer Description
 .GP1                GND                                     
 .GP2                VCC                                     
 .GBL                Bottom Layer                            
+.GTO                Top Overlay                             
 .GTP                Top Paste                               
 .GTS                Top Solder                              
 .GBS                Bottom Solder                           
