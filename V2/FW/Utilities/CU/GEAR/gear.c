@@ -21,24 +21,39 @@ uint8_t gear_decrease(void)
 uint8_t gear_up(void)
 {
   gear_moving=1;
+#ifdef USE_BREADBOARD
+  GPIO_SetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);//dir
+  GPIO_SetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);//enable
+#else /* USE_BREADBOARD */
   GPIO_SetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
   GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
+#endif /* USE_BREADBOARD */
   return 0;
 }
 
 uint8_t gear_down(void)
 {
   gear_moving=1;
+#ifdef USE_BREADBOARD
+  GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);//dir
+  GPIO_SetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);//enable
+#else /* USE_BREADBOARD */
   GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
   GPIO_SetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
+#endif /* USE_BREADBOARD */
   return 0;
 }
 
 uint8_t gear_stop(void)
 {
   gear_moving=0;
+#ifdef USE_BREADBOARD
+  GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);//dir
+  GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);//enable
+#else /* USE_BREADBOARD */
   GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
   GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
+#endif /* USE_BREADBOARD */
   return 0;
 }
 

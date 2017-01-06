@@ -438,6 +438,22 @@ uint8_t CU_IOInit(void)
   RCC_AHB1PeriphClockCmd(MODE1_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =MODE1_INPUT_PIN;
   GPIO_Init(MODE1_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  /* OUTPUTS */
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_InitStructure.GPIO_OType= GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  
+  //-->MOTEURm_OUTPUT_PIN
+  RCC_AHB1PeriphClockCmd(MOTEURm_OUTPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =MOTEURm_OUTPUT_PIN;
+  GPIO_Init(MOTEURm_OUTPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->MOTEURp_OUTPUT_PIN
+  RCC_AHB1PeriphClockCmd(MOTEURp_OUTPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =MOTEURp_OUTPUT_PIN;
+  GPIO_Init(MOTEURp_OUTPUT_GPIO_PORT, &GPIO_InitStructure);
 
 }
 

@@ -261,13 +261,26 @@ typedef enum
 #define MODE1_INPUT_GPIO_PORT                           GPIOC
 #define MODE1_INPUT_GPIO_CLK                            RCC_AHB1Periph_GPIOC 
 
-#define MOTEURm_OUTPUT_PIN                              GPIO_Pin_0
-#define MOTEURm_OUTPUT_GPIO_PORT                        GPIOB
-#define MOTEURm_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOB
+/* when using breadboard, MOTEURm_OUTPUT_PIN=DIR, MOTEURp_OUTPUT_PIN=EN */
+#ifdef USE_BREADBOARD
+  #define MOTEURm_OUTPUT_PIN                              GPIO_Pin_0
+  #define MOTEURm_OUTPUT_GPIO_PORT                        GPIOA
+  #define MOTEURm_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOA
 
-#define MOTEURp_OUTPUT_PIN                              GPIO_Pin_4              
-#define MOTEURp_OUTPUT_GPIO_PORT                        GPIOC
-#define MOTEURp_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+  #define MOTEURp_OUTPUT_PIN                              GPIO_Pin_14              
+  #define MOTEURp_OUTPUT_GPIO_PORT                        GPIOC
+  #define MOTEURp_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+
+#else /* USE_BREADBOARD */
+  #define MOTEURm_OUTPUT_PIN                              GPIO_Pin_0
+  #define MOTEURm_OUTPUT_GPIO_PORT                        GPIOB
+  #define MOTEURm_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOB
+
+  #define MOTEURp_OUTPUT_PIN                              GPIO_Pin_4              
+  #define MOTEURp_OUTPUT_GPIO_PORT                        GPIOC
+  #define MOTEURp_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+#endif /* USE_BREADBOARD */
+
 
     
 

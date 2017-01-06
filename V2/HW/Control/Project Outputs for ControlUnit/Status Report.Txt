@@ -1,12 +1,23 @@
-Output: NC Drill Files
-Type  : NC Drill
-From  : Project [ControlUnit.PrjPCB]
-   Generated File[ControlUnit.TXT]
-   Generated File[ControlUnit.LDP]
-   Generated File[ControlUnit.DRR]
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of Project [ControlUnit.PrjPCB]
+   Generated File[ControlUnit.GTL]
+   Generated File[ControlUnit.GP1]
+   Generated File[ControlUnit.GP2]
+   Generated File[ControlUnit.GBL]
+   Generated File[ControlUnit.GTO]
+   Generated File[ControlUnit.GTP]
+   Generated File[ControlUnit.GTS]
+   Generated File[ControlUnit.GBS]
+   Generated File[ControlUnit.GBP]
+   Generated File[ControlUnit.GBO]
+   Generated File[ControlUnit.GKO]
+   Generated File[ControlUnit.RUL]
+   Generated File[ControlUnit.EXTREP]
+   Generated File[ControlUnit.REP]
 
 
-Files Generated   : 3
+Files Generated   : 14
 Documents Printed : 0
 
-Finished Output Generation At 15:40:31 On 04.01.2017
+Finished Output Generation At 11:03:37 On 06.01.2017
