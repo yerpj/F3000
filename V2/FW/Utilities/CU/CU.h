@@ -26,9 +26,6 @@ typedef enum
 
 
 
-/** @addtogroup NCP020_LOW_LEVEL_LED
-  * @{
-  */
     
 #define LEDn                             3
 #define IOn                             LEDn
@@ -45,9 +42,38 @@ typedef enum
 #define LED3_GPIO_PORT                   GPIOC
 #define LED3_GPIO_CLK                    RCC_AHB1Periph_GPIOC 
 
-/** @addtogroup nolcsa_LOW_LEVEL_COM
-  * @{
-  */
+
+/* CU 7 segment display */
+#define SEG7_SEG_A_MASK                 (0x0001<<12)
+#define SEG7_SEG_B_MASK                 (0x0001<<11)
+#define SEG7_SEG_C_MASK                 (0x0001<<6 )
+#define SEG7_SEG_D_MASK                 (0x0001<<5 )
+#define SEG7_SEG_E_MASK                 (0x0001<<4 )
+#define SEG7_SEG_F_MASK                 (0x0001<<13)
+#define SEG7_SEG_G_MASK                 (0x0001<<14)
+#define SEG7_SEG_DP_MASK                (0x0001<<7 )
+
+/* Bargraph */
+#ifdef USE_BREADBOARD
+#define D16_R_LED_INDEX                 13
+#define D16_G_LED_INDEX                 15
+#define D16_B_LED_INDEX                 14
+
+#define D15_R_LED_INDEX                 10
+#define D15_G_LED_INDEX                 12
+#define D15_B_LED_INDEX                 11
+
+#define D14_R_LED_INDEX                 3
+#define D14_G_LED_INDEX                 5
+#define D14_B_LED_INDEX                 4
+
+#define D13_R_LED_INDEX                 0
+#define D13_G_LED_INDEX                 2
+#define D13_B_LED_INDEX                 1
+#else /* USE_BREADBOARD */
+#endif /* USE_BREADBOARD */
+
+
 #define COMn                             2
 
 /**
@@ -185,9 +211,9 @@ typedef enum
 #ifdef USE_BREADBOARD
   #define PCA9952_MAIN_ADDR                     (0x60<<1)
 #else /* USE_BREADBOARD */
-  #define PCA9952_MAIN_ADDR                     0x62 
-  #define PCA9952_BAR1_ADDR                     0x60 
-  #define PCA9952_BAR2_ADDR                     0x61 
+  #define PCA9952_MAIN_ADDR                     (0x62<<1)
+  #define PCA9952_BAR1_ADDR                     (0x60<<1)
+  #define PCA9952_BAR2_ADDR                     (0x61<<1)
 #endif /* USE_BREADBOARD */
 
 #define CU_REGIME_INPUT                         0x0001
@@ -197,69 +223,217 @@ typedef enum
 #define CU_NEUTRAL_INPUT                        0x0010
 #define CU_RAPPORTp_INPUT                       0x0020
 #define CU_RAPPORTm_INPUT                       0x0040
-#define CU_P2_INPUT                             0x0080
-#define CU_P1_INPUT                             0x0100
-#define CU_RESERVED_INPUT                       0x0200
-#define CU_PALG_INPUT                           0x0400
-#define CU_PALD_INPUT                           0x0800
-#define CU_MODE0_INPUT                          0x1000
-#define CU_MODE1_INPUT                          0x2000
+#define CU_SHIFTER_INPUT                        0x0080
+#define CU_CAME_INPUT                           0x0100
+#define CU_RESERVED1_INPUT                      0x0200
+#define CU_RESERVED2_INPUT                      0x0400
+#define CU_RESERVED3_INPUT                      0x0500
+#define CU_PALG_INPUT                           0x1000
+#define CU_PALD_INPUT                           0x2000
+#define CU_MODE0_INPUT                          0x4000
+#define CU_MODE1_INPUT                          0x8000
 
-#define REGIME_INPUT_PIN                                GPIO_Pin_6
-#define REGIME_INPUT_GPIO_PORT                          GPIOC
-#define REGIME_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOC 
+#ifdef USE_BREADBOARD
+  #define REGIME_INPUT_PUPD                               GPIO_PuPd_UP 
+  #define REGIME_INPUT_PIN                                GPIO_Pin_6
+  #define REGIME_INPUT_GPIO_PORT                          GPIOC
+  #define REGIME_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOC 
 
-#define OIL_INPUT_PIN                                   GPIO_Pin_6
-#define OIL_INPUT_GPIO_PORT                             GPIOC
-#define OIL_INPUT_GPIO_CLK                              RCC_AHB1Periph_GPIOC 
+  #define OIL_INPUT_PUPD                                  GPIO_PuPd_UP 
+  #define OIL_INPUT_PIN                                   GPIO_Pin_6
+  #define OIL_INPUT_GPIO_PORT                             GPIOC
+  #define OIL_INPUT_GPIO_CLK                              RCC_AHB1Periph_GPIOC 
 
-#define EMBRAY_INPUT_PIN                                GPIO_Pin_6
-#define EMBRAY_INPUT_GPIO_PORT                          GPIOC
-#define EMBRAY_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOC 
+  #define EMBRAY_INPUT_PUPD                               GPIO_PuPd_UP 
+  #define EMBRAY_INPUT_PIN                                GPIO_Pin_6
+  #define EMBRAY_INPUT_GPIO_PORT                          GPIOC
+  #define EMBRAY_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOC 
 
-#define GAZ_INPUT_PIN                                   GPIO_Pin_6
-#define GAZ_INPUT_GPIO_PORT                             GPIOC
-#define GAZ_INPUT_GPIO_CLK                              RCC_AHB1Periph_GPIOC 
+  #define GAZ_INPUT_PUPD                                  GPIO_PuPd_UP 
+  #define GAZ_INPUT_PIN                                   GPIO_Pin_6
+  #define GAZ_INPUT_GPIO_PORT                             GPIOC
+  #define GAZ_INPUT_GPIO_CLK                              RCC_AHB1Periph_GPIOC 
 
-#define NEUTRAL_INPUT_PIN                               GPIO_Pin_10
-#define NEUTRAL_INPUT_GPIO_PORT                         GPIOB
-#define NEUTRAL_INPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOB
+  #define NEUTRAL_INPUT_PUPD                              GPIO_PuPd_UP 
+  #define NEUTRAL_INPUT_PIN                               GPIO_Pin_10
+  #define NEUTRAL_INPUT_GPIO_PORT                         GPIOB
+  #define NEUTRAL_INPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOB
 
-#define RAPPORTp_INPUT_PIN                              GPIO_Pin_6
-#define RAPPORTp_INPUT_GPIO_PORT                        GPIOC
-#define RAPPORTp_INPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+  #define RAPPORTp_INPUT_PUPD                             GPIO_PuPd_UP 
+  #define RAPPORTp_INPUT_PIN                              GPIO_Pin_6
+  #define RAPPORTp_INPUT_GPIO_PORT                        GPIOC
+  #define RAPPORTp_INPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+   
+  #define RAPPORTm_INPUT_PUPD                             GPIO_PuPd_UP 
+  #define RAPPORTm_INPUT_PIN                              GPIO_Pin_6
+  #define RAPPORTm_INPUT_GPIO_PORT                        GPIOC
+  #define RAPPORTm_INPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
 
-#define RAPPORTm_INPUT_PIN                              GPIO_Pin_6
-#define RAPPORTm_INPUT_GPIO_PORT                        GPIOC
-#define RAPPORTm_INPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+  #define SHIFTER_INPUT_PUPD                              GPIO_PuPd_UP 
+  #define SHIFTER_INPUT_PIN                               GPIO_Pin_6
+  #define SHIFTER_INPUT_GPIO_PORT                         GPIOC
+  #define SHIFTER_INPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOC 
 
-#define P2_INPUT_PIN                                    GPIO_Pin_6
-#define P2_INPUT_GPIO_PORT                              GPIOC
-#define P2_INPUT_GPIO_CLK                               RCC_AHB1Periph_GPIOC 
+  #define CAME_INPUT_PUPD                                 GPIO_PuPd_UP 
+  #define CAME_INPUT_PIN                                  GPIO_Pin_6
+  #define CAME_INPUT_GPIO_PORT                            GPIOC
+  #define CAME_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOC 
 
-#define P1_INPUT_PIN                                    GPIO_Pin_6
-#define P1_INPUT_GPIO_PORT                              GPIOC
-#define P1_INPUT_GPIO_CLK                               RCC_AHB1Periph_GPIOC 
+  #define RESERVED1_INPUT_PUPD                            GPIO_PuPd_UP 
+  #define RESERVED1_INPUT_PIN                             GPIO_Pin_6
+  #define RESERVED1_INPUT_GPIO_PORT                       GPIOC
+  #define RESERVED1_INPUT_GPIO_CLK                        RCC_AHB1Periph_GPIOC 
+  
+  #define RESERVED2_INPUT_PUPD                            GPIO_PuPd_UP 
+  #define RESERVED2_INPUT_PIN                             GPIO_Pin_6
+  #define RESERVED2_INPUT_GPIO_PORT                       GPIOC
+  #define RESERVED2_INPUT_GPIO_CLK                        RCC_AHB1Periph_GPIOC
+  
+  #define RESERVED3_INPUT_PUPD                            GPIO_PuPd_UP 
+  #define RESERVED3_INPUT_PIN                             GPIO_Pin_6
+  #define RESERVED3_INPUT_GPIO_PORT                       GPIOC
+  #define RESERVED3_INPUT_GPIO_CLK                        RCC_AHB1Periph_GPIOC
 
-#define RESERVED_INPUT_PIN                              GPIO_Pin_6
-#define RESERVED_INPUT_GPIO_PORT                        GPIOC
-#define RESERVED_INPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+  #define PALG_INPUT_PUPD                                 GPIO_PuPd_UP 
+  #define PALG_INPUT_PIN                                  GPIO_Pin_6
+  #define PALG_INPUT_GPIO_PORT                            GPIOC
+  #define PALG_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOC
 
-#define PALG_INPUT_PIN                                  GPIO_Pin_6
-#define PALG_INPUT_GPIO_PORT                            GPIOC
-#define PALG_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOC
+  #define PALD_INPUT_PUPD                                 GPIO_PuPd_UP 
+  #define PALD_INPUT_PIN                                  GPIO_Pin_0
+  #define PALD_INPUT_GPIO_PORT                            GPIOC
+  #define PALD_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOC 
 
-#define PALD_INPUT_PIN                                  GPIO_Pin_0
-#define PALD_INPUT_GPIO_PORT                            GPIOC
-#define PALD_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOC 
+  #define MODE0_INPUT_PUPD                                GPIO_PuPd_UP 
+  #define MODE0_INPUT_PIN                                 GPIO_Pin_8
+  #define MODE0_INPUT_GPIO_PORT                           GPIOC
+  #define MODE0_INPUT_GPIO_CLK                            RCC_AHB1Periph_GPIOC 
 
-#define MODE0_INPUT_PIN                                 GPIO_Pin_8
-#define MODE0_INPUT_GPIO_PORT                           GPIOC
-#define MODE0_INPUT_GPIO_CLK                            RCC_AHB1Periph_GPIOC 
+  #define MODE1_INPUT_PUPD                                GPIO_PuPd_UP 
+  #define MODE1_INPUT_PIN                                 GPIO_Pin_6              
+  #define MODE1_INPUT_GPIO_PORT                           GPIOC
+  #define MODE1_INPUT_GPIO_CLK                            RCC_AHB1Periph_GPIOC 
+   
+  #define BUT_SP_INPUT_PUPD                               GPIO_PuPd_UP 
+  #define BUT_SP_INPUT_PIN                                GPIO_Pin_6              
+  #define BUT_SP_INPUT_GPIO_PORT                          GPIOC
+  #define BUT_SP_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOC 
+   
+  #define BUT_ST_INPUT_PUPD                               GPIO_PuPd_UP
+  #define BUT_ST_INPUT_PIN                                GPIO_Pin_6              
+  #define BUT_ST_INPUT_GPIO_PORT                          GPIOC
+  #define BUT_ST_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOC 
+   
+  #define BUT_N_INPUT_PUPD                                GPIO_PuPd_UP
+  #define BUT_N_INPUT_PIN                                 GPIO_Pin_6              
+  #define BUT_N_INPUT_GPIO_PORT                           GPIOC
+  #define BUT_N_INPUT_GPIO_CLK                            RCC_AHB1Periph_GPIOC 
+   
+  #define VREG_INPUT_PUPD                                 GPIO_PuPd_NOPULL
+  #define VREG_INPUT_PIN                                  GPIO_Pin_1              
+  #define VREG_INPUT_GPIO_PORT                            GPIOB
+  #define VREG_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOB 
+#else /* USE_BREADBOARD */
+  #define REGIME_INPUT_PUPD                               GPIO_PuPd_NOPULL 
+  #define REGIME_INPUT_PIN                                GPIO_Pin_7
+  #define REGIME_INPUT_GPIO_PORT                          GPIOC
+  #define REGIME_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOC 
 
-#define MODE1_INPUT_PIN                                 GPIO_Pin_6              
-#define MODE1_INPUT_GPIO_PORT                           GPIOC
-#define MODE1_INPUT_GPIO_CLK                            RCC_AHB1Periph_GPIOC 
+  #define OIL_INPUT_PUPD                                  GPIO_PuPd_NOPULL 
+  #define OIL_INPUT_PIN                                   GPIO_Pin_14
+  #define OIL_INPUT_GPIO_PORT                             GPIOB
+  #define OIL_INPUT_GPIO_CLK                              RCC_AHB1Periph_GPIOB 
+
+  #define EMBRAY_INPUT_PUPD                               GPIO_PuPd_NOPULL 
+  #define EMBRAY_INPUT_PIN                                GPIO_Pin_15
+  #define EMBRAY_INPUT_GPIO_PORT                          GPIOB
+  #define EMBRAY_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOB 
+
+  #define GAZ_INPUT_PUPD                                  GPIO_PuPd_NOPULL 
+  #define GAZ_INPUT_PIN                                   GPIO_Pin_3
+  #define GAZ_INPUT_GPIO_PORT                             GPIOC
+  #define GAZ_INPUT_GPIO_CLK                              RCC_AHB1Periph_GPIOC 
+
+  #define NEUTRAL_INPUT_PUPD                              GPIO_PuPd_NOPULL 
+  #define NEUTRAL_INPUT_PIN                               GPIO_Pin_6
+  #define NEUTRAL_INPUT_GPIO_PORT                         GPIOC
+  #define NEUTRAL_INPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOC
+
+  #define RAPPORTp_INPUT_PUPD                             GPIO_PuPd_NOPULL 
+  #define RAPPORTp_INPUT_PIN                              GPIO_Pin_4
+  #define RAPPORTp_INPUT_GPIO_PORT                        GPIOA
+  #define RAPPORTp_INPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOA
+
+  #define RAPPORTm_INPUT_PUPD                             GPIO_PuPd_NOPULL 
+  #define RAPPORTm_INPUT_PIN                              GPIO_Pin_1
+  #define RAPPORTm_INPUT_GPIO_PORT                        GPIOA
+  #define RAPPORTm_INPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOA 
+
+  #define SHIFTER_INPUT_PUPD                              GPIO_PuPd_NOPULL 
+  #define SHIFTER_INPUT_PIN                               GPIO_Pin_12
+  #define SHIFTER_INPUT_GPIO_PORT                         GPIOB
+  #define SHIFTER_INPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOB 
+
+  #define CAME_INPUT_PUPD                                 GPIO_PuPd_NOPULL 
+  #define CAME_INPUT_PIN                                  GPIO_Pin_13
+  #define CAME_INPUT_GPIO_PORT                            GPIOB
+  #define CAME_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOB
+
+  #define RESERVED1_INPUT_PUPD                            GPIO_PuPd_NOPULL 
+  #define RESERVED1_INPUT_PIN                             GPIO_Pin_5
+  #define RESERVED1_INPUT_GPIO_PORT                       GPIOA
+  #define RESERVED1_INPUT_GPIO_CLK                        RCC_AHB1Periph_GPIOA
+  
+  #define RESERVED2_INPUT_PUPD                            GPIO_PuPd_NOPULL 
+  #define RESERVED2_INPUT_PIN                             GPIO_Pin_6
+  #define RESERVED2_INPUT_GPIO_PORT                       GPIOA
+  #define RESERVED2_INPUT_GPIO_CLK                        RCC_AHB1Periph_GPIOA
+  
+  #define RESERVED3_INPUT_PUPD                            GPIO_PuPd_NOPULL 
+  #define RESERVED3_INPUT_PIN                             GPIO_Pin_2
+  #define RESERVED3_INPUT_GPIO_PORT                       GPIOA
+  #define RESERVED3_INPUT_GPIO_CLK                        RCC_AHB1Periph_GPIOA
+
+  #define PALG_INPUT_PUPD                                 GPIO_PuPd_NOPULL 
+  #define PALG_INPUT_PIN                                  GPIO_Pin_8
+  #define PALG_INPUT_GPIO_PORT                            GPIOA
+  #define PALG_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOA
+
+  #define PALD_INPUT_PUPD                                 GPIO_PuPd_NOPULL 
+  #define PALD_INPUT_PIN                                  GPIO_Pin_0
+  #define PALD_INPUT_GPIO_PORT                            GPIOC
+  #define PALD_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOC 
+
+  #define MODE0_INPUT_PUPD                                GPIO_PuPd_NOPULL 
+  #define MODE0_INPUT_PIN                                 GPIO_Pin_8
+  #define MODE0_INPUT_GPIO_PORT                           GPIOC
+  #define MODE0_INPUT_GPIO_CLK                            RCC_AHB1Periph_GPIOC 
+
+  #define MODE1_INPUT_PUPD                                GPIO_PuPd_NOPULL 
+  #define MODE1_INPUT_PIN                                 GPIO_Pin_9              
+  #define MODE1_INPUT_GPIO_PORT                           GPIOC
+  #define MODE1_INPUT_GPIO_CLK                            RCC_AHB1Periph_GPIOC  
+   
+  #define BUT_SP_INPUT_PUPD                               GPIO_PuPd_NOPULL 
+  #define BUT_SP_INPUT_PIN                                GPIO_Pin_2              
+  #define BUT_SP_INPUT_GPIO_PORT                          GPIOC
+  #define BUT_SP_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOC 
+   
+  #define BUT_ST_INPUT_PUPD                               GPIO_PuPd_DOWN
+  #define BUT_ST_INPUT_PIN                                GPIO_Pin_5              
+  #define BUT_ST_INPUT_GPIO_PORT                          GPIOC
+  #define BUT_ST_INPUT_GPIO_CLK                           RCC_AHB1Periph_GPIOC 
+   
+  #define BUT_N_INPUT_PUPD                                GPIO_PuPd_NOPULL
+  #define BUT_N_INPUT_PIN                                 GPIO_Pin_1              
+  #define BUT_N_INPUT_GPIO_PORT                           GPIOC
+  #define BUT_N_INPUT_GPIO_CLK                            RCC_AHB1Periph_GPIOC 
+   
+  #define VREG_INPUT_PUPD                                 GPIO_PuPd_NOPULL
+  #define VREG_INPUT_PIN                                  GPIO_Pin_1              
+  #define VREG_INPUT_GPIO_PORT                            GPIOB
+  #define VREG_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOB 
+#endif /* USE_BREADBOARD */
 
 /* when using breadboard, MOTEURm_OUTPUT_PIN=DIR, MOTEURp_OUTPUT_PIN=EN */
 #ifdef USE_BREADBOARD
@@ -271,6 +445,10 @@ typedef enum
   #define MOTEURp_OUTPUT_GPIO_PORT                        GPIOC
   #define MOTEURp_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
 
+  #define STOP_OUTPUT_PIN                               GPIO_Pin_2              
+  #define STOP_OUTPUT_GPIO_PORT                         GPIOD
+  #define STOP_OUTPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOD 
+
 #else /* USE_BREADBOARD */
   #define MOTEURm_OUTPUT_PIN                              GPIO_Pin_0
   #define MOTEURm_OUTPUT_GPIO_PORT                        GPIOB
@@ -279,6 +457,10 @@ typedef enum
   #define MOTEURp_OUTPUT_PIN                              GPIO_Pin_4              
   #define MOTEURp_OUTPUT_GPIO_PORT                        GPIOC
   #define MOTEURp_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+   
+  #define STOP_OUTPUT_PIN                               GPIO_Pin_4              
+  #define STOP_OUTPUT_GPIO_PORT                         GPIOC
+  #define STOP_OUTPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOC 
 #endif /* USE_BREADBOARD */
 
 

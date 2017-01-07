@@ -309,6 +309,8 @@
           <state>$PROJ_DIR$\..\..\Utilities\CU\ADC</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\ITS</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\GEAR</state>
+          <state>$PROJ_DIR$\..\..\Utilities\CU\SEG7</state>
+          <state>$PROJ_DIR$\..\..\Utilities\CU\LEDbuffer</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\timer</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common\CLI</state>
@@ -1969,6 +1971,24 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\Utilities\CU\ITS\internal_temp_sensor.h</name>
+      </file>
+    </group>
+    <group>
+      <name>LEDbuffer</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\LEDbuffer\ledbuffer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\LEDbuffer\ledbuffer.h</name>
+      </file>
+    </group>
+    <group>
+      <name>SEG7</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\SEG7\SEG7.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\SEG7\SEG7.h</name>
       </file>
     </group>
     <group>

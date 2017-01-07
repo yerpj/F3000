@@ -364,82 +364,135 @@ uint8_t CU_IOInit(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
   
-  /* INPUTS */
+  /* DIGITAL INPUTS *********************************************/
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   
   //-->REGIME_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = REGIME_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(REGIME_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =REGIME_INPUT_PIN;
   GPIO_Init(REGIME_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
   //-->OIL_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = OIL_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(OIL_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =OIL_INPUT_PIN;
   GPIO_Init(OIL_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
   //-->EMBRAY_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = EMBRAY_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(EMBRAY_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =EMBRAY_INPUT_PIN;
   GPIO_Init(EMBRAY_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
   //-->GAZ_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = GAZ_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(GAZ_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =GAZ_INPUT_PIN;
   GPIO_Init(GAZ_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
   //-->NEUTRAL_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = NEUTRAL_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(NEUTRAL_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =NEUTRAL_INPUT_PIN;
   GPIO_Init(NEUTRAL_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
   //-->RAPPORTp_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = RAPPORTp_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(RAPPORTp_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =RAPPORTp_INPUT_PIN;
   GPIO_Init(RAPPORTp_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
   //-->RAPPORTm_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = RAPPORTm_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(RAPPORTm_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =RAPPORTm_INPUT_PIN;
   GPIO_Init(RAPPORTm_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
-  //-->P2_INPUT_PIN
-  RCC_AHB1PeriphClockCmd(P2_INPUT_GPIO_CLK, ENABLE);
-  GPIO_InitStructure.GPIO_Pin =P2_INPUT_PIN;
-  GPIO_Init(P2_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  //-->SHIFTER_INPUT_PIN        formerly P2
+  GPIO_InitStructure.GPIO_PuPd = SHIFTER_INPUT_PUPD;
+  RCC_AHB1PeriphClockCmd(SHIFTER_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =SHIFTER_INPUT_PIN;
+  GPIO_Init(SHIFTER_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
-  //-->P1_INPUT_PIN
-  RCC_AHB1PeriphClockCmd(P1_INPUT_GPIO_CLK, ENABLE);
-  GPIO_InitStructure.GPIO_Pin =P1_INPUT_PIN;
-  GPIO_Init(P1_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  //-->CAME_INPUT_PIN        formerly P1
+  GPIO_InitStructure.GPIO_PuPd = CAME_INPUT_PUPD;
+  RCC_AHB1PeriphClockCmd(CAME_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =CAME_INPUT_PIN;
+  GPIO_Init(CAME_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
-  //-->RESERVED_INPUT_PIN
-  RCC_AHB1PeriphClockCmd(RESERVED_INPUT_GPIO_CLK, ENABLE);
-  GPIO_InitStructure.GPIO_Pin =RESERVED_INPUT_PIN;
-  GPIO_Init(RESERVED_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  //-->RESERVED1_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = RESERVED1_INPUT_PUPD;
+  RCC_AHB1PeriphClockCmd(RESERVED1_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =RESERVED1_INPUT_PIN;
+  GPIO_Init(RESERVED1_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->RESERVED2_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = RESERVED2_INPUT_PUPD;
+  RCC_AHB1PeriphClockCmd(RESERVED2_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =RESERVED2_INPUT_PIN;
+  GPIO_Init(RESERVED2_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->RESERVED3_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = RESERVED3_INPUT_PUPD;
+  RCC_AHB1PeriphClockCmd(RESERVED3_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =RESERVED3_INPUT_PIN;
+  GPIO_Init(RESERVED3_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
   //-->PALG_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = PALG_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(PALG_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =PALG_INPUT_PIN;
   GPIO_Init(PALG_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
   //-->PALD_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = PALD_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(PALD_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =PALD_INPUT_PIN;
   GPIO_Init(PALD_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
   //-->MODE0_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = MODE0_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(MODE0_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =MODE0_INPUT_PIN;
   GPIO_Init(MODE0_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
   //-->MODE1_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = MODE1_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(MODE1_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =MODE1_INPUT_PIN;
   GPIO_Init(MODE1_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
-  /* OUTPUTS */
+  //-->BUT_SP_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = BUT_SP_INPUT_PUPD;
+  RCC_AHB1PeriphClockCmd(BUT_ST_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =BUT_SP_INPUT_PIN;
+  GPIO_Init(BUT_SP_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->BUT_ST_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  RCC_AHB1PeriphClockCmd(MODE1_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =BUT_ST_INPUT_PIN;
+  GPIO_Init(BUT_ST_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->BUT_N_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = BUT_N_INPUT_PUPD;
+  RCC_AHB1PeriphClockCmd(BUT_N_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =BUT_N_INPUT_PIN;
+  GPIO_Init(BUT_N_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  /* ANALOG INPUT ********************************************/
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  
+  //-->VREG_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = VREG_INPUT_PUPD;
+  RCC_AHB1PeriphClockCmd(VREG_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =VREG_INPUT_PIN;
+  GPIO_Init(VREG_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  /* OUTPUTS **************************************************/
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
   GPIO_InitStructure.GPIO_OType= GPIO_OType_PP;
@@ -454,7 +507,17 @@ uint8_t CU_IOInit(void)
   RCC_AHB1PeriphClockCmd(MOTEURp_OUTPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =MOTEURp_OUTPUT_PIN;
   GPIO_Init(MOTEURp_OUTPUT_GPIO_PORT, &GPIO_InitStructure);
-
+  
+  //-->MOTEURm_OUTPUT_PIN
+  RCC_AHB1PeriphClockCmd(MOTEURm_OUTPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =MOTEURm_OUTPUT_PIN;
+  GPIO_Init(MOTEURm_OUTPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  //-->MOTEURp_OUTPUT_PIN
+  RCC_AHB1PeriphClockCmd(MOTEURp_OUTPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =MOTEURp_OUTPUT_PIN;
+  GPIO_Init(MOTEURp_OUTPUT_GPIO_PORT, &GPIO_InitStructure);
+  return 0;
 }
 
 uint16_t CU_ReadInputsRaw(void)
@@ -482,14 +545,20 @@ uint16_t CU_ReadInputsRaw(void)
   if(GPIO_ReadInputDataBit(RAPPORTm_INPUT_GPIO_PORT,RAPPORTm_INPUT_PIN))
     InputMask |= CU_RAPPORTm_INPUT;   
   
-  if(GPIO_ReadInputDataBit(P2_INPUT_GPIO_PORT,P2_INPUT_PIN))
-    InputMask |= CU_P2_INPUT;   
+  if(GPIO_ReadInputDataBit(CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN))
+    InputMask |= CU_CAME_INPUT;   
   
-  if(GPIO_ReadInputDataBit(P1_INPUT_GPIO_PORT,P1_INPUT_PIN))
-    InputMask |= CU_P1_INPUT;   
+  if(GPIO_ReadInputDataBit(CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN))
+    InputMask |= CU_CAME_INPUT;   
   
-  if(GPIO_ReadInputDataBit(RESERVED_INPUT_GPIO_PORT,RESERVED_INPUT_PIN))
-    InputMask |= CU_RESERVED_INPUT;   
+  if(GPIO_ReadInputDataBit(RESERVED1_INPUT_GPIO_PORT,RESERVED1_INPUT_PIN))
+    InputMask |= CU_RESERVED1_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(RESERVED2_INPUT_GPIO_PORT,RESERVED2_INPUT_PIN))
+    InputMask |= CU_RESERVED2_INPUT;   
+  
+  if(GPIO_ReadInputDataBit(RESERVED3_INPUT_GPIO_PORT,RESERVED3_INPUT_PIN))
+    InputMask |= CU_RESERVED3_INPUT;   
   
   if(GPIO_ReadInputDataBit(PALG_INPUT_GPIO_PORT,PALG_INPUT_PIN))
     InputMask |= CU_PALG_INPUT;   

@@ -3,12 +3,15 @@
 
 extern I2C_TypeDef *I2C_PERIPH[];
 
+uint8_t I2CInUse=0;
+
 
 uint8_t PCA9952_Init(I2C_List_Typedef I2Cx,uint8_t devAddr)
 {
   uint8_t tmp;
   I2C_Driver_Init(I2Cx);
     
+  I2CInUse=I2Cx;
   //software reset
   
   //verify MODE2==0x05 
@@ -30,7 +33,7 @@ uint8_t PCA9952_Init(I2C_List_Typedef I2Cx,uint8_t devAddr)
   //PCA9952_LED_Control(devAddr,0x2409);
   //PCA9952_LED_Control(devAddr,0x2409<<1);
   //PCA9952_LED_Control(devAddr,0x2409<<2);
-  
+  return 0;
 }
 
 uint8_t PCA9952_LED_Control(uint8_t DevAddr,uint16_t mask)
@@ -45,7 +48,10 @@ uint8_t PCA9952_LED_Control(uint8_t DevAddr,uint16_t mask)
       values[i]=0x00;
   }
   if(PCA9952_write_burst(DevAddr,REG_PWM0,values,16))
+  {
+    I2C_abort_transaction(I2CInUse);
     return 1;
+  }
   return 0;
 }
 

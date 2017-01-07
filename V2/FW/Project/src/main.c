@@ -67,30 +67,59 @@ void F3000_Periodic(void * pvParameters)
   }
 }
 
-uint16_t ledCB(void)
-{
-  CU_LEDOff(LED_BLUE);
-}
+EventGroupHandle_t Gear_EventGroup;
 
 void F3000_App(void * pvParameters)
 {
+  uint8_t err=0;
+  uint8_t i=0;
   uint16_t Inputs=0;
-  while(1)
+  
+  Gear_EventGroup=xEventGroupCreate();
+  if(Gear_EventGroup==NULL)
+    err++;
+  
+  while(!err)
   {
-    //CU_LEDOn(LED_BLUE);
-    //timer_set_alarm_us(1,50000,ledCB);
-    Inputs=CU_ReadInputsRaw();
-    if(PCA9952_LED_Control(PCA9952_MAIN_ADDR,Inputs))
-      I2C_abort_transaction(BUS_I2C3);
-    gear_increase();
+    if(GPIO_ReadInputDataBit(NEUTRAL_INPUT_GPIO_PORT,NEUTRAL_INPUT_PIN))
+    {
+      LEDbuffer_MaskSet(0x01<<D13_G_LED_INDEX | 
+                        0x01<<D14_G_LED_INDEX | 
+                        0x01<<D15_G_LED_INDEX | 
+                        0x01<<D16_G_LED_INDEX  );
+      LEDbuffer_MaskReset(0x01<<D13_B_LED_INDEX |
+                          0x01<<D14_B_LED_INDEX |
+                          0x01<<D15_B_LED_INDEX |
+                          0x01<<D16_B_LED_INDEX  );
+    }
+    else
+    {
+      LEDbuffer_ResetBit(D13_G_LED_INDEX);
+      LEDbuffer_ResetBit(D14_G_LED_INDEX);
+      LEDbuffer_ResetBit(D15_G_LED_INDEX);
+      LEDbuffer_ResetBit(D16_G_LED_INDEX);
+      LEDbuffer_SetBit(D13_B_LED_INDEX);
+      LEDbuffer_SetBit(D14_B_LED_INDEX);
+      LEDbuffer_SetBit(D15_B_LED_INDEX);
+      LEDbuffer_SetBit(D16_B_LED_INDEX);
+    }
+    LEDbuffer_refresh();
+    LEDbuffer_refresh();
+   
+    /*gear_increase();
     while(gear_isMoving())
       vTaskDelay(50);
     vTaskDelay(1000);
     gear_decrease();
     while(gear_isMoving())
-      vTaskDelay(50);
+      vTaskDelay(50);*/
+    SEG7_Set(i++);
+    if(i>8)
+      i=0;
     vTaskDelay(1000);
   }
+  while(1)
+    vTaskDelay(1000);
 }
 
 uint8_t F3000CLIInterpreter(uint8_t *raw)
@@ -111,6 +140,20 @@ uint8_t F3000CLIInterpreter(uint8_t *raw)
     CLI_Output("Rebooting... Please unconnect and reconnect Bluetooth app");
     vTaskDelay(2000);
     NVIC_SystemReset();
+  }
+  else if(strstr(cmd,"GEAR -s UP")>0)
+  {
+    gear_increase();
+    while(gear_isMoving())
+      vTaskDelay(50);
+    CLI_Output("GEAR: OK");
+  }
+  else if(strstr(cmd,"GEAR -s DOWN")>0)
+  {
+    gear_decrease();
+    while(gear_isMoving())
+      vTaskDelay(50);
+    CLI_Output("GEAR: OK");
   }
   else
   {

@@ -12,6 +12,7 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h" 
+#include "event_groups.h"
 
 #include "commonDefs.h"
 #include "commontypes.h"
@@ -26,5 +27,7 @@
 #include "gear.h"
 #include "timer.h"
 #include "STBT.h"
+#include "ledbuffer.h"
+#include "SEG7.h"
 
 #endif /* __MAIN_H */

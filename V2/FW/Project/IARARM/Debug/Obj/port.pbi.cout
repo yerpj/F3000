@@ -18,6 +18,10 @@ C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\CU\GEAR
 -I
+C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\CU\SEG7
+-I
+C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\CU\LEDbuffer
+-I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\CU\timer
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Project\IARARM\..\..\Utilities\Common
@@ -65,6 +69,10 @@ C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\CU\ADC
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\CU\ITS
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\CU\GEAR
+-I
+C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\CU\SEG7
+-I
+C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\CU\LEDbuffer
 -I
 C:\Users\jeanphil.rey\Documents\JP\Perso\F3000\F3000git\V2\FW\Utilities\CU\timer
 -I
@@ -291,8 +299,8 @@ C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\CMSIS\Include
 -D__HAS_LOCATED_DECLARATION__=1
 -D__HAS_LOCATED_WITH_INIT__=1
 -D__IAR_COMPILERBASE__=593164
--D__DATE__="Jan  2 2017"
--D__TIME__="16:06:06"
+-D__DATE__="Jan  7 2017"
+-D__TIME__="15:20:31"
 -D__STDC__=1
 -D__STDC_VERSION__=199901L
 -D__STDC_HOSTED__=1
