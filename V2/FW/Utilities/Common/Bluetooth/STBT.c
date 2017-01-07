@@ -39,7 +39,7 @@ void STBT_Init(COM_TypeDef SerialCOM)
   vSemaphoreCreateBinary(BT_UART_sem);
   BT_UART_RX_Queue = xQueueCreate( 50, sizeof( uint8_t ) );
 
-  xTaskCreate(STBT_Task, "BlueTooth", 5*configMINIMAL_STACK_SIZE, NULL, 5, NULL);
+  xTaskCreate(STBT_Task, "BlueTooth", 5*configMINIMAL_STACK_SIZE, NULL, 9, NULL);
 }
 
 void STBT_Send(uint8_t *str)

@@ -25,21 +25,11 @@
 #include "stm32f2xx_it.h"
 #include "main.h"
 
-/* Scheduler includes */
-
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "semphr.h" 
-
-
-
-    
 
 
 /* Private function prototypes -----------------------------------------------*/
 extern void xPortSysTickHandler(void); 
-
+//extern EventGroupHandle_t CU_Inputs_EventGroup;
 extern uint16_t (*Timer2_OC_Ch1_callback)(void);
 extern uint16_t (*Timer2_OC_Ch2_callback)(void);
 extern uint16_t (*Timer2_OC_Ch3_callback)(void);
@@ -273,6 +263,46 @@ void TIM2_IRQHandler()
     TIM_SetCounter(TIM2,0);
   }
 }
+
+#ifdef USE_BREADBOARD
+void EXTI15_10_IRQHandler()
+{
+  BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+  if(EXTI_GetITStatus(NEUTRAL_INPUT_EXTI_LINE) != RESET)
+  {
+    if(CU_Inputs_EventGroup!=NULL)
+    {
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,
+                                  CU_INPUT_EVENT_NEUTRAL_BIT,
+                                  &xHigherPriorityTaskWoken);
+    }
+    EXTI_ClearITPendingBit(NEUTRAL_INPUT_EXTI_LINE);
+  }
+  if(EXTI_GetITStatus(CAME_INPUT_EXTI_LINE) != RESET)
+  {
+    if(CU_Inputs_EventGroup!=NULL)
+    {
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_CAME_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,
+                                  CU_INPUT_EVENT_CAME_BIT,
+                                  &xHigherPriorityTaskWoken);
+    }
+    EXTI_ClearITPendingBit(CAME_INPUT_EXTI_LINE);
+  }
+}
+
+void EXTI9_5_IRQHandler()
+{
+  BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+  if(EXTI_GetITStatus(EXTI_Line6) != RESET)
+  {
+    EXTI_ClearITPendingBit(EXTI_Line6);
+  }
+}
+#else /* USE_BREADBOARD */
+
+#endif /* USE_BREADBOARD */
 
 
 

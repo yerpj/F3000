@@ -363,7 +363,18 @@ void I2C_Bus_Init(I2C_List_Typedef I2Cx)
 uint8_t CU_IOInit(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
+  EXTI_InitTypeDef EXTI_InitStructure;
+  NVIC_InitTypeDef NVIC_InitStructure;
   
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+  
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 11;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 11;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  
+  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+    
   /* DIGITAL INPUTS *********************************************/
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -374,11 +385,29 @@ uint8_t CU_IOInit(void)
   GPIO_InitStructure.GPIO_Pin =REGIME_INPUT_PIN;
   GPIO_Init(REGIME_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
+  //SYSCFG_EXTILineConfig(REGIME_INPUT_EXTI_PORT_SOURCE,REGIME_INPUT_EXTI_PIN_SOURCE);
+  /* Configure Button EXTI line */
+  EXTI_InitStructure.EXTI_Line = REGIME_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  //EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = REGIME_INPUT_EXTI_IRQn;
+  NVIC_Init(&NVIC_InitStructure);   
+  
   //-->OIL_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = OIL_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(OIL_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =OIL_INPUT_PIN;
   GPIO_Init(OIL_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  SYSCFG_EXTILineConfig(OIL_INPUT_EXTI_PORT_SOURCE,OIL_INPUT_EXTI_PIN_SOURCE);
+  /* Configure Button EXTI line */
+  EXTI_InitStructure.EXTI_Line = OIL_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  //EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = OIL_INPUT_EXTI_IRQn;
+  //NVIC_Init(&NVIC_InitStructure); 
   
   //-->EMBRAY_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = EMBRAY_INPUT_PUPD;
@@ -386,11 +415,29 @@ uint8_t CU_IOInit(void)
   GPIO_InitStructure.GPIO_Pin =EMBRAY_INPUT_PIN;
   GPIO_Init(EMBRAY_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
+  SYSCFG_EXTILineConfig(EMBRAY_INPUT_EXTI_PORT_SOURCE,EMBRAY_INPUT_EXTI_PIN_SOURCE);
+  /* Configure Button EXTI line */
+  EXTI_InitStructure.EXTI_Line = EMBRAY_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  //EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = EMBRAY_INPUT_EXTI_IRQn;
+  //NVIC_Init(&NVIC_InitStructure);   
+  
   //-->GAZ_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = GAZ_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(GAZ_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =GAZ_INPUT_PIN;
   GPIO_Init(GAZ_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  SYSCFG_EXTILineConfig(GAZ_INPUT_EXTI_PORT_SOURCE,GAZ_INPUT_EXTI_PIN_SOURCE);
+  /* Configure Button EXTI line */
+  EXTI_InitStructure.EXTI_Line = GAZ_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  //EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = GAZ_INPUT_EXTI_IRQn;
+  //NVIC_Init(&NVIC_InitStructure);
   
   //-->NEUTRAL_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = NEUTRAL_INPUT_PUPD;
@@ -398,11 +445,29 @@ uint8_t CU_IOInit(void)
   GPIO_InitStructure.GPIO_Pin =NEUTRAL_INPUT_PIN;
   GPIO_Init(NEUTRAL_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
+  SYSCFG_EXTILineConfig(NEUTRAL_INPUT_EXTI_PORT_SOURCE,NEUTRAL_INPUT_EXTI_PIN_SOURCE);
+  /* Configure Button EXTI line */
+  EXTI_InitStructure.EXTI_Line = NEUTRAL_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  //EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = NEUTRAL_INPUT_EXTI_IRQn;
+  //NVIC_Init(&NVIC_InitStructure);   
+  
   //-->RAPPORTp_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = RAPPORTp_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(RAPPORTp_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =RAPPORTp_INPUT_PIN;
   GPIO_Init(RAPPORTp_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  SYSCFG_EXTILineConfig(RAPPORTp_INPUT_EXTI_PORT_SOURCE,RAPPORTp_INPUT_EXTI_PIN_SOURCE);
+  /* Configure Button EXTI line */
+  EXTI_InitStructure.EXTI_Line = RAPPORTp_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  //EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = RAPPORTp_INPUT_EXTI_IRQn;
+  //NVIC_Init(&NVIC_InitStructure);
   
   //-->RAPPORTm_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = RAPPORTm_INPUT_PUPD;
@@ -410,17 +475,44 @@ uint8_t CU_IOInit(void)
   GPIO_InitStructure.GPIO_Pin =RAPPORTm_INPUT_PIN;
   GPIO_Init(RAPPORTm_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
+  SYSCFG_EXTILineConfig(RAPPORTm_INPUT_EXTI_PORT_SOURCE,RAPPORTm_INPUT_EXTI_PIN_SOURCE);
+  /* Configure Button EXTI line */
+  EXTI_InitStructure.EXTI_Line = RAPPORTm_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  //EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = RAPPORTm_INPUT_EXTI_IRQn;
+  //NVIC_Init(&NVIC_InitStructure);
+  
   //-->SHIFTER_INPUT_PIN        formerly P2
   GPIO_InitStructure.GPIO_PuPd = SHIFTER_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(SHIFTER_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =SHIFTER_INPUT_PIN;
   GPIO_Init(SHIFTER_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
+  SYSCFG_EXTILineConfig(SHIFTER_INPUT_EXTI_PORT_SOURCE,SHIFTER_INPUT_EXTI_PIN_SOURCE);
+  /* Configure Button EXTI line */
+  EXTI_InitStructure.EXTI_Line = SHIFTER_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  //EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = SHIFTER_INPUT_EXTI_IRQn;
+  //NVIC_Init(&NVIC_InitStructure);
+  
   //-->CAME_INPUT_PIN        formerly P1
   GPIO_InitStructure.GPIO_PuPd = CAME_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(CAME_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =CAME_INPUT_PIN;
   GPIO_Init(CAME_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  SYSCFG_EXTILineConfig(CAME_INPUT_EXTI_PORT_SOURCE,CAME_INPUT_EXTI_PIN_SOURCE);
+  /* Configure Button EXTI line */
+  EXTI_InitStructure.EXTI_Line = CAME_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = CAME_INPUT_EXTI_IRQn;
+  NVIC_Init(&NVIC_InitStructure); 
   
   //-->RESERVED1_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = RESERVED1_INPUT_PUPD;
@@ -446,11 +538,29 @@ uint8_t CU_IOInit(void)
   GPIO_InitStructure.GPIO_Pin =PALG_INPUT_PIN;
   GPIO_Init(PALG_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
+  SYSCFG_EXTILineConfig(PALG_INPUT_EXTI_PORT_SOURCE,PALG_INPUT_EXTI_PIN_SOURCE);
+  /* Configure Button EXTI line */
+  EXTI_InitStructure.EXTI_Line = PALG_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
+  //EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = PALG_INPUT_EXTI_IRQn;
+  //NVIC_Init(&NVIC_InitStructure);   
+  
   //-->PALD_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = PALD_INPUT_PUPD;
   RCC_AHB1PeriphClockCmd(PALD_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =PALD_INPUT_PIN;
   GPIO_Init(PALD_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
+  SYSCFG_EXTILineConfig(PALD_INPUT_EXTI_PORT_SOURCE,PALD_INPUT_EXTI_PIN_SOURCE);
+  /* Configure Button EXTI line */
+  EXTI_InitStructure.EXTI_Line = PALD_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
+  //EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = PALD_INPUT_EXTI_IRQn;
+  //NVIC_Init(&NVIC_InitStructure); 
   
   //-->MODE0_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = MODE0_INPUT_PUPD;

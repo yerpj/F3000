@@ -1,4 +1,5 @@
 #include "gear.h"
+#include "CU.h"
 
 
 uint8_t gear_current_pos=gear_pos_lost;
@@ -6,8 +7,11 @@ uint8_t gear_moving=0;
 
 uint8_t gear_increase(void)
 {
+  xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
   gear_up();
-  setSysTick_Delay_Timer(1000,gear_stop);
+  xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdTRUE,5000);
+  gear_stop();
+  //setSysTick_Delay_Timer(1000,gear_stop);
   return 0;
 }
 

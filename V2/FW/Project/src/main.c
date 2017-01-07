@@ -67,7 +67,7 @@ void F3000_Periodic(void * pvParameters)
   }
 }
 
-EventGroupHandle_t Gear_EventGroup;
+EventGroupHandle_t CU_Inputs_EventGroup;
 
 void F3000_App(void * pvParameters)
 {
@@ -75,8 +75,8 @@ void F3000_App(void * pvParameters)
   uint8_t i=0;
   uint16_t Inputs=0;
   
-  Gear_EventGroup=xEventGroupCreate();
-  if(Gear_EventGroup==NULL)
+  CU_Inputs_EventGroup=xEventGroupCreate();
+  if(CU_Inputs_EventGroup==NULL)
     err++;
   
   while(!err)
@@ -116,7 +116,7 @@ void F3000_App(void * pvParameters)
     SEG7_Set(i++);
     if(i>8)
       i=0;
-    vTaskDelay(1000);
+    vTaskDelay(50);
   }
   while(1)
     vTaskDelay(1000);

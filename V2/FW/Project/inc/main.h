@@ -13,6 +13,7 @@
 #include "queue.h"
 #include "semphr.h" 
 #include "event_groups.h"
+extern EventGroupHandle_t CU_Inputs_EventGroup;
 
 #include "commonDefs.h"
 #include "commontypes.h"
