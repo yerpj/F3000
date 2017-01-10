@@ -268,39 +268,161 @@ void TIM2_IRQHandler()
 void EXTI15_10_IRQHandler()
 {
   BaseType_t xHigherPriorityTaskWoken=pdFALSE;
-  if(EXTI_GetITStatus(NEUTRAL_INPUT_EXTI_LINE) != RESET)
-  {
-    if(CU_Inputs_EventGroup!=NULL)
-    {
+  
+  if(EXTI_GetITStatus(NEUTRAL_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
       if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT) ==RESET)
-        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,
-                                  CU_INPUT_EVENT_NEUTRAL_BIT,
-                                  &xHigherPriorityTaskWoken);
-    }
-    EXTI_ClearITPendingBit(NEUTRAL_INPUT_EXTI_LINE);
-  }
-  if(EXTI_GetITStatus(CAME_INPUT_EXTI_LINE) != RESET)
-  {
-    if(CU_Inputs_EventGroup!=NULL)
-    {
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(NEUTRAL_INPUT_EXTI_LINE);}
+  
+  if(EXTI_GetITStatus(CAME_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
       if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_CAME_BIT) ==RESET)
-        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,
-                                  CU_INPUT_EVENT_CAME_BIT,
-                                  &xHigherPriorityTaskWoken);
-    }
-    EXTI_ClearITPendingBit(CAME_INPUT_EXTI_LINE);
-  }
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(CAME_INPUT_EXTI_LINE);}
 }
 
 void EXTI9_5_IRQHandler()
 {
   BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+  
   if(EXTI_GetITStatus(EXTI_Line6) != RESET)
   {
     EXTI_ClearITPendingBit(EXTI_Line6);
   }
 }
 #else /* USE_BREADBOARD */
+void EXTI15_10_IRQHandler()
+{
+  BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+  
+  //Shifter: PB12
+  if(EXTI_GetITStatus(SHIFTER_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_SHIFTER_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_SHIFTER_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(SHIFTER_INPUT_EXTI_LINE);}
+  
+  //Came: PB13
+  if(EXTI_GetITStatus(CAME_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_CAME_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(CAME_INPUT_EXTI_LINE);}
+  
+  //Oil: PB14
+  if(EXTI_GetITStatus(OIL_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_OIL_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_OIL_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(OIL_INPUT_EXTI_LINE);}
+  
+  //Embray: PB15
+  if(EXTI_GetITStatus(EMBRAY_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_EMBRAY_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_EMBRAY_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(EMBRAY_INPUT_EXTI_LINE);}
+}
+
+void EXTI9_5_IRQHandler()
+{
+  BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+  
+  //Reserved1: PA5
+  if(EXTI_GetITStatus(RESERVED1_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RESERVED1_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_RESERVED1_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(RESERVED1_INPUT_EXTI_LINE);}
+  
+  //Reserved2: PA6//conflict with Neutre, do not activate interrupt on this line!
+  if(EXTI_GetITStatus(RESERVED2_INPUT_EXTI_LINE) != RESET){
+    /*if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RESERVED2_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_RESERVED2_BIT,&xHigherPriorityTaskWoken);}*/
+    EXTI_ClearITPendingBit(RESERVED2_INPUT_EXTI_LINE);}
+  
+  //Neutral: PC6
+  if(EXTI_GetITStatus(NEUTRAL_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(NEUTRAL_INPUT_EXTI_LINE);}
+  
+  //Regime: PC7
+  if(EXTI_GetITStatus(REGIME_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_REGIME_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_REGIME_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(REGIME_INPUT_EXTI_LINE);}
+  
+  //PAL_g: PA8
+  if(EXTI_GetITStatus(PALG_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_PALG_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_PALG_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(PALG_INPUT_EXTI_LINE);}
+}
+void EXTI4_IRQHandler() 
+{
+  BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+  
+  //Rapport+: PA4
+  if(EXTI_GetITStatus(RAPPORTp_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RAPPORTp_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(RAPPORTp_INPUT_EXTI_LINE);}
+}
+
+void EXTI3_IRQHandler() 
+{
+  BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+  
+  //Gaz: PC3
+  if(EXTI_GetITStatus(GAZ_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_GAZ_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_GAZ_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(GAZ_INPUT_EXTI_LINE);}
+}
+
+void EXTI2_IRQHandler() 
+{
+  BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+  
+  //Reserved3: PA2
+  if(EXTI_GetITStatus(RESERVED3_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RESERVED3_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_RESERVED3_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(RESERVED3_INPUT_EXTI_LINE);}
+}
+
+void EXTI1_IRQHandler() 
+{
+  BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+  
+  //Rapport-: PA1
+  if(EXTI_GetITStatus(RAPPORTm_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RAPPORTm_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTm_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(RAPPORTm_INPUT_EXTI_LINE);}
+}
+
+void EXTI0_IRQHandler() 
+{
+  BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+  
+  //PAL_d: PC0
+  if(EXTI_GetITStatus(PALD_INPUT_EXTI_LINE) != RESET){
+    if(CU_Inputs_EventGroup!=NULL){
+      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_PALD_BIT) ==RESET)
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_PALD_BIT,&xHigherPriorityTaskWoken);}
+    EXTI_ClearITPendingBit(PALD_INPUT_EXTI_LINE);}
+}
 
 #endif /* USE_BREADBOARD */
 

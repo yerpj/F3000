@@ -81,6 +81,7 @@ void F3000_App(void * pvParameters)
   
   while(!err)
   {
+#ifdef USE_BREADBOARD    
     if(GPIO_ReadInputDataBit(NEUTRAL_INPUT_GPIO_PORT,NEUTRAL_INPUT_PIN))
     {
       LEDbuffer_MaskSet(0x01<<D13_G_LED_INDEX | 
@@ -103,6 +104,7 @@ void F3000_App(void * pvParameters)
       LEDbuffer_SetBit(D15_B_LED_INDEX);
       LEDbuffer_SetBit(D16_B_LED_INDEX);
     }
+#endif /* USE_BREADBOARD */
     LEDbuffer_refresh();
     LEDbuffer_refresh();
    
