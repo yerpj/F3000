@@ -18,8 +18,8 @@ uint8_t LEDbuffer_refresh(void)
   {
     PCA9952_LED_Control(PCA9952_MAIN_ADDR,LEDbuffer[0]);
   #ifndef USE_BREADBOARD
-    PCA9952_LED_Control(PCA9952_BAR1_ADDR,LEDbuffer[1]);
-    PCA9952_LED_Control(PCA9952_BAR2_ADDR,LEDbuffer[2]);
+    PCA9952_LED_Control(PCA9952_BAR1_ADDR,LEDbuffer[0]);
+    PCA9952_LED_Control(PCA9952_BAR2_ADDR,LEDbuffer[1]);
   #endif /* USE_BREADBOARD */
     LEDbuffer_last[0]=LEDbuffer[0];
     LEDbuffer_last[1]=LEDbuffer[1];

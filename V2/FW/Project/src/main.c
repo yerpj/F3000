@@ -72,7 +72,7 @@ EventGroupHandle_t CU_Inputs_EventGroup;
 void F3000_App(void * pvParameters)
 {
   uint8_t err=0;
-  uint8_t i=0;
+  uint8_t i=1;
   uint16_t Inputs=0;
   
   CU_Inputs_EventGroup=xEventGroupCreate();
@@ -81,8 +81,8 @@ void F3000_App(void * pvParameters)
   
   while(!err)
   {
-#ifdef USE_BREADBOARD    
-    if(GPIO_ReadInputDataBit(NEUTRAL_INPUT_GPIO_PORT,NEUTRAL_INPUT_PIN))
+#ifdef USE_BREADBOARD 
+    if(GPIO_ReadInputDataBit(CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN))
     {
       LEDbuffer_MaskSet(0x01<<D13_G_LED_INDEX | 
                         0x01<<D14_G_LED_INDEX | 
@@ -104,10 +104,13 @@ void F3000_App(void * pvParameters)
       LEDbuffer_SetBit(D15_B_LED_INDEX);
       LEDbuffer_SetBit(D16_B_LED_INDEX);
     }
+    LEDbuffer_refresh();
+#else
+    bargraph_Set(i++,0);
+    if(i==22)
+      i=0;
 #endif /* USE_BREADBOARD */
-    LEDbuffer_refresh();
-    LEDbuffer_refresh();
-   
+   vTaskDelay(50);
     /*gear_increase();
     while(gear_isMoving())
       vTaskDelay(50);
@@ -115,10 +118,10 @@ void F3000_App(void * pvParameters)
     gear_decrease();
     while(gear_isMoving())
       vTaskDelay(50);*/
-    SEG7_Set(i++);
+    /*SEG7_Set(i++);
     if(i>8)
-      i=0;
-    vTaskDelay(50);
+      i=0;*/
+    
   }
   while(1)
     vTaskDelay(1000);
@@ -178,7 +181,14 @@ void main(void)
   LEDs_Init();
   timer_init();
   ITS_Init(NULL,0);
+#ifdef USE_BREADBOARD
   PCA9952_Init(BUS_I2C3,PCA9952_MAIN_ADDR);
+#else /* USE_BREADBOARD */
+  PCA9952_Init(BUS_I2C1,PCA9952_MAIN_ADDR);
+  PCA9952_Init(BUS_I2C1,PCA9952_BAR1_ADDR);
+  PCA9952_Init(BUS_I2C1,PCA9952_BAR2_ADDR);
+#endif /* USE_BREADBOARD */
+  
   CU_IOInit();
   
   STBT_Init(COM2);

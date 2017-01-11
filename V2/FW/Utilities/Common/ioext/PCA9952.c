@@ -15,8 +15,9 @@ uint8_t PCA9952_Init(I2C_List_Typedef I2Cx,uint8_t devAddr)
   //software reset
   
   //verify MODE2==0x05 
-  if(PCA9952_read_reg(devAddr,REG_MODE2,&tmp,1))
-    return 1;
+  //not implemented if software reset is not performed 
+  /*if(PCA9952_read_reg(devAddr,REG_MODE2,&tmp,1))
+    return 1;*/
   
   /*if(tmp!=0x05)
     return 1;*/

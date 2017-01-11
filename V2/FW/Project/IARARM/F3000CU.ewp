@@ -311,6 +311,7 @@
           <state>$PROJ_DIR$\..\..\Utilities\CU\GEAR</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\SEG7</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\LEDbuffer</state>
+          <state>$PROJ_DIR$\..\..\Utilities\CU\bargraph</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\timer</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common\CLI</state>
@@ -1953,6 +1954,18 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\Utilities\CU\ADC\ADC.h</name>
+      </file>
+    </group>
+    <group>
+      <name>bargraph</name>
+      <excluded>
+        <configuration>Debug</configuration>
+      </excluded>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\bargraph\bargraph.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\bargraph\bargraph.h</name>
       </file>
     </group>
     <group>

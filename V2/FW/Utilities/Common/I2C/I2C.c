@@ -69,7 +69,7 @@ void I2C_abort_transaction(I2C_List_Typedef I2Cx)
     GPIO_ResetBits(I2C_SCL_GPIO_PORT[I2Cx],I2C_SCL_PIN[I2Cx]);
     for(j=0;j<6000;j++);
   }
-  /* I2C SCL and SDA pins configuration */
+  /* I2C SCL  pins configuration */
   GPIO_InitStructure.GPIO_Pin = I2C_SCL_PIN[I2Cx];
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;

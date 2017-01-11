@@ -78,7 +78,7 @@
           
           
           
-        <item>UID</item><item>NXS_UID</item><item>NXS_EUI64</item><item>ITS_currentValue</item><item>tmp</item><item>bus_error</item><item>Inputs</item><item>values</item><item>mask</item><item>Inputs</item><item>cmd</item><item>BTRXedStr</item><item>CLI_RxBuf</item><item>NXS_EUI64</item><item>NXS_UID</item><item>UID</item><item>LEDbuffer</item><item>BTRXedStr</item><item></item></expressions>
+        <item>UID</item><item>NXS_UID</item><item>NXS_EUI64</item><item>ITS_currentValue</item><item>tmp</item><item>bus_error</item><item>Inputs</item><item>values</item><item>mask</item><item>Inputs</item><item>cmd</item><item>BTRXedStr</item><item>CLI_RxBuf</item><item>NXS_EUI64</item><item>NXS_UID</item><item>UID</item><item>LEDbuffer</item><item>BTRXedStr</item><item/></expressions>
         <col-names>
           
           

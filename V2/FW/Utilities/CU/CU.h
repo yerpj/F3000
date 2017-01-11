@@ -71,6 +71,29 @@ typedef enum
 #define D13_G_LED_INDEX                 2
 #define D13_B_LED_INDEX                 1
 #else /* USE_BREADBOARD */
+#define BAR_ALL                         0x3F0FE7FF
+
+#define BAR_LED1                        (0x0001<<7) 
+#define BAR_LED2                        (0x0001<<6) 
+#define BAR_LED3                        (0x0001<<5) 
+#define BAR_LED4                        (0x0001<<4) 
+#define BAR_LED5                        (0x0001<<3) 
+#define BAR_LED6                        (0x0001<<2) 
+#define BAR_LED7                        (0x0001<<1) 
+#define BAR_LED8                        (0x0001<<0) 
+#define BAR_LED9                        (0x0001<<15) 
+#define BAR_LED10                       (0x0001<<14) 
+#define BAR_LED11                       (0x0001<<13) 
+#define BAR_LED12                       (0x0001<<19) 
+#define BAR_LED13                       (0x0001<<18) 
+#define BAR_LED14                       (0x0001<<17) 
+#define BAR_LED15                       (0x0001<<16) 
+#define BAR_LED16                       (0x0001<<29) 
+#define BAR_LED17                       (0x0001<<28) 
+#define BAR_LED18                       (0x0001<<27) 
+#define BAR_LED19                       (0x0001<<26) 
+#define BAR_LED20                       (0x0001<<25) 
+#define BAR_LED21                       (0x0001<<24)                                
 #endif /* USE_BREADBOARD */
 
 
