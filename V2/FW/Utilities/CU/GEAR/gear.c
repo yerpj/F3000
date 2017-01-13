@@ -69,7 +69,6 @@ uint8_t gear_toNeutral(void)
 uint8_t gear_getPosition(void)
 {
   return gear_current_pos;
-  return 0;
 }
 
 uint8_t gear_isMoving(void)

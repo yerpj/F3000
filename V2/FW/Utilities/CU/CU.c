@@ -448,7 +448,7 @@ uint8_t CU_IOInit(void)
   SYSCFG_EXTILineConfig(NEUTRAL_INPUT_EXTI_PORT_SOURCE,NEUTRAL_INPUT_EXTI_PIN_SOURCE);
   /* Configure Button EXTI line */
   EXTI_InitStructure.EXTI_Line = NEUTRAL_INPUT_EXTI_LINE;
-  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;  
   //EXTI_Init(&EXTI_InitStructure);
   /* Enable and set Button EXTI Interrupt to the lowest priority */
   NVIC_InitStructure.NVIC_IRQChannel = NEUTRAL_INPUT_EXTI_IRQn;

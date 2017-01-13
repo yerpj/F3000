@@ -49,7 +49,12 @@ void F3000_Diag(void * pvParameters)
 {
   while(1)
   {
-    vTaskDelay(100);
+    vTaskDelay(10000);
+    if(1)
+    {
+      vTaskResume(AppTaskHandle);
+      vTaskSuspend(NULL);
+    }
     
   }
 }
@@ -59,6 +64,18 @@ void F3000_Periodic(void * pvParameters)
   while(1)
   {
     vTaskDelay(100);
+    if(gear_getPosition()==gear_pos_N)
+    {
+      if(GPIO_ReadInputDataBit(NEUTRAL_INPUT_GPIO_PORT,NEUTRAL_INPUT_PIN))
+      {
+        vTaskResume(DiagnosticTaskHandle);
+        vTaskSuspend(AppTaskHandle);
+      }
+      else
+      {
+        
+      }
+    }
     //check MODE buttons
     //handle temperature sensor
     //handle OIL sensor

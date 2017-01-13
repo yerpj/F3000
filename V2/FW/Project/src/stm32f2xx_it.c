@@ -43,6 +43,7 @@ uint8_t (*SysTick_Delay_cb)(void)=NULL;
 uint32_t Delay_ms_tick=0;
 uint32_t SysTick_Delay_ms=0;
 
+DebouncingInterrupts_t ExtInterrupts;
 
 
 extern void DMA2_Stream0_cb(void);
@@ -201,7 +202,6 @@ void SysTick_Handler(void)
       SysTick_Delay_cb();
       SysTick_Delay_cb=0;
     }
-    
   }
 }
 
@@ -344,11 +344,16 @@ void EXTI9_5_IRQHandler()
     EXTI_ClearITPendingBit(RESERVED2_INPUT_EXTI_LINE);}
   
   //Neutral: PC6
-  if(EXTI_GetITStatus(NEUTRAL_INPUT_EXTI_LINE) != RESET){
-    if(CU_Inputs_EventGroup!=NULL){
-      if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT) ==RESET)
-        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,&xHigherPriorityTaskWoken);}
-    EXTI_ClearITPendingBit(NEUTRAL_INPUT_EXTI_LINE);}
+  if(EXTI_GetITStatus(NEUTRAL_INPUT_EXTI_LINE) != RESET)
+  {
+    if(!GPIO_ReadInputDataBit(NEUTRAL_INPUT_GPIO_PORT,NEUTRAL_INPUT_PIN))
+    {
+      if(CU_Inputs_EventGroup!=NULL){
+        if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT) ==RESET)
+          xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,&xHigherPriorityTaskWoken);}
+    }
+    EXTI_ClearITPendingBit(NEUTRAL_INPUT_EXTI_LINE);
+  }
   
   //Regime: PC7
   if(EXTI_GetITStatus(REGIME_INPUT_EXTI_LINE) != RESET){

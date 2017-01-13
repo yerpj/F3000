@@ -31,6 +31,13 @@
 #include "stm32f2xx.h"
 
 /* Exported types ------------------------------------------------------------*/
+typedef struct
+{
+  uint32_t EnableMask;
+  uint32_t EdgeMask;
+  uint32_t DebounceTime[32];
+  uint32_t Triggered;
+} DebouncingInterrupts_t;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
