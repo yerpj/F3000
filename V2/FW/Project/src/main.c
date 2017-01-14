@@ -88,6 +88,7 @@ EventGroupHandle_t CU_Inputs_EventGroup;
 
 void F3000_App(void * pvParameters)
 {
+  uint8_t a=0;
   uint8_t err=0;
   uint8_t i=1;
   uint16_t Inputs=0;
@@ -103,8 +104,11 @@ void F3000_App(void * pvParameters)
   while(!err)
   {
 #ifdef USE_BREADBOARD 
-    if(GPIO_ReadInputDataBit(CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN))
+    if(!xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,500))
+      continue;
+    if(a)
     {
+      a=0;
       LEDbuffer_MaskSet(0x01<<D13_G_LED_INDEX | 
                         0x01<<D14_G_LED_INDEX | 
                         0x01<<D15_G_LED_INDEX | 
@@ -116,6 +120,7 @@ void F3000_App(void * pvParameters)
     }
     else
     {
+      a=1;
       LEDbuffer_ResetBit(D13_G_LED_INDEX);
       LEDbuffer_ResetBit(D14_G_LED_INDEX);
       LEDbuffer_ResetBit(D15_G_LED_INDEX);

@@ -114,6 +114,17 @@ uint8_t DebouncerHandle(void)
           if(ExtInterrupts.DebounceCurVal_ms[i]==0)
           {
              (ExtInterrupts.IsDebouncing&=~(0x01<<i));
+             if(ExtInterrupts.EdgeMask&(0x01<<i))
+             {
+               if( !GPIO_ReadInputDataBit(ExtInterrupts.InputGPIOPort[i],ExtInterrupts.InputGPIOPin[i]) )
+                 continue;
+             }
+             else
+             {
+               if( GPIO_ReadInputDataBit(ExtInterrupts.InputGPIOPort[i],ExtInterrupts.InputGPIOPin[i]) )
+                 continue;
+             }
+             
              if(DebouncerEventGroup!=NULL)
              {
               if( (xEventGroupGetBitsFromISR(DebouncerEventGroup) & ExtInterrupts.AssociatedEvent[i]) ==RESET)
