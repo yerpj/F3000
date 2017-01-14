@@ -33,14 +33,21 @@
 /* Exported types ------------------------------------------------------------*/
 typedef struct
 {
-  uint32_t EnableMask;
-  uint32_t EdgeMask;
-  uint32_t DebounceTime[32];
-  uint32_t Triggered;
-} DebouncingInterrupts_t;
+  uint32_t IsDebouncing;
+  uint32_t EdgeMask;//rising:1, falling:0
+  uint32_t DebounceTime_ms[32];
+  uint32_t DebounceCurVal_ms[32];
+  uint32_t AssociatedEvent[32];
+  GPIO_TypeDef* InputGPIOPort[32];
+  uint16_t InputGPIOPin[32];
+} DebouncedArray_t;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
+#include "main.h"
+#include "event_groups.h"
+uint8_t DebouncerInit(EventGroupHandle_t xEventGroup);
+uint8_t DebouncerAddInput(uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,uint32_t DebounceTime_ms);
 
 void NMI_Handler(void);
 void HardFault_Handler(void);

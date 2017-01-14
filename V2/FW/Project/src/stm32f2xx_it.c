@@ -43,13 +43,91 @@ uint8_t (*SysTick_Delay_cb)(void)=NULL;
 uint32_t Delay_ms_tick=0;
 uint32_t SysTick_Delay_ms=0;
 
-DebouncingInterrupts_t ExtInterrupts;
+
 
 
 extern void DMA2_Stream0_cb(void);
 
 
 /* Private functions ---------------------------------------------------------*/
+DebouncedArray_t ExtInterrupts;
+EventGroupHandle_t * DebouncerEventGroup=NULL;
+uint8_t DebouncerInit(EventGroupHandle_t xEventGroup)
+{
+  if(xEventGroup==NULL)
+    return 1;
+  DebouncerEventGroup=xEventGroup;
+  ExtInterrupts.EdgeMask=0;
+  ExtInterrupts.IsDebouncing=0;
+  return 0;
+}
+
+uint8_t DebouncerAddInput(uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,uint32_t DebounceTime_ms)
+{
+  uint8_t InputIndex=0;
+  while( ((InputMask>>InputIndex)&0x01)==0 && InputIndex<32 )
+    InputIndex++;
+  if(InputIndex>=32)
+    return 1;
+  ExtInterrupts.InputGPIOPort[InputIndex]=GPIO;
+  ExtInterrupts.InputGPIOPin[InputIndex]=Pin;
+  if(Edge)
+    ExtInterrupts.EdgeMask|=InputMask;
+  else
+    ExtInterrupts.EdgeMask&=~InputMask;
+  ExtInterrupts.AssociatedEvent[InputIndex]=Event;
+  ExtInterrupts.IsDebouncing&=~InputMask;
+  ExtInterrupts.DebounceTime_ms[InputIndex]=DebounceTime_ms;
+  return 0;
+}
+
+//call this function whenever an EXTI event happened
+uint8_t Debounce(uint32_t InputMask)
+{
+  uint8_t InputIndex=0;
+  while( ((InputMask>>InputIndex)&0x01)==0 && InputIndex<32 )
+    InputIndex++;
+  if(ExtInterrupts.IsDebouncing&InputMask)
+    return 0;//nothing to do. Systick is handling the debouncer
+  else
+  {
+    ExtInterrupts.IsDebouncing|=InputMask;
+    ExtInterrupts.DebounceCurVal_ms[InputIndex]=ExtInterrupts.DebounceTime_ms[InputIndex];//load base debouncing delay
+  }
+}
+
+uint8_t DebouncerHandle(void)
+{
+  BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+  uint8_t i;
+  if(ExtInterrupts.IsDebouncing)
+  {
+    for(i=0;i<32;i++)
+    {
+      if(!ExtInterrupts.IsDebouncing)
+        return 0;
+      else
+      {
+        if(ExtInterrupts.DebounceCurVal_ms[i])
+        {
+          ExtInterrupts.DebounceCurVal_ms[i]--;
+          if(ExtInterrupts.DebounceCurVal_ms[i]==0)
+          {
+             (ExtInterrupts.IsDebouncing&=~(0x01<<i));
+             if(DebouncerEventGroup!=NULL)
+             {
+              if( (xEventGroupGetBitsFromISR(DebouncerEventGroup) & ExtInterrupts.AssociatedEvent[i]) ==RESET)
+                xEventGroupSetBitsFromISR(DebouncerEventGroup,ExtInterrupts.AssociatedEvent[i],&xHigherPriorityTaskWoken);
+             }
+          }
+        }
+      }
+    }
+    return 0;
+  }
+}
+
+
 void setSysTick_Delay_Timer(uint32_t Delayms,uint8_t (*cb)(void))
 {
   SysTick_Delay_cb=cb;
@@ -203,6 +281,7 @@ void SysTick_Handler(void)
       SysTick_Delay_cb=0;
     }
   }
+  DebouncerHandle();
 }
 
 void DMA2_Stream0_IRQHandler(void)
@@ -276,9 +355,10 @@ void EXTI15_10_IRQHandler()
     EXTI_ClearITPendingBit(NEUTRAL_INPUT_EXTI_LINE);}
   
   if(EXTI_GetITStatus(CAME_INPUT_EXTI_LINE) != RESET){
-    if(CU_Inputs_EventGroup!=NULL){
+    Debounce(CU_INPUT_EVENT_CAME_BIT);
+    /*if(CU_Inputs_EventGroup!=NULL){
       if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_CAME_BIT) ==RESET)
-        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,&xHigherPriorityTaskWoken);}
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,&xHigherPriorityTaskWoken);}*/
     EXTI_ClearITPendingBit(CAME_INPUT_EXTI_LINE);}
 }
 
@@ -305,9 +385,10 @@ void EXTI15_10_IRQHandler()
   
   //Came: PB13
   if(EXTI_GetITStatus(CAME_INPUT_EXTI_LINE) != RESET){
-    if(CU_Inputs_EventGroup!=NULL){
+    Debounce(CU_INPUT_EVENT_CAME_BIT);
+    /*if(CU_Inputs_EventGroup!=NULL){
       if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_CAME_BIT) ==RESET)
-        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,&xHigherPriorityTaskWoken);}
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,&xHigherPriorityTaskWoken);}*/
     EXTI_ClearITPendingBit(CAME_INPUT_EXTI_LINE);}
   
   //Oil: PB14

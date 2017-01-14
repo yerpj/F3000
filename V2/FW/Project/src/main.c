@@ -96,6 +96,10 @@ void F3000_App(void * pvParameters)
   if(CU_Inputs_EventGroup==NULL)
     err++;
   
+  DebouncerInit(CU_Inputs_EventGroup);
+  //uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,uint32_t DebounceTime_ms
+  DebouncerAddInput(CU_INPUT_EVENT_CAME_BIT,CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN,EXTI_Trigger_Rising,CU_INPUT_EVENT_CAME_BIT,500);
+  
   while(!err)
   {
 #ifdef USE_BREADBOARD 
