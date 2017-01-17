@@ -33,9 +33,9 @@ It features:
 - individual LEDs for motor temperature, oil warning, neutral-position indication and driving mode*
 
 *: The pilot can at any time select the best gear-driving mode:
-1: manual control: The gearbox is controlled by pallets on the steering wheel, foot-controlled declutching
-2: semi-automatic: The gearbox is controlled by pallets on the steering wheel, automatic declutching
-3: automatic: The gearbox is automatically driven according to engine speed for ascending gears engagement, and manually controlled for descending gears engagement
+- manual control: The gearbox is controlled by pallets on the steering wheel, foot-controlled declutching
+- semi-automatic: The gearbox is controlled by pallets on the steering wheel, automatic declutching
+- automatic: The gearbox is automatically driven according to engine speed for ascending gears engagement, and manually controlled for descending gears engagement
 
 
 ![alt tag](https://github.com/yerpj/F3000/blob/master/V2/DOC/Control_Unit_3dPreview.png)
