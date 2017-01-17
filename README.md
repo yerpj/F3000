@@ -18,6 +18,31 @@ More info on demand
 ![alt tag](https://github.com/yerpj/F3000/blob/master/V2/DOC/V2_3dPreview.png)
 
 ![alt tag](https://github.com/yerpj/F3000/blob/master/V2/DOC/PCB_assembled_and_tested.jpg)
+
+Control Unit
+----------------
+
+As an integral part of the steering wheel, this control unit is able to monitor and drive every IO from the Power Unit, as well as the user interface.
+
+It features:
+- 10x 12[V] digital inputs 
+- 3x digital outputs
+- 6x pushbuttons inputs (SW debounced)
+- 1x 7-seg display
+- 21 LEDs forming a beautiful bargraph-style regime speed indicator
+- individual LEDs for motor temperature, oil warning, neutral-position indication and driving mode*
+
+*: The pilot can at any time select the best gear-driving mode:
+1) manual control: The gearbox is controlled by pallets on the steering wheel, foot-controlled declutching
+2) semi-automatic: The gearbox is controlled by pallets on the steering wheel, automatic declutching
+3) automatic: The gearbox is automatically driven according to engine speed for ascending gears engagement, and manually controlled for descending gears engagement
+
+
+![alt tag](https://github.com/yerpj/F3000/blob/master/V2/DOC/Control_Unit_3dPreview.png)
+![alt tag](https://github.com/yerpj/F3000/blob/master/V2/DOC/Control_Unit.jpg)
+
+
+           
            
 
 
