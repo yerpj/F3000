@@ -4,7 +4,7 @@
 #include "main.h"
 
 #define ADC1_CHANNELS_IN_USE    3
-#define ADC1_CHANNELS_MAP       ( BIT18 | BIT8 | BIT16) // VBAT, VNTC,IntTempSens
+#define ADC1_CHANNELS_MAP       ( BIT18 | BIT9 | BIT16) // TEMP_IN, VREG(potentiometer),IntTempSens
 
 void ADC_LowLevelInit(void);
 uint8_t ADC_RegisterCallback(uint8_t channel, void (* cb)(uint16_t));

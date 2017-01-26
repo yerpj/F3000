@@ -90,8 +90,9 @@ void F3000_App(void * pvParameters)
 {
   uint8_t a=0;
   uint8_t err=0;
-  uint8_t i=1;
+  uint8_t i=0;
   uint16_t Inputs=0;
+  float Temperature=0;
   
   CU_Inputs_EventGroup=xEventGroupCreate();
   if(CU_Inputs_EventGroup==NULL)
@@ -101,6 +102,8 @@ void F3000_App(void * pvParameters)
   //uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,uint32_t DebounceTime_ms
   DebouncerAddInput(CU_INPUT_EVENT_CAME_BIT,CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN,EXTI_Trigger_Rising,CU_INPUT_EVENT_CAME_BIT,500);
   
+  
+  bargraph_Set(1,0);
   while(!err)
   {
 #ifdef USE_BREADBOARD 
@@ -132,11 +135,75 @@ void F3000_App(void * pvParameters)
     }
     LEDbuffer_refresh();
 #else
-    bargraph_Set(i++,0);
-    if(i==22)
-      i=0;
+    Temperature=tempSensor_Get_Temp();
+    i=0;
+    while(i<10)
+    {
+      SEG7_Set(i++);
+      vTaskDelay(250);
+    }
+    i=1;
+    while(i<22)
+    {
+      bargraph_Set(i++,0);
+      vTaskDelay(50);
+    }
+    while(i>0)
+    {
+      bargraph_Set(i--,0);
+      vTaskDelay(50);
+    }
+    i=1;
+    while(i<22)
+    {
+      bargraph_Set(i++,1);
+      vTaskDelay(50);
+    }
+    while(i>0)
+    {
+      bargraph_Set(i--,1);
+      vTaskDelay(50);
+    }
+    bargraph_Set(1,0);
+    
+    Indicator_LED_OIL_Set();
+    Indicator_LED_N_Set();
+    vTaskDelay(300);
+    Indicator_LED_OIL_Reset();
+    Indicator_LED_N_Reset();
+    vTaskDelay(300);
+    Indicator_LED_Mode_Set(1);
+    vTaskDelay(300);
+    Indicator_LED_Mode_Set(2);
+    vTaskDelay(300);
+    Indicator_LED_Mode_Set(3);
+    vTaskDelay(300);
+    Indicator_LED_Temp_Set(0);
+    vTaskDelay(300);
+    Indicator_LED_Temp_Set(1);
+    vTaskDelay(300);
+    Indicator_LED_Temp_Set(2);
+    vTaskDelay(300);
+    Indicator_LED_Temp_Set(3);
+    vTaskDelay(300);
+    Indicator_LED_Temp_Set(0);
+    
+    /*Finish*/
+    SEG7_Set(10);
+    bargraph_Set(21,1);
+    Indicator_LED_Temp_Set(3);
+    Indicator_LED_Mode_Set(1);
+    Indicator_LED_OIL_Set();
+    Indicator_LED_N_Set();
+    vTaskDelay(500);
+    SEG7_Set(11);
+    bargraph_Set(1,0);
+    Indicator_LED_Temp_Set(0);
+    Indicator_LED_Mode_Set(1);
+    Indicator_LED_OIL_Reset();
+    Indicator_LED_N_Reset();
+    
 #endif /* USE_BREADBOARD */
-   vTaskDelay(50);
     /*gear_increase();
     while(gear_isMoving())
       vTaskDelay(50);
@@ -207,6 +274,7 @@ void main(void)
   LEDs_Init();
   timer_init();
   ITS_Init(NULL,0);
+  tempSensor_Init(NULL);
 #ifdef USE_BREADBOARD
   PCA9952_Init(BUS_I2C3,PCA9952_MAIN_ADDR);
 #else /* USE_BREADBOARD */

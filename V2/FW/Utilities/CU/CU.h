@@ -42,16 +42,30 @@ typedef enum
 #define LED3_GPIO_PORT                   GPIOC
 #define LED3_GPIO_CLK                    RCC_AHB1Periph_GPIOC 
 
+#define LED_OIL_IOEXP_OFFSET                2
+#define LED_N_IOEXP_OFFSET                  2
+#define LED_TEMP_IOEXP_OFFSET               2
+#define LED_MODE_IOEXP_OFFSET               0
 
+#define LED_OIL_MASK                         ((uint64_t)0x0000000000000001<<(15+(16*LED_OIL_IOEXP_OFFSET)))
+#define LED_N_MASK                         ((uint64_t)0x0000000000000001<<(3+(16*LED_N_IOEXP_OFFSET)))
+#define LED_TEMP1_MASK                         ((uint64_t)0x0000000000000001<<(8+(16*LED_TEMP_IOEXP_OFFSET)))
+#define LED_TEMP2_MASK                         ((uint64_t)0x0000000000000001<<(9+(16*LED_TEMP_IOEXP_OFFSET)))
+#define LED_TEMP3_MASK                         ((uint64_t)0x0000000000000001<<(10+(16*LED_TEMP_IOEXP_OFFSET)))
+#define LED_MODE1_MASK                         ((uint64_t)0x0000000000000001<<(8+(16*LED_MODE_IOEXP_OFFSET)))
+#define LED_MODE2_MASK                         ((uint64_t)0x0000000000000001<<(9+(16*LED_MODE_IOEXP_OFFSET)))
+#define LED_MODE3_MASK                         ((uint64_t)0x0000000000000001<<(10+(16*LED_MODE_IOEXP_OFFSET)))
+
+#define SEG7_IOEXP_OFFSET               2
 /* CU 7 segment display */
-#define SEG7_SEG_A_MASK                 (0x0001<<12)
-#define SEG7_SEG_B_MASK                 (0x0001<<11)
-#define SEG7_SEG_C_MASK                 (0x0001<<6 )
-#define SEG7_SEG_D_MASK                 (0x0001<<5 )
-#define SEG7_SEG_E_MASK                 (0x0001<<4 )
-#define SEG7_SEG_F_MASK                 (0x0001<<13)
-#define SEG7_SEG_G_MASK                 (0x0001<<14)
-#define SEG7_SEG_DP_MASK                (0x0001<<7 )
+#define SEG7_SEG_A_MASK                 ((uint64_t)0x0000000000000001<<(12+(16*SEG7_IOEXP_OFFSET)))
+#define SEG7_SEG_B_MASK                 ((uint64_t)0x0000000000000001<<(11+(16*SEG7_IOEXP_OFFSET)))
+#define SEG7_SEG_C_MASK                 ((uint64_t)0x0000000000000001<<(6+(16*SEG7_IOEXP_OFFSET)))
+#define SEG7_SEG_D_MASK                 ((uint64_t)0x0000000000000001<<(5+(16*SEG7_IOEXP_OFFSET)))
+#define SEG7_SEG_E_MASK                 ((uint64_t)0x0000000000000001<<(4+(16*SEG7_IOEXP_OFFSET)))
+#define SEG7_SEG_F_MASK                 ((uint64_t)0x0000000000000001<<(13+(16*SEG7_IOEXP_OFFSET)))
+#define SEG7_SEG_G_MASK                 ((uint64_t)0x0000000000000001<<(14+(16*SEG7_IOEXP_OFFSET)))
+#define SEG7_SEG_DP_MASK                ((uint64_t)0x0000000000000001<<(7+(16*SEG7_IOEXP_OFFSET)))
 
 /* Bargraph */
 #ifdef USE_BREADBOARD
@@ -191,6 +205,10 @@ typedef enum
  * @brief Definition for Internal Temperature Sensor
  */
 #define ITS_ADC_CHANNEL                         ADC_Channel_16
+#define TEMP_IN_ADC_CHANNEL                     ADC_Channel_18
+#define VREG_ADC_CHANNEL                        ADC_Channel_9
+
+
 
 #define I2Cn    3
 

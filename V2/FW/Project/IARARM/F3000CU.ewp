@@ -168,8 +168,8 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state>USE_BREADBOARD</state>
-          <state>USE_CU_</state>
+          <state>USE_BREADBOARD_</state>
+          <state>USE_CU</state>
           <state>USE_STDPERIPH_DRIVER</state>
           <state>USE_FULL_ASSERT</state>
           <state>STM32F2XX</state>
@@ -311,6 +311,8 @@
           <state>$PROJ_DIR$\..\..\Utilities\CU\GEAR</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\SEG7</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\LEDbuffer</state>
+          <state>$PROJ_DIR$\..\..\Utilities\CU\Indicator</state>
+          <state>$PROJ_DIR$\..\..\Utilities\CU\tempSensor</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\bargraph</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\timer</state>
           <state>$PROJ_DIR$\..\..\Utilities\Common</state>
@@ -1958,9 +1960,6 @@
     </group>
     <group>
       <name>bargraph</name>
-      <excluded>
-        <configuration>Debug</configuration>
-      </excluded>
       <file>
         <name>$PROJ_DIR$\..\..\Utilities\CU\bargraph\bargraph.c</name>
       </file>
@@ -1975,6 +1974,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\Utilities\CU\GEAR\gear.h</name>
+      </file>
+    </group>
+    <group>
+      <name>Indicator</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\Indicator\indicator.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\Indicator\indicator.h</name>
       </file>
     </group>
     <group>
@@ -2002,6 +2010,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\Utilities\CU\SEG7\SEG7.h</name>
+      </file>
+    </group>
+    <group>
+      <name>tempSensor</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\tempSensor\tempSensor.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\tempSensor\tempSensor.h</name>
       </file>
     </group>
     <group>

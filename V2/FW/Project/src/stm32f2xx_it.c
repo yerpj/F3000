@@ -374,9 +374,7 @@ void EXTI15_10_IRQHandler()
 }
 
 void EXTI9_5_IRQHandler()
-{
-  BaseType_t xHigherPriorityTaskWoken=pdFALSE;
-  
+{  
   if(EXTI_GetITStatus(EXTI_Line6) != RESET)
   {
     EXTI_ClearITPendingBit(EXTI_Line6);
