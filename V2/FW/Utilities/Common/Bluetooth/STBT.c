@@ -91,7 +91,7 @@ uint8_t STBT_SPP_Send(uint8_t *str)
 
 void STBT_Task(void * pvParameters)
 {
-  uint32_t numbytesread,numbyteswritten;
+  //uint32_t numbytesread,numbyteswritten;
   uint8_t i=0;
   /*Update the module name*/
   //STBT_Send("AT+AB Config DeviceName=F3000\n");

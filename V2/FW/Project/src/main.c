@@ -10,6 +10,8 @@ uint8_t str[300];
 
 xTaskHandle AppTaskHandle,ConfigTaskHandle,PeriodicTaskHandle,DiagnosticTaskHandle;
 
+uint8_t Vreg_based_LED=0;
+
 void ToggleLed1(void * pvParameters)
 {
   uint32_t led_value=1, direction=0, max=20;
@@ -66,7 +68,7 @@ void F3000_Periodic(void * pvParameters)
     vTaskDelay(100);
     if(gear_getPosition()==gear_pos_N)
     {
-      if(GPIO_ReadInputDataBit(NEUTRAL_INPUT_GPIO_PORT,NEUTRAL_INPUT_PIN))
+      if(CU_GetNeutralButton())
       {
         vTaskResume(DiagnosticTaskHandle);
         vTaskSuspend(AppTaskHandle);
@@ -77,11 +79,24 @@ void F3000_Periodic(void * pvParameters)
       }
     }
     //check MODE buttons
+    Indicator_LED_Mode_Set(CU_GetMode());
     //handle temperature sensor
     Indicator_LED_Temp_Set(tempSensor_Get_State());
+    Vreg_based_LED=((uint8_t)(tempSensor_Get_Temp()*4.2))%22;
+
     //handle OIL sensor
-    //handle bargraph?
+    if(CU_GetOilWarning())
+      Indicator_LED_OIL_Set();
+    else
+      Indicator_LED_OIL_Reset();
+    //handle bargraph
+    
+    
     //handle STOP button
+    if(CU_GetStopButton())
+      CU_STOP_On();
+    else
+      CU_STOP_Off();
   }
 }
 
@@ -89,11 +104,7 @@ EventGroupHandle_t CU_Inputs_EventGroup;
 
 void F3000_App(void * pvParameters)
 {
-  uint8_t a=0;
   uint8_t err=0;
-  uint8_t i=0;
-  uint16_t Inputs=0;
-  float Temperature=0;
   
   CU_Inputs_EventGroup=xEventGroupCreate();
   if(CU_Inputs_EventGroup==NULL)
@@ -104,107 +115,20 @@ void F3000_App(void * pvParameters)
   DebouncerAddInput(CU_INPUT_EVENT_CAME_BIT,CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN,EXTI_Trigger_Rising,CU_INPUT_EVENT_CAME_BIT,500);
   
   
-  bargraph_Set(1,0);
+  
+  bargraph_Set(1,1,Vreg_based_LED);
+  LEDbuffer_MaskSet(0xFFFFFFFFFFFF);
+  LEDbuffer_refresh();
+  LEDbuffer_MaskReset(0xFFFFFFFFFFFF);
+  LEDbuffer_refresh();
   while(!err)
   {
-#ifdef USE_BREADBOARD 
-    if(!xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,500))
-      continue;
-    if(a)
-    {
-      a=0;
-      LEDbuffer_MaskSet(0x01<<D13_G_LED_INDEX | 
-                        0x01<<D14_G_LED_INDEX | 
-                        0x01<<D15_G_LED_INDEX | 
-                        0x01<<D16_G_LED_INDEX  );
-      LEDbuffer_MaskReset(0x01<<D13_B_LED_INDEX |
-                          0x01<<D14_B_LED_INDEX |
-                          0x01<<D15_B_LED_INDEX |
-                          0x01<<D16_B_LED_INDEX  );
-    }
-    else
-    {
-      a=1;
-      LEDbuffer_ResetBit(D13_G_LED_INDEX);
-      LEDbuffer_ResetBit(D14_G_LED_INDEX);
-      LEDbuffer_ResetBit(D15_G_LED_INDEX);
-      LEDbuffer_ResetBit(D16_G_LED_INDEX);
-      LEDbuffer_SetBit(D13_B_LED_INDEX);
-      LEDbuffer_SetBit(D14_B_LED_INDEX);
-      LEDbuffer_SetBit(D15_B_LED_INDEX);
-      LEDbuffer_SetBit(D16_B_LED_INDEX);
-    }
-    LEDbuffer_refresh();
-#else
-    Temperature=tempSensor_Get_Temp();
-    i=0;
-    while(i<10)
-    {
-      SEG7_Set(i++);
-      vTaskDelay(250);
-    }
-    i=1;
-    while(i<22)
-    {
-      bargraph_Set(i++,0);
-      vTaskDelay(50);
-    }
-    while(i>0)
-    {
-      bargraph_Set(i--,0);
-      vTaskDelay(50);
-    }
-    i=1;
-    while(i<22)
-    {
-      bargraph_Set(i++,1);
-      vTaskDelay(50);
-    }
-    while(i>0)
-    {
-      bargraph_Set(i--,1);
-      vTaskDelay(50);
-    }
-    bargraph_Set(1,0);
-    
-    Indicator_LED_OIL_Set();
-    Indicator_LED_N_Set();
-    vTaskDelay(300);
-    Indicator_LED_OIL_Reset();
-    Indicator_LED_N_Reset();
-    vTaskDelay(300);
-    Indicator_LED_Mode_Set(1);
-    vTaskDelay(300);
-    Indicator_LED_Mode_Set(2);
-    vTaskDelay(300);
-    Indicator_LED_Mode_Set(3);
-    vTaskDelay(300);
-    
-    /*Finish*/
-    SEG7_Set(10);
-    bargraph_Set(21,1);
-    Indicator_LED_Mode_Set(1);
-    Indicator_LED_OIL_Set();
-    Indicator_LED_N_Set();
-    vTaskDelay(500);
-    SEG7_Set(11);
-    bargraph_Set(1,0);
-    Indicator_LED_Mode_Set(1);
-    Indicator_LED_OIL_Reset();
-    Indicator_LED_N_Reset();
-    
-#endif /* USE_BREADBOARD */
-    /*gear_increase();
-    while(gear_isMoving())
-      vTaskDelay(50);
-    vTaskDelay(1000);
-    gear_decrease();
-    while(gear_isMoving())
-      vTaskDelay(50);*/
-    /*SEG7_Set(i++);
-    if(i>8)
-      i=0;*/
-    
+     vTaskDelay(10);
+     if(CU_GetNeutralButton())
+     {
+       gear_toNeutral();
+     }
+     bargraph_Set(1,21,Vreg_based_LED);
   }
   while(1)
     vTaskDelay(1000);
@@ -261,19 +185,14 @@ void main(void)
   UID_getUID(UID);
   UID_getNXSFormat(NXS_UID);
   EUI64_getNXSFormat(NXS_EUI64);
-  LEDs_Init();
+  //LEDs_Init();
+  LEDbuffer_Init();
   timer_init();
   ITS_Init(NULL,0);
   tempSensor_Init(NULL);
-#ifdef USE_BREADBOARD
-  PCA9952_Init(BUS_I2C3,PCA9952_MAIN_ADDR);
-#else /* USE_BREADBOARD */
-  PCA9952_Init(BUS_I2C1,PCA9952_MAIN_ADDR);
-  PCA9952_Init(BUS_I2C1,PCA9952_BAR1_ADDR);
-  PCA9952_Init(BUS_I2C1,PCA9952_BAR2_ADDR);
-#endif /* USE_BREADBOARD */
   
   CU_IOInit();
+  CU_LEDsInit();
   
   STBT_Init(COM2);
   console_Init(STBT_ConsoleOutput);
@@ -296,7 +215,7 @@ void main(void)
 
 void vApplicationMallocFailedHook(void)
 {
-  uint8_t i;
+  uint8_t i=0; 
   console_log("\nERROR: Failed to allocate a ressource!\n");
   /*while(1)
   {

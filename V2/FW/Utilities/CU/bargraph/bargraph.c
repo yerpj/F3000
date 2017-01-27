@@ -1,32 +1,30 @@
 #include "bargraph.h"
 
-uint32_t bargraph_table[21]={BAR_LED1,BAR_LED2,BAR_LED3,BAR_LED4,BAR_LED5,
-                             BAR_LED6,BAR_LED7,BAR_LED8,BAR_LED9,BAR_LED10,
-                             BAR_LED11,BAR_LED12,BAR_LED13,BAR_LED14,
-                             BAR_LED15,BAR_LED16,BAR_LED17,BAR_LED18,
-                             BAR_LED19,BAR_LED20,BAR_LED21};
+extern uint32_t CU_bargraph_table[];
 
-uint8_t bargraph_Set(uint8_t value,uint8_t filledOrDot)
+uint8_t bargraph_Set(uint8_t StartValue,uint8_t StopValue,uint8_t NegativeMask)
 {
   uint8_t i;
   uint32_t filledMask=0;
-  if(value<1 || value>21)
+  if(StartValue<1 || StartValue>21)
+    return 1;
+  if(StopValue<1 || StopValue>21)
+    return 1;
+  if(NegativeMask>21)
     return 1;
     
-  LEDbuffer_MaskReset(BAR_ALL);
+  LEDbuffer_MaskReset(BAR_ALL);    
   
-  if(filledOrDot)
+  for(i=(StartValue-1);i<(StopValue);i++)
+    filledMask|=CU_bargraph_table[i];
+  
+  if(NegativeMask>0)
   {
-    //filled
-    for(i=0;i<(value);i++)
-      filledMask|=bargraph_table[i];
-    LEDbuffer_MaskSet(filledMask);
+    filledMask^=CU_bargraph_table[NegativeMask-1];
   }
-  else
-  {
-    //dot
-    LEDbuffer_MaskSet(bargraph_table[value-1]);
-  }
+  LEDbuffer_MaskSet(filledMask);
+
   LEDbuffer_refresh();
+
   return 0;
 }

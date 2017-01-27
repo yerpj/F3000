@@ -86,6 +86,7 @@ uint8_t SEG7_Set(uint8_t value)
   default:break;
   }
   LEDbuffer_refresh();
+  return 0;
 }
 
 

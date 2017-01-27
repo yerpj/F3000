@@ -63,6 +63,10 @@ uint8_t gear_stop(void)
 
 uint8_t gear_toNeutral(void)
 {
+  if(gear_current_pos!=gear_pos_N)
+  {
+    
+  }
   return 0;
 }
 

@@ -119,7 +119,7 @@ void ADC_LowLevelInit(void)
     {
       if( (ADC1_CHANNELS_MAP & (BIT0<<j)))
       {
-        ADC_RegularChannelConfig(ADC1,j ,i+1, ADC_SampleTime_480Cycles);
+        ADC_RegularChannelConfig(ADC1,j ,i+1, ADC_SampleTime_56Cycles);
         ADCChannelValueMapping[j]=i;
         if(j==ADC_Channel_Vbat)
           ADC_Cmd(ADC1, ENABLE);//  ?!?!?!?

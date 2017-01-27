@@ -33,13 +33,95 @@ const uint8_t I2C_SDA_SOURCE[I2Cn] = {PCA9952_I2C_SDA_SOURCE,PCA9952_I2C_SDA_SOU
 const uint8_t I2C_SDA_AF[I2Cn] = {PCA9952_I2C_SDA_AF,PCA9952_I2C_SDA_AF,PCA9952_I2C_SDA_AF};
 const uint32_t I2C_SPEED[I2Cn] = {PCA9952_I2C_SPEED,PCA9952_I2C_SPEED,PCA9952_I2C_SPEED};
 
+uint64_t CU_CommonLeds_table[16]={SEG7_SEG_A_MASK,
+                                  SEG7_SEG_B_MASK,
+                                  SEG7_SEG_C_MASK,
+                                  SEG7_SEG_D_MASK,
+                                  SEG7_SEG_E_MASK,
+                                  SEG7_SEG_F_MASK,
+                                  SEG7_SEG_G_MASK,
+                                  SEG7_SEG_DP_MASK,
+                                  LED_TEMP1_MASK,
+                                  LED_TEMP2_MASK,
+                                  LED_TEMP3_MASK,
+                                  LED_MODE1_MASK,
+                                  LED_MODE2_MASK,
+                                  LED_MODE3_MASK,
+                                  LED_N_MASK,
+                                  LED_OIL_MASK};
+
+uint32_t CU_CommonLeds_intensity[16]={SEG7_SEG_INTENSITY,
+                                      SEG7_SEG_INTENSITY,
+                                      SEG7_SEG_INTENSITY,
+                                      SEG7_SEG_INTENSITY,
+                                      SEG7_SEG_INTENSITY,
+                                      SEG7_SEG_INTENSITY,
+                                      SEG7_SEG_INTENSITY,
+                                      SEG7_SEG_INTENSITY,
+                                      LED_TEMP1_INTENSITY,
+                                      LED_TEMP2_INTENSITY,
+                                      LED_TEMP3_INTENSITY,
+                                      LED_MODE1_INTENSITY,
+                                      LED_MODE2_INTENSITY,
+                                      LED_MODE3_INTENSITY,
+                                      LED_N_INTENSITY,
+                                      LED_OIL_INTENSITY};
+                                  
+                                  
+
+uint32_t CU_bargraph_table[21]={ BAR_LED1,
+                              BAR_LED2,
+                              BAR_LED3,
+                              BAR_LED4,
+                              BAR_LED5,
+                              BAR_LED6,
+                              BAR_LED7,
+                              BAR_LED8,
+                              BAR_LED9,
+                              BAR_LED10,
+                              BAR_LED11,
+                              BAR_LED12,
+                              BAR_LED13,
+                              BAR_LED14,
+                              BAR_LED15,
+                              BAR_LED16,
+                              BAR_LED17,
+                              BAR_LED18,
+                              BAR_LED19,
+                              BAR_LED20,
+                              BAR_LED21};
+
+uint32_t CU_bargraph_intensity[21]={ (uint32_t)((float)BAR_LED1_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED2_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED3_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED4_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED5_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED6_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED7_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED8_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED9_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED10_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED11_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED12_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED13_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED14_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED15_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED16_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED17_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED18_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED19_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED20_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
+                                     (uint32_t)((float)BAR_LED21_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR)};
+
 //void Console_Rx_Task(void * pvParameters);
 //xSemaphoreHandle Console_rx_sem;
 //uint8_t ConsoleRXBuf[50];
 //uint8_t ConsoleRXPtr=0;
 //uint8_t ConsoleRXReady=0;
 
-void LEDs_Init(void)
+uint8_t CU_Mode=CU_Mode_Manual;
+
+/*void LEDs_Init(void)
 {
   
   CU_LEDInit(LED_BLUE);
@@ -53,17 +135,17 @@ void LEDs_Init(void)
   CU_LEDOff(LED_BLUE);
   CU_LEDOff(LED_RED);
   CU_LEDOff(LED_GREEN);
-}
+}*/
 
-void CU_LEDInit(Led_TypeDef Led)
+/*void CU_LEDInit(Led_TypeDef Led)
 {
   GPIO_InitTypeDef  GPIO_InitStructure;
   
-  /* Enable the GPIO_LED Clock */
+
   RCC_AHB1PeriphClockCmd(GPIO_CLK[Led], ENABLE);
 
 
-  /* Configure the GPIO_LED pin */
+
   GPIO_InitStructure.GPIO_Pin = GPIO_PIN[Led];
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
@@ -73,22 +155,22 @@ void CU_LEDInit(Led_TypeDef Led)
   
   CU_LEDOn(Led);
   CU_LEDOff(Led);
-}
+}*/
 
-void CU_LEDDeInit(Led_TypeDef Led)
+/*void CU_LEDDeInit(Led_TypeDef Led)
 {
   GPIO_InitTypeDef  GPIO_InitStructure;
   
-  /* Enable the GPIO_LED Clock */
+
   RCC_AHB1PeriphClockCmd(GPIO_CLK[Led], ENABLE);
   
-  /* Configure the GPIO_LED pin */
+
   GPIO_InitStructure.GPIO_Pin = GPIO_PIN[Led];
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_Init(GPIO_PORT[Led], &GPIO_InitStructure);
-}
+}*/
 
 /**
   * @brief  Turns selected LED On.
@@ -100,9 +182,19 @@ void CU_LEDDeInit(Led_TypeDef Led)
   *     @arg LED4  
   * @retval None
   */
-void CU_LEDOn(Led_TypeDef Led)
+/*void CU_LEDOn(Led_TypeDef Led)
 {
   GPIO_PORT[Led]->BSRRH = GPIO_PIN[Led]; 
+}*/
+
+void CU_STOP_On(void)
+{
+  GPIO_SetBits(STOP_OUTPUT_GPIO_PORT,STOP_OUTPUT_PIN);
+}
+
+void CU_STOP_Off(void)
+{
+  GPIO_ResetBits(STOP_OUTPUT_GPIO_PORT,STOP_OUTPUT_PIN);
 }
 
 /**
@@ -115,10 +207,10 @@ void CU_LEDOn(Led_TypeDef Led)
   *     @arg LED4 
   * @retval None
   */
-void CU_LEDOff(Led_TypeDef Led)
+/*void CU_LEDOff(Led_TypeDef Led)
 {
   GPIO_PORT[Led]->BSRRL = GPIO_PIN[Led]; 
-}
+}*/
 
 /**
   * @brief  Toggles the selected LED.
@@ -130,10 +222,10 @@ void CU_LEDOff(Led_TypeDef Led)
   *     @arg LED4  
   * @retval None
   */
-void CU_LEDToggle(Led_TypeDef Led)
+/*void CU_LEDToggle(Led_TypeDef Led)
 {
   GPIO_PORT[Led]->ODR ^= GPIO_PIN[Led];
-}
+}*/
 
 void CU_RNGInit(void)
 {
@@ -358,6 +450,37 @@ void I2C_Bus_Init(I2C_List_Typedef I2Cx)
   
   /* Initialize the I2C peripheral */
   I2C_Init(I2C_PERIPH[I2Cx] , &I2C_InitStructure);
+}
+
+uint8_t CU_LEDsInit(void)
+{
+  uint32_t i=0;
+#ifdef USE_BREADBOARD
+  PCA9952_Init(BUS_I2C3,PCA9952_MAIN_ADDR);
+#else /* USE_BREADBOARD */
+  PCA9952_Init(BUS_I2C1,PCA9952_MAIN_ADDR);
+  PCA9952_Init(BUS_I2C1,PCA9952_BAR1_ADDR);
+  PCA9952_Init(BUS_I2C1,PCA9952_BAR2_ADDR);
+#endif /* USE_BREADBOARD */
+  
+  /* Set bargraph LEDs intensity */
+  for(i=0;i<21;i++)
+  {
+    if(CU_bargraph_table[i]>0x8000)
+      PCA9952_LED_Intensity_Control(PCA9952_BAR2_ADDR,(CU_bargraph_table[i]>>16),CU_bargraph_intensity[i]);
+    else
+      PCA9952_LED_Intensity_Control(PCA9952_BAR1_ADDR,CU_bargraph_table[i],CU_bargraph_intensity[i]);
+  }
+  
+  /* Set other leds intensity */
+  for(i=0;i<16;i++)
+  {
+    if(CU_CommonLeds_table[i]>0xFFFFFFFF)
+      PCA9952_LED_Intensity_Control(PCA9952_MAIN_ADDR,(CU_CommonLeds_table[i]>>32),CU_CommonLeds_intensity[i]);
+    else
+      PCA9952_LED_Intensity_Control(PCA9952_BAR1_ADDR,CU_CommonLeds_table[i],CU_CommonLeds_intensity[i]);
+  }
+  return 0;
 }
 
 uint8_t CU_IOInit(void)
@@ -624,16 +747,51 @@ uint8_t CU_IOInit(void)
   GPIO_InitStructure.GPIO_Pin =MOTEURp_OUTPUT_PIN;
   GPIO_Init(MOTEURp_OUTPUT_GPIO_PORT, &GPIO_InitStructure);
   
-  //-->MOTEURm_OUTPUT_PIN
-  RCC_AHB1PeriphClockCmd(MOTEURm_OUTPUT_GPIO_CLK, ENABLE);
-  GPIO_InitStructure.GPIO_Pin =MOTEURm_OUTPUT_PIN;
-  GPIO_Init(MOTEURm_OUTPUT_GPIO_PORT, &GPIO_InitStructure);
+  //-->STOP_OUTPUT_PIN
+  RCC_AHB1PeriphClockCmd(STOP_OUTPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =STOP_OUTPUT_PIN;
+  GPIO_Init(STOP_OUTPUT_GPIO_PORT, &GPIO_InitStructure);
   
-  //-->MOTEURp_OUTPUT_PIN
-  RCC_AHB1PeriphClockCmd(MOTEURp_OUTPUT_GPIO_CLK, ENABLE);
-  GPIO_InitStructure.GPIO_Pin =MOTEURp_OUTPUT_PIN;
-  GPIO_Init(MOTEURp_OUTPUT_GPIO_PORT, &GPIO_InitStructure);
   return 0;
+}
+
+uint8_t CU_GetMode(void)
+{
+  if(GPIO_ReadInputDataBit(MODE0_INPUT_GPIO_PORT,MODE0_INPUT_PIN) && GPIO_ReadInputDataBit(MODE1_INPUT_GPIO_PORT,MODE1_INPUT_PIN))
+  {
+    CU_Mode=CU_Mode_SemiAuto;
+  }
+  else if( GPIO_ReadInputDataBit(MODE0_INPUT_GPIO_PORT,MODE0_INPUT_PIN) && ( !GPIO_ReadInputDataBit(MODE1_INPUT_GPIO_PORT,MODE1_INPUT_PIN) ) )
+  {
+    CU_Mode=CU_Mode_Manual;
+  }
+  else if( GPIO_ReadInputDataBit(MODE1_INPUT_GPIO_PORT,MODE1_INPUT_PIN) && ( !GPIO_ReadInputDataBit(MODE0_INPUT_GPIO_PORT,MODE0_INPUT_PIN) ) )
+  {
+    CU_Mode=CU_Mode_Auto;
+  }
+  else
+    return 0;
+  return CU_Mode;
+}
+
+uint8_t CU_GetOilWarning(void)
+{
+  return GPIO_ReadInputDataBit(OIL_INPUT_GPIO_PORT,OIL_INPUT_PIN);
+}
+
+uint8_t CU_GetStopButton(void)
+{
+  return !GPIO_ReadInputDataBit(BUT_SP_INPUT_GPIO_PORT,BUT_SP_INPUT_PIN);
+}
+
+uint8_t CU_GetStartButton(void)
+{
+  return !GPIO_ReadInputDataBit(BUT_ST_INPUT_GPIO_PORT,BUT_ST_INPUT_PIN);
+}
+
+uint8_t CU_GetNeutralButton(void)
+{
+  return !GPIO_ReadInputDataBit(BUT_N_INPUT_GPIO_PORT,BUT_N_INPUT_PIN);
 }
 
 uint16_t CU_ReadInputsRaw(void)

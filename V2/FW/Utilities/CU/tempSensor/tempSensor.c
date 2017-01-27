@@ -5,7 +5,7 @@ void tempSensor_Monitor_callback(uint16_t value);
 
 void (*tempSensor_cb)(float)=0;
 
-#define TEMPSENSOR_ADC_ACCU_SIZE 10
+#define TEMPSENSOR_ADC_ACCU_SIZE 2
 uint16_t tempSensor_ADCAccu[TEMPSENSOR_ADC_ACCU_SIZE];
 uint8_t tempSensor_ADCAccuPtr=0;
 float tempSensor_currentValue=0;//defined as the input voltage (on header). range: [0..5]V

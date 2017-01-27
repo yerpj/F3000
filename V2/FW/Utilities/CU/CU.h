@@ -19,6 +19,12 @@ typedef enum
   COM2 = 1,
 } COM_TypeDef;
 
+enum{
+  CU_Mode_Manual=1,
+  CU_Mode_SemiAuto=2,
+  CU_Mode_Auto=3
+};
+
 
 #define LED_BLUE LED3
 #define LED_RED LED1
@@ -42,13 +48,30 @@ typedef enum
 #define LED3_GPIO_PORT                   GPIOC
 #define LED3_GPIO_CLK                    RCC_AHB1Periph_GPIOC 
 
-#define LED_OIL_IOEXP_OFFSET                2
-#define LED_N_IOEXP_OFFSET                  2
-#define LED_TEMP_IOEXP_OFFSET               2
-#define LED_MODE_IOEXP_OFFSET               0
 
-#define LED_OIL_MASK                         ((uint64_t)0x0000000000000001<<(15+(16*LED_OIL_IOEXP_OFFSET)))
-#define LED_N_MASK                         ((uint64_t)0x0000000000000001<<(3+(16*LED_N_IOEXP_OFFSET)))
+#define BAR_LED_INTENSITY_GLOBAL_FACTOR (float)(0.3)
+
+#define LED_BLUE_3MM_INTENSITY            25
+#define LED_RED_3MM_INTENSITY             40
+#define LED_GREEN_3MM_INTENSITY           7
+#define LED_RED_5MM_INTENSITY             35
+#define LED_GREEN_5MM_INTENSITY           7
+
+#define LED_OIL_IOEXP_OFFSET                2
+#define LED_OIL_INTENSITY                   LED_RED_5MM_INTENSITY
+#define LED_N_IOEXP_OFFSET                  2
+#define LED_N_INTENSITY                     LED_GREEN_5MM_INTENSITY
+#define LED_TEMP_IOEXP_OFFSET               2
+#define LED_TEMP1_INTENSITY                 LED_BLUE_3MM_INTENSITY
+#define LED_TEMP2_INTENSITY                 LED_GREEN_3MM_INTENSITY
+#define LED_TEMP3_INTENSITY                 LED_RED_5MM_INTENSITY
+#define LED_MODE_IOEXP_OFFSET               0
+#define LED_MODE1_INTENSITY                 LED_GREEN_3MM_INTENSITY
+#define LED_MODE2_INTENSITY                 LED_BLUE_3MM_INTENSITY
+#define LED_MODE3_INTENSITY                 LED_GREEN_3MM_INTENSITY
+
+#define LED_OIL_MASK                           ((uint64_t)0x0000000000000001<<(15+(16*LED_OIL_IOEXP_OFFSET)))
+#define LED_N_MASK                             ((uint64_t)0x0000000000000001<<(3+(16*LED_N_IOEXP_OFFSET)))
 #define LED_TEMP1_MASK                         ((uint64_t)0x0000000000000001<<(8+(16*LED_TEMP_IOEXP_OFFSET)))
 #define LED_TEMP2_MASK                         ((uint64_t)0x0000000000000001<<(9+(16*LED_TEMP_IOEXP_OFFSET)))
 #define LED_TEMP3_MASK                         ((uint64_t)0x0000000000000001<<(10+(16*LED_TEMP_IOEXP_OFFSET)))
@@ -58,6 +81,7 @@ typedef enum
 
 #define SEG7_IOEXP_OFFSET               2
 /* CU 7 segment display */
+#define SEG7_SEG_INTENSITY              8
 #define SEG7_SEG_A_MASK                 ((uint64_t)0x0000000000000001<<(12+(16*SEG7_IOEXP_OFFSET)))
 #define SEG7_SEG_B_MASK                 ((uint64_t)0x0000000000000001<<(11+(16*SEG7_IOEXP_OFFSET)))
 #define SEG7_SEG_C_MASK                 ((uint64_t)0x0000000000000001<<(6+(16*SEG7_IOEXP_OFFSET)))
@@ -85,29 +109,52 @@ typedef enum
 #define D13_G_LED_INDEX                 2
 #define D13_B_LED_INDEX                 1
 #else /* USE_BREADBOARD */
-#define BAR_ALL                         0x3F0FE7FF
+#define BAR_ALL                         0x3F0FE0FF      //previous value: 0x3F0FE7FF
+
+
 
 #define BAR_LED1                        (0x0001<<7) 
+#define BAR_LED1_INTENSITY              LED_BLUE_3MM_INTENSITY
 #define BAR_LED2                        (0x0001<<6) 
+#define BAR_LED2_INTENSITY              LED_BLUE_3MM_INTENSITY
 #define BAR_LED3                        (0x0001<<5) 
+#define BAR_LED3_INTENSITY              LED_BLUE_3MM_INTENSITY
 #define BAR_LED4                        (0x0001<<4) 
+#define BAR_LED4_INTENSITY              LED_BLUE_3MM_INTENSITY
 #define BAR_LED5                        (0x0001<<3) 
+#define BAR_LED5_INTENSITY              LED_BLUE_3MM_INTENSITY
 #define BAR_LED6                        (0x0001<<2) 
-#define BAR_LED7                        (0x0001<<1) 
+#define BAR_LED6_INTENSITY              LED_BLUE_3MM_INTENSITY
+#define BAR_LED7                        (0x0001<<1)
+#define BAR_LED7_INTENSITY              LED_BLUE_3MM_INTENSITY 
 #define BAR_LED8                        (0x0001<<0) 
+#define BAR_LED8_INTENSITY              LED_BLUE_3MM_INTENSITY
 #define BAR_LED9                        (0x0001<<15) 
+#define BAR_LED9_INTENSITY              LED_BLUE_3MM_INTENSITY
 #define BAR_LED10                       (0x0001<<14) 
+#define BAR_LED10_INTENSITY             LED_GREEN_3MM_INTENSITY
 #define BAR_LED11                       (0x0001<<13) 
+#define BAR_LED11_INTENSITY             LED_GREEN_3MM_INTENSITY
 #define BAR_LED12                       (0x0001<<19) 
+#define BAR_LED12_INTENSITY             LED_GREEN_3MM_INTENSITY
 #define BAR_LED13                       (0x0001<<18) 
+#define BAR_LED13_INTENSITY             LED_GREEN_3MM_INTENSITY
 #define BAR_LED14                       (0x0001<<17) 
+#define BAR_LED14_INTENSITY             LED_GREEN_3MM_INTENSITY
 #define BAR_LED15                       (0x0001<<16) 
-#define BAR_LED16                       (0x0001<<29) 
-#define BAR_LED17                       (0x0001<<28) 
+#define BAR_LED15_INTENSITY             LED_GREEN_3MM_INTENSITY
+#define BAR_LED16                       (0x0001<<29)
+#define BAR_LED16_INTENSITY             LED_GREEN_3MM_INTENSITY
+#define BAR_LED17                       (0x0001<<28)
+#define BAR_LED17_INTENSITY             LED_GREEN_3MM_INTENSITY
 #define BAR_LED18                       (0x0001<<27) 
+#define BAR_LED18_INTENSITY             LED_GREEN_3MM_INTENSITY
 #define BAR_LED19                       (0x0001<<26) 
+#define BAR_LED19_INTENSITY             LED_GREEN_3MM_INTENSITY
 #define BAR_LED20                       (0x0001<<25) 
-#define BAR_LED21                       (0x0001<<24)                                
+#define BAR_LED20_INTENSITY             LED_RED_3MM_INTENSITY
+#define BAR_LED21                       (0x0001<<24) 
+#define BAR_LED21_INTENSITY             LED_RED_3MM_INTENSITY                           
 #endif /* USE_BREADBOARD */
 
 
@@ -461,14 +508,14 @@ typedef enum
   #define CU_INPUT_EVENT_GAZ_BIT                      BIT3
 
   #define NEUTRAL_INPUT_PUPD                              GPIO_PuPd_NOPULL 
-  #define NEUTRAL_INPUT_PIN                               GPIO_Pin_6
+  #define NEUTRAL_INPUT_PIN                               GPIO_Pin_1
   #define NEUTRAL_INPUT_GPIO_PORT                         GPIOC
   #define NEUTRAL_INPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOC
-  #define NEUTRAL_INPUT_EXTI_LINE                            EXTI_Line6
+  #define NEUTRAL_INPUT_EXTI_LINE                            EXTI_Line1
   #define NEUTRAL_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOC
-  #define NEUTRAL_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource6
-  #define NEUTRAL_INPUT_EXTI_IRQn                            EXTI9_5_IRQn
-  #define CU_INPUT_EVENT_NEUTRAL_BIT                      BIT6
+  #define NEUTRAL_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource1
+  #define NEUTRAL_INPUT_EXTI_IRQn                            EXTI1_IRQn
+  #define CU_INPUT_EVENT_NEUTRAL_BIT                      BIT1
 
   #define RAPPORTp_INPUT_PUPD                             GPIO_PuPd_NOPULL 
   #define RAPPORTp_INPUT_PIN                              GPIO_Pin_4
@@ -640,6 +687,14 @@ uint8_t Console_LowLevelInit(void);
 void I2C_Bus_Init(I2C_List_Typedef I2Cx);
 uint16_t CU_ReadInputsRaw(void);
 uint8_t CU_IOInit(void);
+uint8_t CU_LEDsInit(void);
+uint8_t CU_GetMode(void);
+uint8_t CU_GetOilWarning(void);
+uint8_t CU_GetStopButton(void);
+uint8_t CU_GetStartButton(void);
+uint8_t CU_GetNeutralButton(void);
+void CU_STOP_On(void);
+void CU_STOP_Off(void);
 
 
 

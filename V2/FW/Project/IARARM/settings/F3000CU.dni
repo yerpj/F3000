@@ -21,7 +21,7 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=325043992
+Checksum=151358584
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -47,15 +47,19 @@ ITMportsTermIO=0
 ITMportsLogFile=0
 ITMlogFile=$PROJ_DIR$\ITM.log
 [array_types]
-Fmt0=uint16_t[3]	4	0
+Fmt0=uint16_t[3]	1	0
+Fmt1=uint8_t[4]	1	0
 [watch_formats]
 Fmt0={W}0:Inputs	1	0
-Fmt1={W}0:Temperature	4	0
-Fmt2={W}0:devAddr	1	0
-Fmt3={W}0:filledMask	1	0
-Fmt4={W}0:mask	4	0
-Fmt5={W}0:tmp	1	0
-Fmt6={W}0:value	3	0
+Fmt1={W}0:Intensity	3	0
+Fmt2={W}0:Mask	1	0
+Fmt3={W}0:Percent	3	0
+Fmt4={W}0:Temperature	4	0
+Fmt5={W}0:devAddr	1	0
+Fmt6={W}0:filledMask	1	0
+Fmt7={W}0:mask	1	0
+Fmt8={W}0:tmp	1	0
+Fmt9={W}0:value	3	0
 [DataLog]
 LogEnabled=0
 SumEnabled=0
@@ -69,10 +73,6 @@ GraphEnabled=0
 ShowTimeLog=1
 ShowTimeSum=1
 SumSortOrder=0
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Count=0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -80,9 +80,6 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
-[Aliases]
-Count=0
-SuppressDialog=0
 [Trace2]
 Enabled=0
 ShowSource=0
@@ -103,3 +100,11 @@ Mode=3
 Graph=0
 Symbiont=0
 Exclusions=
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\src\main.c}.129.8" 0 0 1 "" 0 "" 0
+Count=1
+[Aliases]
+Count=0
+SuppressDialog=0

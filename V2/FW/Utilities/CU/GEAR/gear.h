@@ -20,4 +20,7 @@ uint8_t gear_getPosition(void);
 uint8_t gear_isMoving(void);
 uint8_t gear_stop(void);
 
+uint8_t gear_increase(void);
+uint8_t gear_decrease(void);
+
 #endif /* __GEAR_H__ */

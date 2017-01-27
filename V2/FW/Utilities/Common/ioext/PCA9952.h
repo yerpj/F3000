@@ -66,5 +66,6 @@ uint8_t PCA9952_read_reg(uint8_t DevAddr, uint8_t reg, uint8_t *buf, uint8_t cou
 uint8_t PCA9952_write_reg(uint8_t DevAddr, uint8_t reg, uint8_t value);
 uint8_t PCA9952_write_burst(uint8_t DevAddr, uint8_t reg, uint8_t *buf,uint8_t count);
 uint8_t PCA9952_LED_Control(uint8_t DevAddr,uint16_t mask);
+uint8_t PCA9952_LED_Intensity_Control(uint8_t DevAddr,uint16_t Mask,uint8_t Intensity);
 
 #endif /* __PCA9952_H__ */

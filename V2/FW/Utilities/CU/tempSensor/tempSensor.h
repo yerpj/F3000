@@ -17,6 +17,7 @@ enum{
 void tempSensor_Init(void (*callback)(float));
 
 float tempSensor_Get_Temp(void);
+uint8_t tempSensor_Get_State(void);
 
 
 #endif /* __TEMPSENSOR_H__ */
