@@ -602,6 +602,12 @@ uint8_t CU_IOInit(void)
   GPIO_InitStructure.GPIO_Pin =VREG_INPUT_PIN;
   GPIO_Init(VREG_INPUT_GPIO_PORT, &GPIO_InitStructure);
   
+  //-->TEMP_IN_INPUT_PIN
+  GPIO_InitStructure.GPIO_PuPd = TEMP_IN_INPUT_PUPD;
+  RCC_AHB1PeriphClockCmd(TEMP_IN_INPUT_GPIO_CLK, ENABLE);
+  GPIO_InitStructure.GPIO_Pin =TEMP_IN_INPUT_PIN;
+  GPIO_Init(TEMP_IN_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  
   /* OUTPUTS **************************************************/
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;

@@ -78,6 +78,7 @@ void F3000_Periodic(void * pvParameters)
     }
     //check MODE buttons
     //handle temperature sensor
+    Indicator_LED_Temp_Set(tempSensor_Get_State());
     //handle OIL sensor
     //handle bargraph?
     //handle STOP button
@@ -178,27 +179,16 @@ void F3000_App(void * pvParameters)
     vTaskDelay(300);
     Indicator_LED_Mode_Set(3);
     vTaskDelay(300);
-    Indicator_LED_Temp_Set(0);
-    vTaskDelay(300);
-    Indicator_LED_Temp_Set(1);
-    vTaskDelay(300);
-    Indicator_LED_Temp_Set(2);
-    vTaskDelay(300);
-    Indicator_LED_Temp_Set(3);
-    vTaskDelay(300);
-    Indicator_LED_Temp_Set(0);
     
     /*Finish*/
     SEG7_Set(10);
     bargraph_Set(21,1);
-    Indicator_LED_Temp_Set(3);
     Indicator_LED_Mode_Set(1);
     Indicator_LED_OIL_Set();
     Indicator_LED_N_Set();
     vTaskDelay(500);
     SEG7_Set(11);
     bargraph_Set(1,0);
-    Indicator_LED_Temp_Set(0);
     Indicator_LED_Mode_Set(1);
     Indicator_LED_OIL_Reset();
     Indicator_LED_N_Reset();

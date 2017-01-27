@@ -205,9 +205,8 @@ typedef enum
  * @brief Definition for Internal Temperature Sensor
  */
 #define ITS_ADC_CHANNEL                         ADC_Channel_16
-#define TEMP_IN_ADC_CHANNEL                     ADC_Channel_18
+#define TEMP_IN_ADC_CHANNEL                     ADC_Channel_8
 #define VREG_ADC_CHANNEL                        ADC_Channel_9
-
 
 
 #define I2Cn    3
@@ -590,6 +589,11 @@ typedef enum
   #define VREG_INPUT_PIN                                  GPIO_Pin_1              
   #define VREG_INPUT_GPIO_PORT                            GPIOB
   #define VREG_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOB 
+
+  #define TEMP_IN_INPUT_PUPD                              GPIO_PuPd_NOPULL 
+  #define TEMP_IN_INPUT_PIN                               GPIO_Pin_0
+  #define TEMP_IN_INPUT_GPIO_PORT                         GPIOB
+  #define TEMP_IN_INPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOB
 #endif /* USE_BREADBOARD */
 
 /* when using breadboard, MOTEURm_OUTPUT_PIN=DIR, MOTEURp_OUTPUT_PIN=EN */
@@ -607,13 +611,13 @@ typedef enum
   #define STOP_OUTPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOD 
 
 #else /* USE_BREADBOARD */
-  #define MOTEURm_OUTPUT_PIN                              GPIO_Pin_0
-  #define MOTEURm_OUTPUT_GPIO_PORT                        GPIOB
-  #define MOTEURm_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOB
+  #define MOTEURm_OUTPUT_PIN                              GPIO_Pin_3
+  #define MOTEURm_OUTPUT_GPIO_PORT                        GPIOA
+  #define MOTEURm_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOA
 
-  #define MOTEURp_OUTPUT_PIN                              GPIO_Pin_4              
-  #define MOTEURp_OUTPUT_GPIO_PORT                        GPIOC
-  #define MOTEURp_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOC 
+  #define MOTEURp_OUTPUT_PIN                              GPIO_Pin_7              
+  #define MOTEURp_OUTPUT_GPIO_PORT                        GPIOA
+  #define MOTEURp_OUTPUT_GPIO_CLK                         RCC_AHB1Periph_GPIOA 
    
   #define STOP_OUTPUT_PIN                               GPIO_Pin_4              
   #define STOP_OUTPUT_GPIO_PORT                         GPIOC
