@@ -39,7 +39,8 @@ It features:
 
 
 ![alt tag](https://github.com/yerpj/F3000/blob/master/V2/DOC/Control_Unit_3dPreview.png)
-![alt tag](https://github.com/yerpj/F3000/blob/master/V2/DOC/Control_Unit.jpg)
+![alt tag](https://github.com/yerpj/F3000/blob/master/V2/DOC/Control_Unit.jpg)  
+![alt tag](https://github.com/yerpj/F3000/blob/master/V2/DOC/LEDdebugging.jpg) 
 
 
            
