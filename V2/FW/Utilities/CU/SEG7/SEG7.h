@@ -14,6 +14,9 @@
 #define DEG7_LOST (9)
 #define DEG7_ALL (10)
 #define DEG7_NONE (11)
+#define DEG7_A (12)
+#define DEG7_d (13)
+#define DEG7_C (14)
 
 uint8_t SEG7_Set(uint8_t value);
 

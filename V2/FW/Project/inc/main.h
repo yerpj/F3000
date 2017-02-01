@@ -37,4 +37,10 @@ extern EventGroupHandle_t CU_Inputs_EventGroup;
   #include "bargraph.h"
 #endif /* USE_BREADBOARD */
 
+enum {
+  MainMode_App=0,
+  MainMode_Diagnostic=1,
+  MainMode_Configuration=2,
+};
+
 #endif /* __MAIN_H */

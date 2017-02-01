@@ -65,8 +65,10 @@ uint8_t gear_toNeutral(void)
 {
   if(gear_current_pos!=gear_pos_N)
   {
-    
+    //todo
+    gear_current_pos=gear_pos_N;
   }
+  
   return 0;
 }
 
