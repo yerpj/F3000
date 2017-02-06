@@ -794,6 +794,26 @@ uint8_t CU_GetNeutralButton(void)
   return !GPIO_ReadInputDataBit(BUT_N_INPUT_GPIO_PORT,BUT_N_INPUT_PIN);
 }
 
+uint8_t CU_GetShifterInput(void)
+{
+  return GPIO_ReadInputDataBit(SHIFTER_INPUT_GPIO_PORT,SHIFTER_INPUT_PIN);
+}
+
+uint8_t CU_GetEmbrayInput(void)
+{
+  return GPIO_ReadInputDataBit(EMBRAY_INPUT_GPIO_PORT,EMBRAY_INPUT_PIN);
+}
+
+uint8_t CU_GetNeutralInput(void)
+{
+  return GPIO_ReadInputDataBit(NEUTRAL_INPUT_GPIO_PORT,NEUTRAL_INPUT_PIN);
+}
+
+uint8_t CU_GetCameInput(void)
+{
+  return GPIO_ReadInputDataBit(CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN);
+}
+
 uint16_t CU_ReadInputsRaw(void)
 {
   uint16_t InputMask=0x0000;

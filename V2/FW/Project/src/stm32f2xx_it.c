@@ -307,13 +307,12 @@ void DMA2_Stream0_IRQHandler(void)
   }
 }
 
-void USART3_IRQHandler(void)
+void USART1_IRQHandler(void)
 {
-  if(USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)
+  if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
   {
-    USART_ClearITPendingBit(USART3, USART_IT_RXNE);
-    STBT_USART_RX_Callback(USART_ReceiveData(USART3));
-    //Elite_LPRP_USART_RX_Callback(USART_ReceiveData(USART3));
+    USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+    STBT_USART_RX_Callback(USART_ReceiveData(USART1));
   }
 }
 

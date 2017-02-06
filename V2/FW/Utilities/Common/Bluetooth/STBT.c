@@ -37,7 +37,7 @@ void STBT_Init(COM_TypeDef SerialCOM)
   
   CU_COMInit(SerialCOM,&USART_InitStruct);
   vSemaphoreCreateBinary(BT_UART_sem);
-  BT_UART_RX_Queue = xQueueCreate( 50, sizeof( uint8_t ) );
+  BT_UART_RX_Queue = xQueueCreate( 100, sizeof( uint8_t ) );
 
   xTaskCreate(STBT_Task, "BlueTooth", 5*configMINIMAL_STACK_SIZE, NULL, 9, NULL);
 }
@@ -48,11 +48,11 @@ void STBT_Send(uint8_t *str)
   xSemaphoreTake(BT_UART_sem, portMAX_DELAY);
   do
   {
-    while( !(USART3->SR & 0x00000040) );
-    USART_SendData(USART3,str[x]);
+    while( !(USART1->SR & 0x00000040) );
+    USART_SendData(USART1,str[x]);
     x++;
   }while( (str[x]!=0) );
-    while( !(USART3->SR & 0x00000040) );
+    while( !(USART1->SR & 0x00000040) );
   xSemaphoreGive(BT_UART_sem);
 }
 
@@ -62,11 +62,11 @@ void STBT_SendLine(uint8_t *str, uint32_t length)
   xSemaphoreTake(BT_UART_sem, portMAX_DELAY);
   do
   {
-    while( !(USART3->SR & 0x00000040) );
-    USART_SendData(USART3,str[x]);
+    while( !(USART1->SR & 0x00000040) );
+    USART_SendData(USART1,str[x]);
     x++;
   }while( (str[x]!=0) && (x<length) );
-    while( !(USART3->SR & 0x00000040) );
+    while( !(USART1->SR & 0x00000040) );
   xSemaphoreGive(BT_UART_sem);
 }
 
@@ -94,15 +94,15 @@ void STBT_Task(void * pvParameters)
   //uint32_t numbytesread,numbyteswritten;
   uint8_t i=0;
   /*Update the module name*/
-  //STBT_Send("AT+AB Config DeviceName=F3000\n");
+  //bah facdscsdcdsSTBT_Send("AT+AB Config DeviceName=F3000\n");
   vTaskDelay(100);
   /*Reset the BT module*/
   STBT_Send("AT+AB Reset \n");
   vTaskDelay(7000);
   /*Enable autoBonding*/
-  STBT_Send("AT+AB EnableBond\n");
+  //STBT_Send("AT+AB EnableBond\n");
   vTaskDelay(100);
-  STBT_Send("AT+AB Config PIN=1234\n");
+  //STBT_Send("AT+AB Config PIN=1234\n");
   vTaskDelay(100);
   for(;;)
   {
@@ -128,6 +128,7 @@ void STBT_Task(void * pvParameters)
           {
             BT_State=Active_Command_mode;           
           }
+          buffer_init(BTRXedStr,0,BTRXedStrPtr-1);
           BTRXedStrPtr=0;
         }
         else
@@ -139,6 +140,7 @@ void STBT_Task(void * pvParameters)
               CLI_Input(BTRXedStr[i]);
             CLI_Input('\r');
             CLI_Input('\n');
+            buffer_init(BTRXedStr,0,BTRXedStrPtr-1);
             BTRXedStrPtr=0;
           }
         }
@@ -159,7 +161,9 @@ void STBT_Task(void * pvParameters)
           {
             BT_State=Active_Command_mode;
           }
+          buffer_init(BTRXedStr,0,BTRXedStrPtr-1);
           BTRXedStrPtr=0;
+          
         }
         break;
       default:break;

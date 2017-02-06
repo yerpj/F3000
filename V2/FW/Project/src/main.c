@@ -18,6 +18,7 @@ uint8_t MainMode=MainMode_App;
 //other variables
 uint8_t Vreg_based_LED=0;
 uint8_t str[300];
+EventGroupHandle_t CU_Inputs_EventGroup;
 
 uint8_t MainAppChangeMode(uint8_t Mode)
 {
@@ -189,7 +190,7 @@ void F3000_Periodic(void * pvParameters)
     //check MODE buttons
     Indicator_LED_Mode_Set(CU_GetMode());
     //handle temperature sensor
-    Indicator_LED_Temp_Set(tempSensor_Get_State());
+    Indicator_LED_Temp_Set(0/*tempSensor_Get_State()*/);
     Vreg_based_LED=((uint8_t)(tempSensor_Get_Temp()*4.2))%22;
 
     //handle OIL sensor
@@ -207,8 +208,6 @@ void F3000_Periodic(void * pvParameters)
       CU_STOP_Off();
   }
 }
-
-EventGroupHandle_t CU_Inputs_EventGroup;
 
 void F3000_App(void * pvParameters)
 {
@@ -228,7 +227,7 @@ void F3000_App(void * pvParameters)
   LEDbuffer_refresh();
   LEDbuffer_MaskReset(0xFFFFFFFFFFFF);
   LEDbuffer_refresh();
-  gear_toNeutral();
+  //gear_toNeutral();
   while(!err)
   {
     //take MainAppMutex first
@@ -273,15 +272,16 @@ uint8_t F3000CLIInterpreter(uint8_t *raw)
   else if(strstr(cmd,"GEAR -s UP")>0)
   {
     gear_increase();
-    while(gear_isMoving())
-      vTaskDelay(50);
     CLI_Output("GEAR: OK");
   }
   else if(strstr(cmd,"GEAR -s DOWN")>0)
   {
     gear_decrease();
-    while(gear_isMoving())
-      vTaskDelay(50);
+    CLI_Output("GEAR: OK");
+  }
+  else if(strstr(cmd,"GEAR -s NEUTRAL")>0)
+  {
+    gear_toNeutral();
     CLI_Output("GEAR: OK");
   }
   else
@@ -319,9 +319,13 @@ void main(void)
   CU_IOInit();
   CU_LEDsInit();
   
-  STBT_Init(COM2);
+  STBT_Init(COM1);
   console_Init(STBT_ConsoleOutput);
   CLI_Init(console_log,F3000CLIInterpreter);
+  if(gear_Init())
+  {
+    console_log("can't init GearBox");
+  }
   
   //xTaskCreate(ToggleLed1, "LED1", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, NULL);
   xTaskCreate(F3000_App, "Application", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &AppTaskHandle);

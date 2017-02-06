@@ -165,15 +165,15 @@ enum{
  */ 
 #define EVAL_COM1                        USART1
 #define EVAL_COM1_CLK                    RCC_APB2Periph_USART1
-#define EVAL_COM1_TX_PIN                 GPIO_Pin_6
-#define EVAL_COM1_TX_GPIO_PORT           GPIOB
-#define EVAL_COM1_TX_GPIO_CLK            RCC_AHB1Periph_GPIOB
-#define EVAL_COM1_TX_SOURCE              GPIO_PinSource6
+#define EVAL_COM1_TX_PIN                 GPIO_Pin_9
+#define EVAL_COM1_TX_GPIO_PORT           GPIOA
+#define EVAL_COM1_TX_GPIO_CLK            RCC_AHB1Periph_GPIOA
+#define EVAL_COM1_TX_SOURCE              GPIO_PinSource9
 #define EVAL_COM1_TX_AF                  GPIO_AF_USART1
-#define EVAL_COM1_RX_PIN                 GPIO_Pin_7
-#define EVAL_COM1_RX_GPIO_PORT           GPIOB
-#define EVAL_COM1_RX_GPIO_CLK            RCC_AHB1Periph_GPIOB
-#define EVAL_COM1_RX_SOURCE              GPIO_PinSource7
+#define EVAL_COM1_RX_PIN                 GPIO_Pin_10
+#define EVAL_COM1_RX_GPIO_PORT           GPIOA
+#define EVAL_COM1_RX_GPIO_CLK            RCC_AHB1Periph_GPIOA
+#define EVAL_COM1_RX_SOURCE              GPIO_PinSource10
 #define EVAL_COM1_RX_AF                  GPIO_AF_USART1
 #define EVAL_COM1_IRQn                   USART1_IRQn
 
@@ -693,6 +693,10 @@ uint8_t CU_GetOilWarning(void);
 uint8_t CU_GetStopButton(void);
 uint8_t CU_GetStartButton(void);
 uint8_t CU_GetNeutralButton(void);
+uint8_t CU_GetShifterInput(void);
+uint8_t CU_GetEmbrayInput(void);
+uint8_t CU_GetNeutralInput(void);
+uint8_t CU_GetCameInput(void);
 void CU_STOP_On(void);
 void CU_STOP_Off(void);
 
