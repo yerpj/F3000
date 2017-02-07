@@ -141,7 +141,7 @@ void gear_task(void * pvParameters)
       gear_down();
       
       //wait on CAME or timeout if CAME is not already HIGH
-      if(!CU_GetCameInput()) WROOOOOOONG !!!!! NEED SOME POLLING ON EACH OF INCREASE/DECREASE/TONEUTRAL FUNCTIONS!!! 
+      if(!CU_GetCameInput()) /* WROOOOOOONG !!!!! NEED SOME POLLING ON EACH OF INCREASE/DECREASE/TONEUTRAL FUNCTIONS!!! */
       {
         if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_CAME_TIMEOUT_MS) )
           console_log("INFO: Missed CAME event");
