@@ -1,6 +1,8 @@
 #include "gear.h"
 #include "CU.h"
 
+#define USE_DEVMOTOR
+
 //gearbox task 
 xTaskHandle Gear_taskHandler;
 EventGroupHandle_t gear_Events;
@@ -24,7 +26,7 @@ void gear_task(void * pvParameters)
     else if( (EventBits & GEAR_EVENT_TONEUTRAL) !=0 )
     {//to neutral
       xEventGroupClearBits(gear_Events,GEAR_EVENT_TONEUTRAL);
-      if( (gear_current_pos==gear_pos_lost) || (gear_current_pos==gear_pos_1) || (!CU_GetNeutralInput() && (gear_current_pos==gear_pos_N)) )   //TO BE VFERIFIED
+      if( (gear_current_pos==gear_pos_lost) || (gear_current_pos==gear_pos_1) || (!CU_GetNeutralInput() && (gear_current_pos==gear_pos_N)) )   //TO BE VERIFIED
       {
         SEG7_Set(DEG7_DOT);
         
@@ -36,6 +38,16 @@ void gear_task(void * pvParameters)
         
         //begin turning motor
         gear_up();
+        
+        //wait until CAME input is down
+        while( CU_GetCameInput() )
+        {
+          vTaskDelay(2);
+          // TODO: add a timeout mechanism HERE
+        }
+        
+        //clear CAME event bit
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
         
         i=(GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS/2 /*same time as in while loop below*/ );
       
@@ -69,23 +81,53 @@ void gear_task(void * pvParameters)
       else if( gear_current_pos==gear_pos_2 )
       {
         SEG7_Set(DEG7_DOT);
-        //clear CAME event bit
-        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
+        
+        //clear NEUTRAL event bit
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT);
+        
         //begin turning motor
         gear_down();
-        //wait on CAME event
+        
+        //wait until CAME input is down
+        while( CU_GetCameInput() )
+        {
+          vTaskDelay(2);
+          // TODO: add a timeout mechanism HERE
+        }
+        
+        //clear CAME event bit
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
+        
+        //wait for NEUTRAL INPUT TO BE ASSERTED with timeout
+        while( i && !(xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT) )
+        {
+          if( (xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_CAME_BIT) )
+          {
+            gear_stop();
+            gear_current_pos=gear_pos_lost;
+          }
+          vTaskDelay(2);
+          i--;
+        }
+        
+        //begin turning motor
+        gear_up();
+        
+        //clear CAME event bit
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
+
+        //wait on CAME event with timeout
         if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_CAME_TIMEOUT_MS) )
         {
           console_log("INFO: Missed CAME event");
           gear_current_pos=gear_pos_lost;
-          gear_stop();
           SEG7_Set(DEG7_LOST);
-          continue;
         }
         else
         {
           gear_current_pos=gear_pos_N;
         }
+        gear_stop();
       }      
       SEG7_Set(DEG7_0);
     }
@@ -99,29 +141,42 @@ void gear_task(void * pvParameters)
       //clear CAME event bit
       xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
       
-      //clear SHIFTER event bit
-      xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_SHIFTER_BIT);
-      
       //begin turning motor
       gear_up();
+      
+      //wait until CAME input is low
+      while( CU_GetCameInput() )
+      {
+        vTaskDelay(2);
+        // TODO: add a timeout mechanism HERE
+      }
+      
+      //clear CAME event bit
+      xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
       
       i=(GEAR_WAIT_ON_CAME_TIMEOUT_MS/5 /*same time as in while loop below*/ );
       
       //wait on CAME event of input HIGH with timeout
-      while( i && !(xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_CAME_BIT) && !CU_GetCameInput())
+      while( i && !(xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_CAME_BIT) )
       {
         if(gear_mode!=gear_mode_manual)
         {
           if(CU_GetShifterInput() && (!CU_GetEmbrayInput()) )
+          {
             CU_STOP_On();
+          }
           else
+          {
             CU_STOP_Off();
+          }
         }
         vTaskDelay(5);
         i--;
       }
       if(i==0)
         console_log("INFO: Missed CAME event");
+      
+      CU_STOP_Off();
       gear_stop();
       
       //set 7SEG to a valid value
@@ -134,18 +189,23 @@ void gear_task(void * pvParameters)
       //set 7SEG to DOT
       SEG7_Set(DEG7_DOT);
       
-      //clear CAME event bit
-      xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
-      
       //begin turning motor
       gear_down();
       
-      //wait on CAME or timeout if CAME is not already HIGH
-      if(!CU_GetCameInput()) /* WROOOOOOONG !!!!! NEED SOME POLLING ON EACH OF INCREASE/DECREASE/TONEUTRAL FUNCTIONS!!! */
+      //wait until CAME input is low
+      while( CU_GetCameInput() )
       {
-        if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_CAME_TIMEOUT_MS) )
-          console_log("INFO: Missed CAME event");
+        vTaskDelay(2);
+        // TODO: add a timeout mechanism HERE
       }
+      
+      //clear CAME event bit
+      xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
+      
+      //wait on CAME or timeout
+      if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_CAME_TIMEOUT_MS) )
+        console_log("INFO: Missed CAME event");
+
       gear_stop();
       
       //set 7SEG to a valid value
@@ -210,39 +270,39 @@ uint8_t gear_toNeutral(void)
 uint8_t gear_up(void)
 {
   gear_moving=1;
-#ifdef USE_BREADBOARD
+#if  defined(USE_BREADBOARD) || defined(USE_DEVMOTOR)
   GPIO_SetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);//dir
   GPIO_SetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);//enable
-#else /* USE_BREADBOARD */
+#else /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
   GPIO_SetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
   GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
-#endif /* USE_BREADBOARD */
+#endif /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
   return 0;
 }
 
 uint8_t gear_down(void)
 {
   gear_moving=1;
-#ifdef USE_BREADBOARD
-  GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);//dir
-  GPIO_SetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);//enable
-#else /* USE_BREADBOARD */
+#if  defined(USE_BREADBOARD) || defined(USE_DEVMOTOR)
+  GPIO_SetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);//dir
+  GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);//enable
+#else /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
   GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
   GPIO_SetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
-#endif /* USE_BREADBOARD */
+#endif /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
   return 0;
 }
 
 uint8_t gear_stop(void)
 {
   gear_moving=0;
-#ifdef USE_BREADBOARD
+#if  defined(USE_BREADBOARD) || defined(USE_DEVMOTOR)
   GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);//dir
   GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);//enable
-#else /* USE_BREADBOARD */
+#else /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
   GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
   GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
-#endif /* USE_BREADBOARD */
+#endif /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
   return 0;
 }
 
