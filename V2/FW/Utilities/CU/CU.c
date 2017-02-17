@@ -507,8 +507,16 @@ uint8_t CU_IOInit(void)
   RCC_AHB1PeriphClockCmd(REGIME_INPUT_GPIO_CLK, ENABLE);
   GPIO_InitStructure.GPIO_Pin =REGIME_INPUT_PIN;
   GPIO_Init(REGIME_INPUT_GPIO_PORT, &GPIO_InitStructure);
+  SYSCFG_EXTILineConfig(REGIME_INPUT_EXTI_PORT_SOURCE,REGIME_INPUT_EXTI_PIN_SOURCE);
+  /* REGIME_INPUT_PIN EXTI line */
+  EXTI_InitStructure.EXTI_Line = REGIME_INPUT_EXTI_LINE;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  EXTI_Init(&EXTI_InitStructure);
+  /* Enable and set Button EXTI Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = REGIME_INPUT_EXTI_IRQn;
+  NVIC_Init(&NVIC_InitStructure); 
   
-  //SYSCFG_EXTILineConfig(REGIME_INPUT_EXTI_PORT_SOURCE,REGIME_INPUT_EXTI_PIN_SOURCE);
+  
   /* Configure Button EXTI line */
   EXTI_InitStructure.EXTI_Line = REGIME_INPUT_EXTI_LINE;
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  

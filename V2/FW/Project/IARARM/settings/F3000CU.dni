@@ -21,7 +21,7 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=-1099888089
+Checksum=1735672642
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -55,12 +55,13 @@ Fmt1={W}0:Inputs	1	0
 Fmt2={W}0:Intensity	3	0
 Fmt3={W}0:Mask	1	0
 Fmt4={W}0:Percent	3	0
-Fmt5={W}0:Temperature	4	0
-Fmt6={W}0:devAddr	1	0
-Fmt7={W}0:filledMask	1	0
-Fmt8={W}0:mask	1	0
-Fmt9={W}0:tmp	1	0
-Fmt10={W}0:value	3	0
+Fmt5={W}0:StopValue	3	0
+Fmt6={W}0:Temperature	4	0
+Fmt7={W}0:devAddr	1	0
+Fmt8={W}0:filledMask	1	0
+Fmt9={W}0:mask	1	0
+Fmt10={W}0:tmp	1	0
+Fmt11={W}0:value	3	0
 [DataLog]
 LogEnabled=0
 SumEnabled=0

@@ -43,6 +43,11 @@ uint8_t (*SysTick_Delay_cb)(void)=NULL;
 uint32_t Delay_ms_tick=0;
 uint32_t SysTick_Delay_ms=0;
 
+uint32_t Regime_Delay_ms=0;
+uint32_t Regime_RPM=0;
+uint32_t RegimeIRQEvents=0;
+
+
 
 
 
@@ -60,6 +65,11 @@ uint8_t DebouncerInit(EventGroupHandle_t xEventGroup)
   ExtInterrupts.EdgeMask=0;
   ExtInterrupts.IsDebouncing=0;
   return 0;
+}
+
+uint32_t Regime_getRPM(void)
+{
+  return Regime_RPM;
 }
 
 uint8_t DebouncerAddInput(uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,uint32_t DebounceTime_ms)
@@ -293,6 +303,14 @@ void SysTick_Handler(void)
     }
   }
   DebouncerHandle();
+  
+  if(++Regime_Delay_ms>200)
+  {
+    Regime_RPM=300*RegimeIRQEvents;
+    RegimeIRQEvents=0;
+    Regime_Delay_ms=0;
+  }
+  
 }
 
 void DMA2_Stream0_IRQHandler(void)
@@ -446,9 +464,10 @@ void EXTI9_5_IRQHandler()
   
   //Regime: PC7
   if(EXTI_GetITStatus(REGIME_INPUT_EXTI_LINE) != RESET){
-    if(CU_Inputs_EventGroup!=NULL){
+    /*if(CU_Inputs_EventGroup!=NULL){
       if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_REGIME_BIT) ==RESET)
-        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_REGIME_BIT,&xHigherPriorityTaskWoken);}
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_REGIME_BIT,&xHigherPriorityTaskWoken);}*/
+    RegimeIRQEvents++;
     EXTI_ClearITPendingBit(REGIME_INPUT_EXTI_LINE);}
   
   //PAL_g: PA8

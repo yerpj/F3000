@@ -17,7 +17,9 @@ uint8_t bargraph_Set(uint8_t StartValue,uint8_t StopValue)
   uint32_t filledMask=0;
   if(StartValue<1 || StartValue>BARGRAPH_NLEDS)
     return 1;
-  if(StopValue<1 || StopValue>BARGRAPH_NLEDS)
+  if(StopValue<1)
+    StopValue=1;
+  else if(StopValue>BARGRAPH_NLEDS)
     return 1;
   if(NegativeMask>BARGRAPH_NLEDS)
     return 1;
