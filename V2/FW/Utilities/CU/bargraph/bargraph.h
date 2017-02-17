@@ -2,6 +2,8 @@
 #define __BARGRAPH_H__
 #include "main.h"
 
+#define BARGRAPH_NLEDS  (21)      //number of LEDS in the bargraph
+
 enum{
   bargraph_FromLeftToRight=1,
   bargraph_FromRightToLeft=0
@@ -12,6 +14,8 @@ enum{
   bargraph_DotMode=0
 };
 
-uint8_t bargraph_Set(uint8_t StartValue,uint8_t StopValue,uint8_t NegativeMask);
+void bargraph_Init(void);
+uint8_t bargraph_Set(uint8_t StartValue,uint8_t StopValue);
+uint8_t bargraph_MaskSet(uint32_t mask);
 
 #endif /* __BARGRAPH_H__ */

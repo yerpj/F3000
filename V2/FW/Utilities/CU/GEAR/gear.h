@@ -11,13 +11,14 @@
 #define GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS (1000)
 
 enum{
-  gear_pos_1=0,
-  gear_pos_N=1,
+  gear_pos_1=1,
+  gear_pos_N=0,
   gear_pos_2=2,
   gear_pos_3=3,
   gear_pos_4=4,
   gear_pos_5=5,
-  gear_pos_lost=6
+  gear_pos_6=6,
+  gear_pos_lost=9
 };
 
 enum{

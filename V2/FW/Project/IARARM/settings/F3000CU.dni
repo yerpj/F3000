@@ -21,7 +21,7 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=-393827891
+Checksum=-1099888089
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -50,16 +50,17 @@ ITMlogFile=$PROJ_DIR$\ITM.log
 Fmt0=uint16_t[3]	1	0
 Fmt1=uint8_t[4]	1	0
 [watch_formats]
-Fmt0={W}0:Inputs	1	0
-Fmt1={W}0:Intensity	3	0
-Fmt2={W}0:Mask	1	0
-Fmt3={W}0:Percent	3	0
-Fmt4={W}0:Temperature	4	0
-Fmt5={W}0:devAddr	1	0
-Fmt6={W}0:filledMask	1	0
-Fmt7={W}0:mask	1	0
-Fmt8={W}0:tmp	1	0
-Fmt9={W}0:value	3	0
+Fmt0={W}0:InputMask	1	0
+Fmt1={W}0:Inputs	1	0
+Fmt2={W}0:Intensity	3	0
+Fmt3={W}0:Mask	1	0
+Fmt4={W}0:Percent	3	0
+Fmt5={W}0:Temperature	4	0
+Fmt6={W}0:devAddr	1	0
+Fmt7={W}0:filledMask	1	0
+Fmt8={W}0:mask	1	0
+Fmt9={W}0:tmp	1	0
+Fmt10={W}0:value	3	0
 [DataLog]
 LogEnabled=0
 SumEnabled=0

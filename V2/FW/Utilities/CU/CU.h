@@ -314,7 +314,7 @@ enum{
 #define CU_CAME_INPUT                           0x0100
 #define CU_RESERVED1_INPUT                      0x0200
 #define CU_RESERVED2_INPUT                      0x0400
-#define CU_RESERVED3_INPUT                      0x0500
+#define CU_RESERVED3_INPUT                      0x0800
 #define CU_PALG_INPUT                           0x1000
 #define CU_PALD_INPUT                           0x2000
 #define CU_MODE0_INPUT                          0x4000
@@ -508,14 +508,14 @@ enum{
   #define CU_INPUT_EVENT_GAZ_BIT                      BIT3
 
   #define NEUTRAL_INPUT_PUPD                              GPIO_PuPd_NOPULL 
-  #define NEUTRAL_INPUT_PIN                               GPIO_Pin_1
+  #define NEUTRAL_INPUT_PIN                               GPIO_Pin_6
   #define NEUTRAL_INPUT_GPIO_PORT                         GPIOC
   #define NEUTRAL_INPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOC
-  #define NEUTRAL_INPUT_EXTI_LINE                            EXTI_Line1
+  #define NEUTRAL_INPUT_EXTI_LINE                            EXTI_Line6
   #define NEUTRAL_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOC
-  #define NEUTRAL_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource1
-  #define NEUTRAL_INPUT_EXTI_IRQn                            EXTI1_IRQn
-  #define CU_INPUT_EVENT_NEUTRAL_BIT                      BIT1
+  #define NEUTRAL_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource6
+  #define NEUTRAL_INPUT_EXTI_IRQn                            EXTI9_5_IRQn
+  #define CU_INPUT_EVENT_NEUTRAL_BIT                      BIT6
 
   #define RAPPORTp_INPUT_PUPD                             GPIO_PuPd_NOPULL 
   #define RAPPORTp_INPUT_PIN                              GPIO_Pin_4
@@ -561,50 +561,50 @@ enum{
   #define RESERVED1_INPUT_PIN                             GPIO_Pin_5
   #define RESERVED1_INPUT_GPIO_PORT                       GPIOA
   #define RESERVED1_INPUT_GPIO_CLK                        RCC_AHB1Periph_GPIOA
-  #define RESERVED1_INPUT_EXTI_LINE                            EXTI_Line13
-  #define RESERVED1_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOB
-  #define RESERVED1_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource13
-  #define RESERVED1_INPUT_EXTI_IRQn                            EXTI15_10_IRQn
+  #define RESERVED1_INPUT_EXTI_LINE                            EXTI_Line5
+  #define RESERVED1_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOA
+  #define RESERVED1_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource5
+  #define RESERVED1_INPUT_EXTI_IRQn                            EXTI9_5_IRQn
   #define CU_INPUT_EVENT_RESERVED1_BIT                      BIT5
   
   #define RESERVED2_INPUT_PUPD                            GPIO_PuPd_NOPULL 
   #define RESERVED2_INPUT_PIN                             GPIO_Pin_6
   #define RESERVED2_INPUT_GPIO_PORT                       GPIOA
   #define RESERVED2_INPUT_GPIO_CLK                        RCC_AHB1Periph_GPIOA
-  #define RESERVED2_INPUT_EXTI_LINE                            EXTI_Line13
-  #define RESERVED2_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOB
-  #define RESERVED2_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource13
-  #define RESERVED2_INPUT_EXTI_IRQn                            EXTI15_10_IRQn
+  #define RESERVED2_INPUT_EXTI_LINE                            EXTI_Line6
+  #define RESERVED2_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOA
+  #define RESERVED2_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource6
+  #define RESERVED2_INPUT_EXTI_IRQn                            EXTI9_5_IRQn
   #define CU_INPUT_EVENT_RESERVED2_BIT                      BIT6
   
   #define RESERVED3_INPUT_PUPD                            GPIO_PuPd_NOPULL 
   #define RESERVED3_INPUT_PIN                             GPIO_Pin_2
   #define RESERVED3_INPUT_GPIO_PORT                       GPIOA
   #define RESERVED3_INPUT_GPIO_CLK                        RCC_AHB1Periph_GPIOA
-  #define RESERVED3_INPUT_EXTI_LINE                            EXTI_Line13
-  #define RESERVED3_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOB
-  #define RESERVED3_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource13
-  #define RESERVED3_INPUT_EXTI_IRQn                            EXTI15_10_IRQn
+  #define RESERVED3_INPUT_EXTI_LINE                            EXTI_Line2
+  #define RESERVED3_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOA
+  #define RESERVED3_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource2
+  #define RESERVED3_INPUT_EXTI_IRQn                            EXTI2_IRQn
   #define CU_INPUT_EVENT_RESERVED3_BIT                      BIT2
 
   #define PALG_INPUT_PUPD                                 GPIO_PuPd_NOPULL 
   #define PALG_INPUT_PIN                                  GPIO_Pin_8
   #define PALG_INPUT_GPIO_PORT                            GPIOA
   #define PALG_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOA
-  #define PALG_INPUT_EXTI_LINE                            EXTI_Line13
-  #define PALG_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOB
-  #define PALG_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource13
-  #define PALG_INPUT_EXTI_IRQn                            EXTI15_10_IRQn
+  #define PALG_INPUT_EXTI_LINE                            EXTI_Line8
+  #define PALG_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOA
+  #define PALG_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource8
+  #define PALG_INPUT_EXTI_IRQn                            EXTI9_5_IRQn
   #define CU_INPUT_EVENT_PALG_BIT                      BIT8
 
   #define PALD_INPUT_PUPD                                 GPIO_PuPd_NOPULL 
   #define PALD_INPUT_PIN                                  GPIO_Pin_0
   #define PALD_INPUT_GPIO_PORT                            GPIOC
   #define PALD_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOC 
-  #define PALD_INPUT_EXTI_LINE                            EXTI_Line13
-  #define PALD_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOB
-  #define PALD_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource13
-  #define PALD_INPUT_EXTI_IRQn                            EXTI15_10_IRQn
+  #define PALD_INPUT_EXTI_LINE                            EXTI_Line0
+  #define PALD_INPUT_EXTI_PORT_SOURCE                     EXTI_PortSourceGPIOC
+  #define PALD_INPUT_EXTI_PIN_SOURCE                      EXTI_PinSource0
+  #define PALD_INPUT_EXTI_IRQn                            EXTI0_IRQn
   #define CU_INPUT_EVENT_PALD_BIT                      BIT0
 
   #define MODE0_INPUT_PUPD                                GPIO_PuPd_NOPULL 

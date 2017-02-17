@@ -842,9 +842,6 @@ uint16_t CU_ReadInputsRaw(void)
   if(GPIO_ReadInputDataBit(CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN))
     InputMask |= CU_CAME_INPUT;   
   
-  if(GPIO_ReadInputDataBit(CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN))
-    InputMask |= CU_CAME_INPUT;   
-  
   if(GPIO_ReadInputDataBit(RESERVED1_INPUT_GPIO_PORT,RESERVED1_INPUT_PIN))
     InputMask |= CU_RESERVED1_INPUT;   
   

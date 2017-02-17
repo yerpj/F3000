@@ -20,6 +20,11 @@ uint8_t Vreg_based_LED=0;
 uint8_t str[300];
 EventGroupHandle_t CU_Inputs_EventGroup;
 
+uint8_t MainAppGetMode(void)
+{
+  return MainMode;
+}
+
 uint8_t MainAppChangeMode(uint8_t Mode)
 {
   //take MainAppMutex first
@@ -44,25 +49,13 @@ uint8_t MainAppChangeMode(uint8_t Mode)
   switch(Mode)
   {
   case MainMode_App:
-    vTaskSuspend(ConfigTaskHandle);
-    vTaskSuspend(DiagnosticTaskHandle);
-    vTaskResume(AppTaskHandle);
     MainMode=MainMode_App;
-    SEG7_Set(DEG7_A);
     break;
   case MainMode_Diagnostic:
-    vTaskSuspend(ConfigTaskHandle);
-    vTaskSuspend(AppTaskHandle);
-    vTaskResume(DiagnosticTaskHandle);
     MainMode=MainMode_Diagnostic;
-    SEG7_Set(DEG7_d);
     break;
   case MainMode_Configuration:
-    vTaskSuspend(DiagnosticTaskHandle);
-    vTaskSuspend(AppTaskHandle);
-    vTaskResume(ConfigTaskHandle);
     MainMode=MainMode_Configuration;
-    SEG7_Set(DEG7_C);
     break;
   default:break;
   }
@@ -105,17 +98,24 @@ void F3000_Conf(void * pvParameters)
   uint8_t dummy=0;
   while(1)
   {
-    //take MainConfigMutex 
-    if( xSemaphoreTake( MainConfigMutex, ( TickType_t ) 100 ) != pdTRUE )
+    if(MainMode==MainMode_Configuration)
     {
-      continue;
+      SEG7_Set(DEG7_C);
+      //take MainConfigMutex 
+      if( xSemaphoreTake( MainConfigMutex, ( TickType_t ) 100 ) != pdTRUE )
+      {
+        continue;
+      }
+      
+      dummy++;
+      
+      //release MainConfigMutex 
+      xSemaphoreGive(MainConfigMutex);
+      vTaskDelay(100);
     }
+    else
+      vTaskDelay(200);
     
-    dummy++;
-    
-    //release MainConfigMutex 
-    xSemaphoreGive(MainConfigMutex);
-    vTaskDelay(100);
   }
 }
 
@@ -124,17 +124,28 @@ void F3000_Diag(void * pvParameters)
   uint8_t dummy=0;
   while(1)
   {
-    //take MainDiagMutex 
-    if( xSemaphoreTake( MainDiagMutex, ( TickType_t ) 100 ) != pdTRUE )
+    if(MainMode==MainMode_Diagnostic)
     {
-      continue;
+      SEG7_Set(DEG7_d);
+      //take MainDiagMutex 
+      if( xSemaphoreTake( MainDiagMutex, ( TickType_t ) 100 ) != pdTRUE )
+      {
+        continue;
+      }
+      
+      bargraph_MaskSet(CU_ReadInputsRaw());
+     
+      //release MainDiagMutex 
+      xSemaphoreGive(MainDiagMutex);
+      
+      if(CU_GetStopButton())
+      {
+        MainAppChangeMode(MainMode_App);
+      }
+      vTaskDelay(20);
     }
-    
-    dummy++;
-   
-    //release MainDiagMutex 
-    xSemaphoreGive(MainDiagMutex);
-    vTaskDelay(10000);
+    else
+      vTaskDelay(200);
   }
 }
 
@@ -144,9 +155,10 @@ void F3000_Periodic(void * pvParameters)
   while(1)
   {
     vTaskDelay(100);
-    if(gear_getPosition()==gear_pos_N)
+    
+    if(CU_GetNeutralButton())
     {
-      if(CU_GetNeutralButton())
+      if(gear_getPosition()==gear_pos_N)
       {
         i=20;
         while(i && CU_GetNeutralButton())
@@ -162,7 +174,7 @@ void F3000_Periodic(void * pvParameters)
             {
               //problem
             }
-            bargraph_Set(1,7,0);
+            //bargraph_Set(1,7,0);
           }
           else if(MainMode==MainMode_Diagnostic)
           {
@@ -170,7 +182,7 @@ void F3000_Periodic(void * pvParameters)
             {
               //problem
             }
-            bargraph_Set(7,14,0);
+            //bargraph_Set(7,14,0);
           }
           else if(MainMode==MainMode_Configuration)
           {
@@ -178,13 +190,12 @@ void F3000_Periodic(void * pvParameters)
             {
               //problem
             }
-            bargraph_Set(14,21,0);
           }
         }
       }
       else
       {
-        
+        gear_toNeutral();
       }
     }
     //check MODE buttons
@@ -222,29 +233,35 @@ void F3000_App(void * pvParameters)
   
   
   
-  bargraph_Set(1,1,Vreg_based_LED);
+  /*bargraph_Set(1,1,Vreg_based_LED);
   LEDbuffer_MaskSet(0xFFFFFFFFFFFF);
   LEDbuffer_refresh();
   LEDbuffer_MaskReset(0xFFFFFFFFFFFF);
-  LEDbuffer_refresh();
-  //gear_toNeutral();
+  LEDbuffer_refresh();*/
+
   while(!err)
   {
-    //take MainAppMutex first
-    if( xSemaphoreTake( MainAppMutex, ( TickType_t ) 100 ) != pdTRUE )
+    if(MainMode==MainMode_App)
     {
-      continue;
+      //take MainAppMutex first
+      if( xSemaphoreTake( MainAppMutex, ( TickType_t ) 100 ) != pdTRUE )
+      {
+        continue;
+      }
+      
+      /*if(CU_GetNeutralButton())
+      {
+       gear_toNeutral();
+      }*/
+      bargraph_Set(1,21);
+      
+      //release MainAppMutex 
+      xSemaphoreGive(MainAppMutex);
+      vTaskDelay(50);
     }
+    else
+      vTaskDelay(200);
     
-    /*if(CU_GetNeutralButton())
-    {
-     gear_toNeutral();
-    }*/
-    //bargraph_Set(1,21,Vreg_based_LED);
-    
-    //release MainAppMutex 
-    xSemaphoreGive(MainAppMutex);
-    vTaskDelay(50);
   }
   while(1)
     vTaskDelay(1000);
@@ -307,6 +324,7 @@ void main(void)
   timer_init();
   ITS_Init(NULL,0);
   tempSensor_Init(NULL);
+  bargraph_Init();
   
   //Applications mutexes
   MainAppMutex = xSemaphoreCreateMutex();
@@ -331,9 +349,9 @@ void main(void)
   xTaskCreate(F3000_App, "Application", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &AppTaskHandle);
   xTaskCreate(F3000_Periodic, "PeriodicTask", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &PeriodicTaskHandle);
   xTaskCreate(F3000_Conf, "Config", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &ConfigTaskHandle);
-  vTaskSuspend(ConfigTaskHandle);
+  //vTaskSuspend(ConfigTaskHandle);
   xTaskCreate(F3000_Diag, "Config", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &DiagnosticTaskHandle);
-  vTaskSuspend(DiagnosticTaskHandle);
+  //vTaskSuspend(DiagnosticTaskHandle);
   
   
   vTaskStartScheduler();

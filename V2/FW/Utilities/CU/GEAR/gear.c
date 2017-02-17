@@ -1,5 +1,6 @@
 #include "gear.h"
 #include "CU.h"
+#include "main.h"
 
 #define USE_DEVMOTOR
 
@@ -18,12 +19,18 @@ void gear_task(void * pvParameters)
   uint32_t i=0;
   while(1)
   {
-    EventBits=xEventGroupWaitBits(gear_Events,GEAR_EVENT_INCREASE|GEAR_EVENT_DECREASE|GEAR_EVENT_TONEUTRAL,pdFALSE,pdFALSE,1000);
-    if( !EventBits )
-    {//no event. continue
+    if( MainAppGetMode()!=MainMode_App )
+    {
+      vTaskDelay(20);
       continue;
     }
-    else if( (EventBits & GEAR_EVENT_TONEUTRAL) !=0 )
+    EventBits=xEventGroupWaitBits(gear_Events,GEAR_EVENT_INCREASE|GEAR_EVENT_DECREASE|GEAR_EVENT_TONEUTRAL,pdFALSE,pdFALSE,50);
+    if( !EventBits )
+    {//no event. continue
+      SEG7_Set(gear_current_pos);
+      continue;
+    }
+    else if( (EventBits & GEAR_EVENT_TONEUTRAL) !=0)
     {//to neutral
       xEventGroupClearBits(gear_Events,GEAR_EVENT_TONEUTRAL);
       if( (gear_current_pos==gear_pos_lost) || (gear_current_pos==gear_pos_1) || (!CU_GetNeutralInput() && (gear_current_pos==gear_pos_N)) )   //TO BE VERIFIED
@@ -71,12 +78,17 @@ void gear_task(void * pvParameters)
         {
           console_log("INFO: Missed CAME event");
           gear_current_pos=gear_pos_lost;
+          #warning THIS GEAR POSITION HAS TO BE REMOVED IN CASE OF ERROR
+          gear_current_pos=gear_pos_N;
         }
         else
         {
           gear_current_pos=gear_pos_N;
         }
         gear_stop();
+        
+        #warning THIS GEAR POSITION HAS TO BE REMOVED IN CASE OF ERROR
+        gear_current_pos=gear_pos_N;
       }
       else if( gear_current_pos==gear_pos_2 )
       {
@@ -211,7 +223,6 @@ void gear_task(void * pvParameters)
       //set 7SEG to a valid value
       SEG7_Set(DEG7_0);
     }
-    //vTaskDelay(50);
   }
 }
 
@@ -236,6 +247,9 @@ uint8_t gear_Init(void)
   if(gear_Events == NULL)
     return 1;
   xTaskCreate(gear_task, "GearBox", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &Gear_taskHandler);
+  if(CU_GetNeutralInput())
+    gear_current_pos=gear_pos_N;
+  SEG7_Set(gear_getPosition());
   return 0;
 }
 
@@ -263,7 +277,8 @@ uint8_t gear_decrease(void)
 
 uint8_t gear_toNeutral(void)
 {
-  xEventGroupSetBits(gear_Events,GEAR_EVENT_TONEUTRAL);
+  if( MainAppGetMode()==MainMode_App )
+    xEventGroupSetBits(gear_Events,GEAR_EVENT_TONEUTRAL);
   return 0;
 }
 

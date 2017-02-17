@@ -43,4 +43,6 @@ enum {
   MainMode_Configuration=2,
 };
 
+uint8_t MainAppGetMode(void);
+
 #endif /* __MAIN_H */
