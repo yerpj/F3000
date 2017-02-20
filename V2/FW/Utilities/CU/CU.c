@@ -885,4 +885,90 @@ uint8_t CU_RPMToBargraph(void)
   return (uint8_t)ScaledRPM;
 }
 
+void CU_MX25L1606E_LowLevel_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+  SPI_InitTypeDef  SPI_InitStructure;
+
+  /* Enable SCK GPIO clocks */
+  RCC_AHB1PeriphClockCmd(FLASH_SPI_SCK_GPIO_CLK, ENABLE);
+  
+  /* Enable SPI  clock */
+  RCC_APB1PeriphClockCmd(FLASH_SPI_CLK, ENABLE);
+  
+  /* SPI */
+  GPIO_PinAFConfig(FLASH_SPI_SCK_GPIO_PORT, FLASH_SPI_SCK_SOURCE, FLASH_SPI_SCK_AF);
+  GPIO_PinAFConfig(FLASH_SPI_MISO_GPIO_PORT, FLASH_SPI_MISO_SOURCE, FLASH_SPI_MISO_AF);
+  GPIO_PinAFConfig(FLASH_SPI_MOSI_GPIO_PORT, FLASH_SPI_MOSI_SOURCE, FLASH_SPI_MOSI_AF);
+
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  
+  /* SPI SCK pin configuration */
+  GPIO_InitStructure.GPIO_Pin = FLASH_SPI_SCK_PIN;
+  GPIO_Init(FLASH_SPI_SCK_GPIO_PORT, &GPIO_InitStructure);
+
+  /* SPI  MOSI pin configuration */
+  GPIO_InitStructure.GPIO_Pin =  FLASH_SPI_MOSI_PIN;
+  GPIO_Init(FLASH_SPI_MOSI_GPIO_PORT, &GPIO_InitStructure);
+
+  /* SPI MISO pin configuration */
+  GPIO_InitStructure.GPIO_Pin = FLASH_SPI_MISO_PIN;
+  GPIO_Init(FLASH_SPI_MISO_GPIO_PORT, &GPIO_InitStructure);
+
+  /* SPI configuration -------------------------------------------------------*/
+  SPI_I2S_DeInit(FLASH_SPI);
+  SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+  SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
+  SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
+  SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
+  SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
+  SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
+  SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+  SPI_InitStructure.SPI_CRCPolynomial = 7;
+  SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
+  SPI_Init(FLASH_SPI, &SPI_InitStructure);
+
+  /* Enable SPI  */
+  SPI_Cmd(FLASH_SPI, ENABLE);
+  
+  /* Enable CS GPIO clocks */
+  RCC_AHB1PeriphClockCmd(FLASH_SPI_CS_GPIO_CLK, ENABLE);
+ 
+  /* Configure GPIO PIN for Memory Chip select */
+  GPIO_InitStructure.GPIO_Pin = FLASH_SPI_CS_PIN;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(FLASH_SPI_CS_GPIO_PORT, &GPIO_InitStructure);
+
+  /* Deselect : Chip Select high */
+  GPIO_SetBits(FLASH_SPI_CS_GPIO_PORT, FLASH_SPI_CS_PIN);
+}
+
+void CU_MX25L1606E_transfer(uint8_t *buffer,uint32_t length)
+{
+  uint32_t count;
+  for(count=0;count<length;count++)
+  {
+    FLASH_SPI->DR = buffer[count];
+    while (SPI_I2S_GetFlagStatus(FLASH_SPI, SPI_I2S_FLAG_RXNE) == RESET);//while empty
+    buffer[count] = FLASH_SPI->DR;
+    while (SPI_I2S_GetFlagStatus(FLASH_SPI, SPI_I2S_FLAG_BSY));
+    while (SPI_I2S_GetFlagStatus(FLASH_SPI, SPI_I2S_FLAG_TXE) == RESET);//while not empty
+  }
+}
+
+void CU_MX25L1606E_CS(uint8_t state)
+{
+  if(state)
+    GPIO_ResetBits(FLASH_SPI_CS_GPIO_PORT, FLASH_SPI_CS_PIN);
+  else
+    GPIO_SetBits(FLASH_SPI_CS_GPIO_PORT, FLASH_SPI_CS_PIN);
+}
+
+
+
 

@@ -223,7 +223,6 @@ void F3000_Periodic(void * pvParameters)
 void F3000_App(void * pvParameters)
 {
   uint8_t err=0;
-  
   if(CU_Inputs_EventGroup==NULL)
     err++;
   
@@ -238,6 +237,24 @@ void F3000_App(void * pvParameters)
   LEDbuffer_refresh();
   LEDbuffer_MaskReset(0xFFFFFFFFFFFF);
   LEDbuffer_refresh();*/
+  uint8_t helloWorld[]="Hello World";
+  uint8_t readback[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+  uint8_t status;
+  uint8_t Flash_ID[3];
+  flash_read_ID(Flash_ID);
+  
+  flash_Write_Enable();
+  status=flash_read_Status();
+  flash_Sector_Erase(0);
+  status=flash_read_Status();
+  flash_Write_Enable();
+  status=flash_read_Status();
+  flash_Write_Sector(helloWorld,12,0);
+  status=flash_read_Status();
+  flash_read_Data(readback,12,0);
+  status=flash_read_Status();
+  status=flash_read_Status();
+  flash_read_ID(Flash_ID);
 
   while(!err)
   {
@@ -325,6 +342,7 @@ void main(void)
   ITS_Init(NULL,0);
   tempSensor_Init(NULL);
   bargraph_Init();
+  flash_init();
   
   //Applications mutexes
   MainAppMutex = xSemaphoreCreateMutex();

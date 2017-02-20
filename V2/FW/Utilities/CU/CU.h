@@ -200,36 +200,6 @@ enum{
 #define EVAL_COM2_RX_AF                  GPIO_AF_USART3
 #define EVAL_COM2_IRQn                   USART3_IRQn
 
-
-
-/**
- * @brief Definition for SPI1
- */ 
-#define FLASH_SPI                       SPI1
-#define FLASH_SPI_CLK                   RCC_APB2Periph_SPI1 
-
-#define FLASH_SPI_SCK_PIN               GPIO_Pin_5                  /* PA.5 */
-#define FLASH_SPI_SCK_GPIO_PORT         GPIOA                       /* GPIOA */
-#define FLASH_SPI_SCK_GPIO_CLK          RCC_AHB1Periph_GPIOA
-#define FLASH_SPI_SCK_SOURCE            GPIO_PinSource5
-#define FLASH_SPI_SCK_AF                GPIO_AF_SPI1
-
-#define FLASH_SPI_MISO_PIN              GPIO_Pin_6                  /* PA.6 */
-#define FLASH_SPI_MISO_GPIO_PORT        GPIOA                       /* GPIOA */
-#define FLASH_SPI_MISO_GPIO_CLK         RCC_AHB1Periph_GPIOA
-#define FLASH_SPI_MISO_SOURCE           GPIO_PinSource6
-#define FLASH_SPI_MISO_AF               GPIO_AF_SPI1
-
-#define FLASH_SPI_MOSI_PIN              GPIO_Pin_7                  /* PA.7 */
-#define FLASH_SPI_MOSI_GPIO_PORT        GPIOA                       /* GPIOA */
-#define FLASH_SPI_MOSI_GPIO_CLK         RCC_AHB1Periph_GPIOA
-#define FLASH_SPI_MOSI_SOURCE           GPIO_PinSource7
-#define FLASH_SPI_MOSI_AF               GPIO_AF_SPI1
-
-#define FLASH_SPI_CS_PIN                GPIO_Pin_4                  /* PA.4 */
-#define FLASH_SPI_CS_GPIO_PORT          GPIOA                       /* GPIOA */
-#define FLASH_SPI_CS_GPIO_CLK           RCC_AHB1Periph_GPIOA
-
 /**
  * @brief Definition for HEADER_RS232 UART connection
  */ 
@@ -677,6 +647,32 @@ enum{
   #define STOP_OUTPUT_GPIO_CLK                          RCC_AHB1Periph_GPIOC 
 #endif /* USE_BREADBOARD */
 
+/*******Serial FLASH********/
+#define FLASH_SPI                       SPI3
+#define FLASH_SPI_CLK                   RCC_APB1Periph_SPI3
+
+#define FLASH_SPI_SCK_PIN               GPIO_Pin_10                  /* PC.10 */
+#define FLASH_SPI_SCK_GPIO_PORT         GPIOC                       /* GPIOC */
+#define FLASH_SPI_SCK_GPIO_CLK          RCC_AHB1Periph_GPIOC
+#define FLASH_SPI_SCK_SOURCE            GPIO_PinSource10
+#define FLASH_SPI_SCK_AF                GPIO_AF_SPI3
+
+#define FLASH_SPI_MISO_PIN              GPIO_Pin_11                  /* PC.11 */
+#define FLASH_SPI_MISO_GPIO_PORT        GPIOC                       /* GPIOC */
+#define FLASH_SPI_MISO_GPIO_CLK         RCC_AHB1Periph_GPIOC
+#define FLASH_SPI_MISO_SOURCE           GPIO_PinSource11
+#define FLASH_SPI_MISO_AF               GPIO_AF_SPI3
+
+#define FLASH_SPI_MOSI_PIN              GPIO_Pin_12                  /* PC.12 */
+#define FLASH_SPI_MOSI_GPIO_PORT        GPIOC                       /* GPIOC */
+#define FLASH_SPI_MOSI_GPIO_CLK         RCC_AHB1Periph_GPIOC
+#define FLASH_SPI_MOSI_SOURCE           GPIO_PinSource12
+#define FLASH_SPI_MOSI_AF               GPIO_AF_SPI3
+
+#define FLASH_SPI_CS_PIN                GPIO_Pin_15                  /* PA.15 */
+#define FLASH_SPI_CS_GPIO_PORT          GPIOA                       /* GPIOA */
+#define FLASH_SPI_CS_GPIO_CLK           RCC_AHB1Periph_GPIOA
+
 
     
 
@@ -706,6 +702,10 @@ uint8_t CU_GetCameInput(void);
 void CU_STOP_On(void);
 void CU_STOP_Off(void);
 uint8_t CU_RPMToBargraph(void);
+void CU_MX25L1606E_LowLevel_Init(void);
+void CU_MX25L1606E_transfer(uint8_t *buffer,uint32_t length);
+void CU_MX25L1606E_CS(uint8_t state);
+
 
 
 
