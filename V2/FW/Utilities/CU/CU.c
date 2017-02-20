@@ -1,5 +1,6 @@
 #include "CU.h"
 #include "main.h"
+#include "stm32f2xx_it.h"
 
 GPIO_TypeDef* GPIO_PORT[IOn] = {LED1_GPIO_PORT, LED2_GPIO_PORT, LED3_GPIO_PORT};
 const uint16_t GPIO_PIN[IOn] = {LED1_PIN, LED2_PIN, LED3_PIN};
@@ -871,6 +872,17 @@ uint16_t CU_ReadInputsRaw(void)
   if(GPIO_ReadInputDataBit(MODE1_INPUT_GPIO_PORT,MODE1_INPUT_PIN))
     InputMask |= CU_MODE1_INPUT;   
   return InputMask;
+}
+
+uint8_t CU_RPMToBargraph(void)
+{
+  uint32_t ScaledRPM=0;
+  ScaledRPM=(uint32_t)(CU_RPM_A*(float)Regime_getRPM()+CU_RPM_B);
+  if(ScaledRPM<1)
+    ScaledRPM=1;
+  if(ScaledRPM>BARGRAPH_NLEDS)
+    ScaledRPM=BARGRAPH_NLEDS;
+  return (uint8_t)ScaledRPM;
 }
 
 

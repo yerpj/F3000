@@ -253,7 +253,7 @@ void F3000_App(void * pvParameters)
       {
        gear_toNeutral();
       }*/
-      bargraph_Set(1,(uint8_t)(Regime_getRPM()*0.00035));
+      bargraph_Set(1,CU_RPMToBargraph());
       
       //release MainAppMutex 
       xSemaphoreGive(MainAppMutex);

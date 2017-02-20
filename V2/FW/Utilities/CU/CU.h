@@ -30,6 +30,12 @@ enum{
 #define LED_RED LED1
 #define LED_GREEN LED2
 
+/* Bargraph RPM constants */
+#define CU_RPM_MIN      (float)600 //(raw per minute)
+#define CU_RPM_MAX      (float)8000 //(raw per minute)
+#define CU_RPM_A        (float)(20/(CU_RPM_MAX-CU_RPM_MIN))
+#define CU_RPM_B        (float)( (CU_RPM_MAX-21*CU_RPM_MIN) / (CU_RPM_MAX-CU_RPM_MIN) )
+
 
 
     
@@ -699,6 +705,7 @@ uint8_t CU_GetNeutralInput(void);
 uint8_t CU_GetCameInput(void);
 void CU_STOP_On(void);
 void CU_STOP_Off(void);
+uint8_t CU_RPMToBargraph(void);
 
 
 
