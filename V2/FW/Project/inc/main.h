@@ -32,6 +32,7 @@ extern EventGroupHandle_t CU_Inputs_EventGroup;
 #include "ledbuffer.h"
 #include "SEG7.h"
 #include "flash.h"
+#include "paramcollection.h"
 #include "indicator.h"
 #include "tempSensor.h"
 #ifndef USE_BREADBOARD

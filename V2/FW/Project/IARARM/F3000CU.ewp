@@ -309,6 +309,7 @@
           <state>$PROJ_DIR$\..\..\Utilities\CU\ADC</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\ITS</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\GEAR</state>
+          <state>$PROJ_DIR$\..\..\Utilities\CU\ParamCollection</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\FLASH</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\SEG7</state>
           <state>$PROJ_DIR$\..\..\Utilities\CU\LEDbuffer</state>
@@ -2011,6 +2012,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\Utilities\CU\LEDbuffer\ledbuffer.h</name>
+      </file>
+    </group>
+    <group>
+      <name>ParameterStorage</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\ParamCollection\paramcollection.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\Utilities\CU\ParamCollection\paramcollection.h</name>
       </file>
     </group>
     <group>

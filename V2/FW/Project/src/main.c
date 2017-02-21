@@ -2,6 +2,8 @@
 
 #define UID_ADDRESS_BASE (uint8_t*)(0x1FFF7A10)
 #define UID_BYTE_SIZE   (12)
+
+#define FLASH_REINIT
 uint8_t UID[8];
 uint8_t NXS_UID[12];
 uint8_t NXS_EUI64[8];
@@ -223,6 +225,7 @@ void F3000_Periodic(void * pvParameters)
 void F3000_App(void * pvParameters)
 {
   uint8_t err=0;
+  uint32_t param;
   if(CU_Inputs_EventGroup==NULL)
     err++;
   
@@ -230,31 +233,6 @@ void F3000_App(void * pvParameters)
   //uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,uint32_t DebounceTime_ms
   DebouncerAddInput(CU_INPUT_EVENT_CAME_BIT,CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN,EXTI_Trigger_Rising,CU_INPUT_EVENT_CAME_BIT,500);
   
-  
-  
-  /*bargraph_Set(1,1,Vreg_based_LED);
-  LEDbuffer_MaskSet(0xFFFFFFFFFFFF);
-  LEDbuffer_refresh();
-  LEDbuffer_MaskReset(0xFFFFFFFFFFFF);
-  LEDbuffer_refresh();*/
-  uint8_t helloWorld[]="Hello World";
-  uint8_t readback[12]={0,0,0,0,0,0,0,0,0,0,0,0};
-  uint8_t status;
-  uint8_t Flash_ID[3];
-  flash_read_ID(Flash_ID);
-  
-  flash_Write_Enable();
-  status=flash_read_Status();
-  flash_Sector_Erase(0);
-  status=flash_read_Status();
-  flash_Write_Enable();
-  status=flash_read_Status();
-  flash_Write_Sector(helloWorld,12,0);
-  status=flash_read_Status();
-  flash_read_Data(readback,12,0);
-  status=flash_read_Status();
-  status=flash_read_Status();
-  flash_read_ID(Flash_ID);
 
   while(!err)
   {
@@ -297,6 +275,44 @@ uint8_t F3000CLIInterpreter(uint8_t *raw)
     CLI_Output("Temp: not yet measured");
     return 0;
   }
+  if(strstr(cmd,"SYS -s Lum")>0)
+  {
+    uint32_t lum=0;
+    cmd=strstr(cmd,"SYS -s Lum");
+    if(strstr(cmd,"=")>0)
+    {
+      cmd=strstr(cmd,"=")+1;
+      if(cmd[0]>='0' && cmd[0]<='9')
+      {
+        if(cmd[1]>='0' && cmd[1]<='9')
+        {
+          if(cmd[2]>='0' && cmd[2]<='9')
+          {
+            lum+=(cmd[0]-'0')*100;
+            lum+=(cmd[1]-'0')*10;
+            lum+=cmd[2]-'0';
+          }
+          else
+          {
+            lum+=(cmd[0]-'0')*10;
+            lum+=cmd[1]-'0';
+          }
+        }
+        else
+          lum+=cmd[0]-'0';
+      }
+      if(lum>0 && lum<=100)
+      {
+        PC_SetParam((uint8_t*)&lum,"LED_I");
+        PC_GetParam((uint8_t*)&lum,"LED_I");
+        CU_LEDsInit( (((float)lum)/100) );
+        LEDbuffer_refresh(1);
+        sprintf(str,"luminosity set to %3i [\%]",lum);
+        CLI_Output(str);
+      }
+    }
+    return 0;
+  }
   else if(strstr(cmd,"SYS -r")>0)
   {
     CLI_Output("Rebooting... Please unconnect and reconnect Bluetooth app");
@@ -327,11 +343,8 @@ uint8_t F3000CLIInterpreter(uint8_t *raw)
   return 0;
 }
 
-void main(void)
+void F3000_Init(void * pvParameters)
 {
-  /* System function that updates the SystemCoreClock variable. */
-  SystemCoreClockUpdate();
-  NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );//no bits of sub-priority. Only preemption priorities are used
   UID_Init(UID_ADDRESS_BASE,UID_BYTE_SIZE);
   UID_getUID(UID);
   UID_getNXSFormat(NXS_UID);
@@ -342,8 +355,21 @@ void main(void)
   ITS_Init(NULL,0);
   tempSensor_Init(NULL);
   bargraph_Init();
-  flash_init();
+  if(flash_init())
+     console_log("can't init flash");
+  if( PC_Init() )
+    console_log("can't init Parameter Collection. Flash problem?");
+#ifdef FLASH_REINIT
+  uint32_t param=30;
+  PC_SetParam((uint8_t*)&param,"LED_I");
+#endif /* FLASH_REINIT */
   
+  PC_GetParam((uint8_t*)&param,"LED_I");
+  CU_LEDsInit( (((float)param)/100) );
+  if(gear_Init())
+  {
+    console_log("can't init GearBox");
+  }
   //Applications mutexes
   MainAppMutex = xSemaphoreCreateMutex();
   MainConfigMutex = xSemaphoreCreateMutex();
@@ -353,26 +379,39 @@ void main(void)
   CU_Inputs_EventGroup=xEventGroupCreate();
   
   CU_IOInit();
-  CU_LEDsInit();
+  
   
   STBT_Init(COM1);
   console_Init(STBT_ConsoleOutput);
   CLI_Init(console_log,F3000CLIInterpreter);
-  if(gear_Init())
-  {
-    console_log("can't init GearBox");
-  }
-  
+  vTaskResume(ConfigTaskHandle);
+  vTaskResume(DiagnosticTaskHandle);
+  vTaskResume(PeriodicTaskHandle);
+  vTaskResume(AppTaskHandle);
+  vTaskDelete(NULL);
+}
+
+void F3000_System_Start(void)
+{
   //xTaskCreate(ToggleLed1, "LED1", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, NULL);
   xTaskCreate(F3000_App, "Application", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &AppTaskHandle);
   xTaskCreate(F3000_Periodic, "PeriodicTask", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &PeriodicTaskHandle);
   xTaskCreate(F3000_Conf, "Config", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &ConfigTaskHandle);
-  //vTaskSuspend(ConfigTaskHandle);
-  xTaskCreate(F3000_Diag, "Config", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &DiagnosticTaskHandle);
-  //vTaskSuspend(DiagnosticTaskHandle);
-  
-  
+  xTaskCreate(F3000_Diag, "Diag", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &DiagnosticTaskHandle);
+  vTaskSuspend(ConfigTaskHandle);
+  vTaskSuspend(DiagnosticTaskHandle);
+  vTaskSuspend(PeriodicTaskHandle);
+  vTaskSuspend(AppTaskHandle);
+  xTaskCreate(F3000_Init, "F3000Init", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, NULL);
   vTaskStartScheduler();
+}
+
+void main(void)
+{
+  /* System function that updates the SystemCoreClock variable. */
+  SystemCoreClockUpdate();
+  NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );//no bits of sub-priority. Only preemption priorities are used
+  F3000_System_Start();
   
   /* We should never get here as control is now taken by the scheduler */
   for( ;; );

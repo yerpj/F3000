@@ -87,7 +87,7 @@ enum{
 
 #define SEG7_IOEXP_OFFSET               2
 /* CU 7 segment display */
-#define SEG7_SEG_INTENSITY              8
+#define SEG7_SEG_INTENSITY              8//8
 #define SEG7_SEG_A_MASK                 ((uint64_t)0x0000000000000001<<(12+(16*SEG7_IOEXP_OFFSET)))
 #define SEG7_SEG_B_MASK                 ((uint64_t)0x0000000000000001<<(11+(16*SEG7_IOEXP_OFFSET)))
 #define SEG7_SEG_C_MASK                 ((uint64_t)0x0000000000000001<<(6+(16*SEG7_IOEXP_OFFSET)))
@@ -689,7 +689,7 @@ uint8_t Console_LowLevelInit(void);
 void I2C_Bus_Init(I2C_List_Typedef I2Cx);
 uint16_t CU_ReadInputsRaw(void);
 uint8_t CU_IOInit(void);
-uint8_t CU_LEDsInit(void);
+uint8_t CU_LEDsInit(float intensityPercent);
 uint8_t CU_GetMode(void);
 uint8_t CU_GetOilWarning(void);
 uint8_t CU_GetStopButton(void);
@@ -703,7 +703,7 @@ void CU_STOP_On(void);
 void CU_STOP_Off(void);
 uint8_t CU_RPMToBargraph(void);
 void CU_MX25L1606E_LowLevel_Init(void);
-void CU_MX25L1606E_transfer(uint8_t *buffer,uint32_t length);
+void CU_MX25L1606E_transfer(uint8_t *buffer,uint32_t length,uint8_t immediateCSRelease);
 void CU_MX25L1606E_CS(uint8_t state);
 
 

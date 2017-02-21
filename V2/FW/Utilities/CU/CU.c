@@ -92,27 +92,27 @@ uint32_t CU_bargraph_table[21]={ BAR_LED1,
                               BAR_LED20,
                               BAR_LED21};
 
-uint32_t CU_bargraph_intensity[21]={ (uint32_t)((float)BAR_LED1_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED2_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED3_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED4_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED5_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED6_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED7_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED8_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED9_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED10_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED11_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED12_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED13_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED14_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED15_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED16_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED17_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED18_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED19_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED20_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR),
-                                     (uint32_t)((float)BAR_LED21_INTENSITY*BAR_LED_INTENSITY_GLOBAL_FACTOR)};
+uint32_t CU_bargraph_intensity[21]={ (uint32_t)((float)BAR_LED1_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED2_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED3_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED4_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED5_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED6_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED7_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED8_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED9_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED10_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED11_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED12_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED13_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED14_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED15_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED16_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED17_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED18_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED19_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED20_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/),
+                                     (uint32_t)((float)BAR_LED21_INTENSITY/**BAR_LED_INTENSITY_GLOBAL_FACTOR*/)};
 
 //void Console_Rx_Task(void * pvParameters);
 //xSemaphoreHandle Console_rx_sem;
@@ -453,7 +453,7 @@ void I2C_Bus_Init(I2C_List_Typedef I2Cx)
   I2C_Init(I2C_PERIPH[I2Cx] , &I2C_InitStructure);
 }
 
-uint8_t CU_LEDsInit(void)
+uint8_t CU_LEDsInit(float intensity)
 {
   uint32_t i=0;
 #ifdef USE_BREADBOARD
@@ -468,18 +468,18 @@ uint8_t CU_LEDsInit(void)
   for(i=0;i<21;i++)
   {
     if(CU_bargraph_table[i]>0x8000)
-      PCA9952_LED_Intensity_Control(PCA9952_BAR2_ADDR,(CU_bargraph_table[i]>>16),CU_bargraph_intensity[i]);
+      PCA9952_LED_Intensity_Control(PCA9952_BAR2_ADDR,(CU_bargraph_table[i]>>16),(uint32_t)CU_bargraph_intensity[i]*intensity);
     else
-      PCA9952_LED_Intensity_Control(PCA9952_BAR1_ADDR,CU_bargraph_table[i],CU_bargraph_intensity[i]);
+      PCA9952_LED_Intensity_Control(PCA9952_BAR1_ADDR,CU_bargraph_table[i],(uint32_t)CU_bargraph_intensity[i]*intensity);
   }
   
   /* Set other leds intensity */
   for(i=0;i<16;i++)
   {
     if(CU_CommonLeds_table[i]>0xFFFFFFFF)
-      PCA9952_LED_Intensity_Control(PCA9952_MAIN_ADDR,(CU_CommonLeds_table[i]>>32),CU_CommonLeds_intensity[i]);
+      PCA9952_LED_Intensity_Control(PCA9952_MAIN_ADDR,(CU_CommonLeds_table[i]>>32),(uint32_t)CU_CommonLeds_intensity[i]*intensity);
     else
-      PCA9952_LED_Intensity_Control(PCA9952_BAR1_ADDR,CU_CommonLeds_table[i],CU_CommonLeds_intensity[i]);
+      PCA9952_LED_Intensity_Control(PCA9952_BAR1_ADDR,CU_CommonLeds_table[i],(uint32_t)CU_CommonLeds_intensity[i]*intensity);
   }
   return 0;
 }
@@ -948,7 +948,7 @@ void CU_MX25L1606E_LowLevel_Init(void)
   GPIO_SetBits(FLASH_SPI_CS_GPIO_PORT, FLASH_SPI_CS_PIN);
 }
 
-void CU_MX25L1606E_transfer(uint8_t *buffer,uint32_t length)
+void CU_MX25L1606E_transfer(uint8_t *buffer,uint32_t length,uint8_t immediateCSRelease)
 {
   uint32_t count;
   for(count=0;count<length;count++)
@@ -959,11 +959,13 @@ void CU_MX25L1606E_transfer(uint8_t *buffer,uint32_t length)
     while (SPI_I2S_GetFlagStatus(FLASH_SPI, SPI_I2S_FLAG_BSY));
     while (SPI_I2S_GetFlagStatus(FLASH_SPI, SPI_I2S_FLAG_TXE) == RESET);//while not empty
   }
+  if(immediateCSRelease)
+    GPIO_SetBits(FLASH_SPI_CS_GPIO_PORT, FLASH_SPI_CS_PIN);
 }
 
 void CU_MX25L1606E_CS(uint8_t state)
 {
-  if(state)
+  if(state==FLASH_CS_ASSERTED)
     GPIO_ResetBits(FLASH_SPI_CS_GPIO_PORT, FLASH_SPI_CS_PIN);
   else
     GPIO_SetBits(FLASH_SPI_CS_GPIO_PORT, FLASH_SPI_CS_PIN);

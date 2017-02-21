@@ -3,28 +3,28 @@
 uint8_t Indicator_LED_OIL_Set(void)
 {
   LEDbuffer_MaskSet(LED_OIL_MASK);
-  LEDbuffer_refresh();
+  LEDbuffer_refresh(0);
   return 0;
 }
 
 uint8_t Indicator_LED_OIL_Reset(void)
 {
   LEDbuffer_MaskReset(LED_OIL_MASK);
-  LEDbuffer_refresh();
+  LEDbuffer_refresh(0);
   return 0;
 }
 
 uint8_t Indicator_LED_N_Set(void)
 {
   LEDbuffer_MaskSet(LED_N_MASK);
-  LEDbuffer_refresh();
+  LEDbuffer_refresh(0);
   return 0;
 }
 
 uint8_t Indicator_LED_N_Reset(void)
 {
   LEDbuffer_MaskReset(LED_N_MASK);
-  LEDbuffer_refresh();
+  LEDbuffer_refresh(0);
   return 0;
 }
 uint8_t Indicator_LED_Mode_Set(uint8_t Mode)
@@ -44,7 +44,7 @@ uint8_t Indicator_LED_Mode_Set(uint8_t Mode)
   default:
     return 1;
   }
-  LEDbuffer_refresh();
+  LEDbuffer_refresh(0);
   return 0;
 }
 
@@ -67,7 +67,7 @@ uint8_t Indicator_LED_Temp_Set(uint8_t Temp)
   default:
     return 1;
   }
-  LEDbuffer_refresh();
+  LEDbuffer_refresh(0);
   return 0;
 }
 

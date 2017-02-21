@@ -35,7 +35,7 @@ uint8_t bargraph_Set(uint8_t StartValue,uint8_t StopValue)
   }
   LEDbuffer_MaskSet(filledMask);
 
-  LEDbuffer_refresh();
+  LEDbuffer_refresh(0);
 
   return 0;
 }
@@ -55,7 +55,7 @@ uint8_t bargraph_MaskSet(uint32_t mask)
   LEDbuffer_MaskSet(filledMask);
   
   /* refresh bargraph */
-  LEDbuffer_refresh();
+  LEDbuffer_refresh(0);
   return 0;
 }
 

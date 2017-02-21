@@ -21,13 +21,13 @@ uint8_t LEDbuffer_Init(void)
   return 1;
 }
 
-uint8_t LEDbuffer_refresh(void)
+uint8_t LEDbuffer_refresh(uint8_t force)
 {
   if( xSemaphoreTake( LEDbufferMutex, ( TickType_t ) 100 ) != pdTRUE )
   {
     return 1;
   }
-  if( (LEDbuffer_last[0]!=LEDbuffer[0]) || (LEDbuffer_last[1]!=LEDbuffer[1]) || (LEDbuffer_last[2]!=LEDbuffer[2]) )
+  if( (LEDbuffer_last[0]!=LEDbuffer[0]) || (LEDbuffer_last[1]!=LEDbuffer[1]) || (LEDbuffer_last[2]!=LEDbuffer[2]) || force )
   {
   #ifdef USE_BREADBOARD
     PCA9952_LED_Control(PCA9952_MAIN_ADDR,LEDbuffer[0]);
