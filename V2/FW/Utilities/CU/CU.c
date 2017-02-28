@@ -453,17 +453,9 @@ void I2C_Bus_Init(I2C_List_Typedef I2Cx)
   I2C_Init(I2C_PERIPH[I2Cx] , &I2C_InitStructure);
 }
 
-uint8_t CU_LEDsInit(float intensity)
+uint8_t CU_LEDsSetIntensity(float intensity)
 {
   uint32_t i=0;
-#ifdef USE_BREADBOARD
-  PCA9952_Init(BUS_I2C3,PCA9952_MAIN_ADDR);
-#else /* USE_BREADBOARD */
-  PCA9952_Init(BUS_I2C1,PCA9952_MAIN_ADDR);
-  PCA9952_Init(BUS_I2C1,PCA9952_BAR1_ADDR);
-  PCA9952_Init(BUS_I2C1,PCA9952_BAR2_ADDR);
-#endif /* USE_BREADBOARD */
-  
   /* Set bargraph LEDs intensity */
   for(i=0;i<21;i++)
   {
@@ -481,6 +473,20 @@ uint8_t CU_LEDsInit(float intensity)
     else
       PCA9952_LED_Intensity_Control(PCA9952_BAR1_ADDR,CU_CommonLeds_table[i],(uint32_t)CU_CommonLeds_intensity[i]*intensity);
   }
+  return 0;
+}
+
+uint8_t CU_LEDsInit(float intensity)
+{
+#ifdef USE_BREADBOARD
+  PCA9952_Init(BUS_I2C3,PCA9952_MAIN_ADDR);
+#else /* USE_BREADBOARD */
+  PCA9952_Init(BUS_I2C1,PCA9952_MAIN_ADDR);
+  PCA9952_Init(BUS_I2C1,PCA9952_BAR1_ADDR);
+  PCA9952_Init(BUS_I2C1,PCA9952_BAR2_ADDR);
+#endif /* USE_BREADBOARD */
+  
+  CU_LEDsSetIntensity(intensity);
   return 0;
 }
 

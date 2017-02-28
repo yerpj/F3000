@@ -35,7 +35,7 @@ void gear_task(void * pvParameters)
       xEventGroupClearBits(gear_Events,GEAR_EVENT_TONEUTRAL);
       if( (gear_current_pos==gear_pos_lost) || (gear_current_pos==gear_pos_1) || (!CU_GetNeutralInput() && (gear_current_pos==gear_pos_N)) )   //TO BE VERIFIED
       {
-        SEG7_Set(DEG7_DOT);
+        SEG7_Set(SEG7_DOT);
         
         //clear CAME event bit
         xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
@@ -92,7 +92,7 @@ void gear_task(void * pvParameters)
       }
       else if( gear_current_pos==gear_pos_2 )
       {
-        SEG7_Set(DEG7_DOT);
+        SEG7_Set(SEG7_DOT);
         
         //clear NEUTRAL event bit
         xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT);
@@ -133,7 +133,7 @@ void gear_task(void * pvParameters)
         {
           console_log("INFO: Missed CAME event");
           gear_current_pos=gear_pos_lost;
-          SEG7_Set(DEG7_LOST);
+          SEG7_Set(SEG7_LOST);
         }
         else
         {
@@ -141,14 +141,14 @@ void gear_task(void * pvParameters)
         }
         gear_stop();
       }      
-      SEG7_Set(DEG7_0);
+      SEG7_Set(SEG7_0);
     }
     else if( (EventBits & GEAR_EVENT_INCREASE) !=0 )
     {//increase
       xEventGroupClearBits(gear_Events,GEAR_EVENT_INCREASE);
       
       //set 7SEG to DOT
-      SEG7_Set(DEG7_DOT);
+      SEG7_Set(SEG7_DOT);
       
       //clear CAME event bit
       xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
@@ -192,14 +192,14 @@ void gear_task(void * pvParameters)
       gear_stop();
       
       //set 7SEG to a valid value
-      SEG7_Set(DEG7_0);
+      SEG7_Set(SEG7_0);
     }
     else if( (EventBits & GEAR_EVENT_DECREASE) !=0 )
     {//decrease
       xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE);
       
       //set 7SEG to DOT
-      SEG7_Set(DEG7_DOT);
+      SEG7_Set(SEG7_DOT);
       
       //begin turning motor
       gear_down();
@@ -221,7 +221,7 @@ void gear_task(void * pvParameters)
       gear_stop();
       
       //set 7SEG to a valid value
-      SEG7_Set(DEG7_0);
+      SEG7_Set(SEG7_0);
     }
   }
 }

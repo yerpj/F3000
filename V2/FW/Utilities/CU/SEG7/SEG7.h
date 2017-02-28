@@ -2,21 +2,23 @@
 #define __SEG7_H__
 #include "main.h"
 
-#define DEG7_0 (0)
-#define DEG7_1 (1)
-#define DEG7_2 (2)
-#define DEG7_3 (3)
-#define DEG7_4 (4)
-#define DEG7_5 (5)
-#define DEG7_6 (6)
-#define DEG7_7 (7)
-#define DEG7_DOT (8)
-#define DEG7_LOST (9)
-#define DEG7_ALL (10)
-#define DEG7_NONE (11)
-#define DEG7_A (12)
-#define DEG7_d (13)
-#define DEG7_C (14)
+#define SEG7_0 (0)
+#define SEG7_1 (1)
+#define SEG7_2 (2)
+#define SEG7_3 (3)
+#define SEG7_4 (4)
+#define SEG7_5 (5)
+#define SEG7_6 (6)
+#define SEG7_7 (7)
+#define SEG7_8 (8)
+#define SEG7_9 (9)
+#define SEG7_DOT (10)
+#define SEG7_LOST (11)
+#define SEG7_ALL (12)
+#define SEG7_NONE (13)
+#define SEG7_A (14)
+#define SEG7_d (15)
+#define SEG7_C (16)
 
 uint8_t SEG7_Set(uint8_t value);
 

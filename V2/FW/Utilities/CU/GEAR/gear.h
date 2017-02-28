@@ -10,7 +10,7 @@
 #define GEAR_WAIT_ON_CAME_TIMEOUT_MS (2000)
 #define GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS (1000)
 
-enum{
+enum{//see SEG7.h for correspondancy
   gear_pos_1=1,
   gear_pos_N=0,
   gear_pos_2=2,
@@ -18,7 +18,7 @@ enum{
   gear_pos_4=4,
   gear_pos_5=5,
   gear_pos_6=6,
-  gear_pos_lost=9
+  gear_pos_lost=11
 };
 
 enum{

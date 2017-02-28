@@ -87,7 +87,12 @@ enum{
 
 #define SEG7_IOEXP_OFFSET               2
 /* CU 7 segment display */
-#define SEG7_SEG_INTENSITY              8//8
+#define SEG7_SEG_INTENSITY              50//8
+#if (SEG7_SEG_INTENSITY>40)
+  #warning SEG7 current limited to 40% (8mA)
+  #undef SEG7_SEG_INTENSITY
+  #define SEG7_SEG_INTENSITY 40
+#endif 
 #define SEG7_SEG_A_MASK                 ((uint64_t)0x0000000000000001<<(12+(16*SEG7_IOEXP_OFFSET)))
 #define SEG7_SEG_B_MASK                 ((uint64_t)0x0000000000000001<<(11+(16*SEG7_IOEXP_OFFSET)))
 #define SEG7_SEG_C_MASK                 ((uint64_t)0x0000000000000001<<(6+(16*SEG7_IOEXP_OFFSET)))
@@ -690,6 +695,7 @@ void I2C_Bus_Init(I2C_List_Typedef I2Cx);
 uint16_t CU_ReadInputsRaw(void);
 uint8_t CU_IOInit(void);
 uint8_t CU_LEDsInit(float intensityPercent);
+uint8_t CU_LEDsSetIntensity(float intensity);
 uint8_t CU_GetMode(void);
 uint8_t CU_GetOilWarning(void);
 uint8_t CU_GetStopButton(void);

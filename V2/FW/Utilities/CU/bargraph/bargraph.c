@@ -11,6 +11,20 @@ uint8_t Vreg_ADCAccuPtr=0;
 float Vreg_currentValue=0;
 uint8_t NegativeMask=0;
 
+uint8_t bargraph_DisplayPotValue(void)
+{
+  uint32_t filledMask=0;
+    
+  LEDbuffer_MaskReset(BAR_ALL);    
+  if(NegativeMask>0)
+  {
+    filledMask=CU_bargraph_table[NegativeMask-1];
+  }
+  LEDbuffer_MaskSet(filledMask);
+  LEDbuffer_refresh(0);
+  return 0;
+}
+
 uint8_t bargraph_Set(uint8_t StartValue,uint8_t StopValue)
 {
   uint8_t i;
@@ -68,6 +82,7 @@ void bargraph_Init(void)
 
 void Vreg_Monitor_callback(uint16_t value)
 {
+#define INVERT_VREG_VALUE
   uint16_t Vreg_Accu=0;
   float Vreg_value;
   uint8_t i;
@@ -77,13 +92,21 @@ void Vreg_Monitor_callback(uint16_t value)
       Vreg_ADCAccuPtr=0;
       for(i=0;i<Vreg_ADC_ACCU_SIZE;i++)
         Vreg_Accu+=Vreg_ADCAccu[i];
-      Vreg_value=0.0051335*(((float)Vreg_Accu)/((float)Vreg_ADC_ACCU_SIZE));
+      Vreg_value=0.0054*(((float)Vreg_Accu)/((float)Vreg_ADC_ACCU_SIZE));
       if(Vreg_value>21)
         NegativeMask=21;
       else if(Vreg_value<1)
         NegativeMask=1;
       else
         NegativeMask=(uint8_t)Vreg_value;
+#ifdef INVERT_VREG_VALUE
+    NegativeMask=22-NegativeMask;
+#endif /* INVERT_VREG_VALUE */
       //Vreg_currentValue=(float)( ( (Vreg_value-Vreg_V_TEMP_25)/Vreg_AVG_SLOPE) +25 );
   }
+}
+
+uint8_t bargraph_getPotValue(void)
+{
+  return NegativeMask;
 }

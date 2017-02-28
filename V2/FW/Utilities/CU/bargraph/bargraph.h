@@ -17,5 +17,7 @@ enum{
 void bargraph_Init(void);
 uint8_t bargraph_Set(uint8_t StartValue,uint8_t StopValue);
 uint8_t bargraph_MaskSet(uint32_t mask);
+uint8_t bargraph_getPotValue(void);
+uint8_t bargraph_DisplayPotValue(void);
 
 #endif /* __BARGRAPH_H__ */

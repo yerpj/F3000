@@ -37,6 +37,8 @@ uint8_t PCA9952_LED_Intensity_Control(uint8_t DevAddr,uint16_t Mask,uint8_t Perc
 {
   uint8_t i;
   uint8_t Intensity=(uint8_t)((float)Percent*2.55);
+  if(Intensity==0)
+    Intensity=1;
   for(i=0;i<16;i++)
   {
     if(Mask&(0x0001<<i))

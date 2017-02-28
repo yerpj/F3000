@@ -97,23 +97,73 @@ void ToggleLed1(void * pvParameters)
 
 void F3000_Conf(void * pvParameters)
 {
-  uint8_t dummy=0;
+  uint8_t state=0;
+  uint8_t varNum=0;
+  uint8_t paramValue=0;
+  uint32_t ledIntensity=0;
   while(1)
   {
     if(MainMode==MainMode_Configuration)
     {
-      SEG7_Set(DEG7_C);
       //take MainConfigMutex 
       if( xSemaphoreTake( MainConfigMutex, ( TickType_t ) 100 ) != pdTRUE )
       {
         continue;
       }
       
-      dummy++;
+      switch(state)
+      {
+      case 0:
+        SEG7_Set(SEG7_C);
+        vTaskDelay(1000);
+        while(CU_GetNeutralButton())
+          vTaskDelay(20);
+        state=1;
+        break;
+      case 1:
+        varNum=bargraph_getPotValue();
+        if(varNum>9)
+          varNum=9;
+        SEG7_Set(varNum);
+        if(CU_GetNeutralButton())
+        {
+          state=2;
+          while(CU_GetNeutralButton())
+            vTaskDelay(20);
+        }
+        break;
+      case 2:
+        SEG7_Set(varNum);
+        bargraph_DisplayPotValue();
+        paramValue=bargraph_getPotValue();
+        switch(varNum)
+        {
+        case 9:
+          if(CU_GetNeutralButton())
+          {
+            ledIntensity=(uint32_t)((float)paramValue*4.7619);
+            PC_SetParam((uint8_t*)&ledIntensity,"LED_I");
+            PC_GetParam((uint8_t*)&ledIntensity,"LED_I");
+            CU_LEDsSetIntensity( (((float)ledIntensity)/100) );
+            while(CU_GetNeutralButton())
+            vTaskDelay(20);
+            state=1;
+          }
+          break;
+        default:break;
+        }
+        break;
+      default:break;
+      }
       
       //release MainConfigMutex 
       xSemaphoreGive(MainConfigMutex);
-      vTaskDelay(100);
+      if(CU_GetStopButton())
+      {
+        state=0;
+        MainAppChangeMode(MainMode_App);
+      }
+      vTaskDelay(20);
     }
     else
       vTaskDelay(200);
@@ -128,7 +178,7 @@ void F3000_Diag(void * pvParameters)
   {
     if(MainMode==MainMode_Diagnostic)
     {
-      SEG7_Set(DEG7_d);
+      SEG7_Set(SEG7_d);
       //take MainDiagMutex 
       if( xSemaphoreTake( MainDiagMutex, ( TickType_t ) 100 ) != pdTRUE )
       {
@@ -249,7 +299,8 @@ void F3000_App(void * pvParameters)
        gear_toNeutral();
       }*/
       bargraph_Set(1,CU_RPMToBargraph());
-      
+      //LEDbuffer_MaskSet(0xFFFFFFFFFFFF);
+      //LEDbuffer_refresh(0);
       //release MainAppMutex 
       xSemaphoreGive(MainAppMutex);
       vTaskDelay(50);
@@ -360,7 +411,7 @@ void F3000_Init(void * pvParameters)
   if( PC_Init() )
     console_log("can't init Parameter Collection. Flash problem?");
 #ifdef FLASH_REINIT
-  uint32_t param=30;
+  uint32_t param=50;
   PC_SetParam((uint8_t*)&param,"LED_I");
 #endif /* FLASH_REINIT */
   
