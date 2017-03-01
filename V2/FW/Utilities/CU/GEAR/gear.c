@@ -31,7 +31,7 @@ void gear_task(void * pvParameters)
       continue;
     }
     else if( (EventBits & GEAR_EVENT_TONEUTRAL) !=0)
-    {//to neutral
+/**/{//to neutral
       xEventGroupClearBits(gear_Events,GEAR_EVENT_TONEUTRAL);
       if( (gear_current_pos==gear_pos_lost) || (gear_current_pos==gear_pos_1) || (!CU_GetNeutralInput() && (gear_current_pos==gear_pos_N)) )   //TO BE VERIFIED
       {
@@ -144,58 +144,55 @@ void gear_task(void * pvParameters)
       SEG7_Set(SEG7_0);
     }
     else if( (EventBits & GEAR_EVENT_INCREASE) !=0 )
-    {//increase
+/**/{//increase
       xEventGroupClearBits(gear_Events,GEAR_EVENT_INCREASE);
       
       //set 7SEG to DOT
       SEG7_Set(SEG7_DOT);
       
-      //clear CAME event bit
-      xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
-      
       //begin turning motor
       gear_up();
       
       //wait until CAME input is low
-      while( CU_GetCameInput() )
+      while( CU_GetCameInput() )// TODO: add a timeout mechanism HERE
       {
-        vTaskDelay(2);
-        // TODO: add a timeout mechanism HERE
-      }
-      
-      //clear CAME event bit
-      xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
-      
-      i=(GEAR_WAIT_ON_CAME_TIMEOUT_MS/5 /*same time as in while loop below*/ );
-      
-      //wait on CAME event of input HIGH with timeout
-      while( i && !(xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_CAME_BIT) )
-      {
-        if(gear_mode!=gear_mode_manual)
+        if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
         {
-          if(CU_GetShifterInput() && (!CU_GetEmbrayInput()) )
-          {
+          if(CU_GetShifterInput())
             CU_STOP_On();
-          }
           else
-          {
             CU_STOP_Off();
-          }
         }
         vTaskDelay(5);
-        i--;
       }
-      if(i==0)
-        console_log("INFO: Missed CAME event");
       
+      //wait until CAME input is high
+      while( !CU_GetCameInput() )// TODO: add a timeout mechanism HERE
+      {
+        if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
+        {
+          if(CU_GetShifterInput())
+            CU_STOP_On();
+          else
+            CU_STOP_Off();
+        }
+        vTaskDelay(5);
+      }
+      
+      /* stop motor */
       CU_STOP_Off();
       gear_stop();
       
-      //set 7SEG to a valid value
-      SEG7_Set(SEG7_0);
+      /* update SEG7 */
+      if(gear_current_pos!=gear_pos_lost)
+      {
+        if(gear_current_pos<gear_pos_6)
+          gear_current_pos++;
+        SEG7_Set(gear_current_pos);
+      }
     }
     else if( (EventBits & GEAR_EVENT_DECREASE) !=0 )
-    {//decrease
+/**/{//decrease
       xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE);
       
       //set 7SEG to DOT
@@ -205,23 +202,42 @@ void gear_task(void * pvParameters)
       gear_down();
       
       //wait until CAME input is low
-      while( CU_GetCameInput() )
+      while( CU_GetCameInput() )// TODO: add a timeout mechanism HERE
       {
-        vTaskDelay(2);
-        // TODO: add a timeout mechanism HERE
+        if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
+        {
+          if(CU_GetShifterInput())
+            CU_STOP_On();
+          else
+            CU_STOP_Off();
+        }
+        vTaskDelay(5);
       }
       
-      //clear CAME event bit
-      xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
+      //wait until CAME input is high
+      while( !CU_GetCameInput() )// TODO: add a timeout mechanism HERE
+      {
+        if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
+        {
+          if(CU_GetShifterInput())
+            CU_STOP_On();
+          else
+            CU_STOP_Off();
+        }
+        vTaskDelay(5);
+      }
       
-      //wait on CAME or timeout
-      if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_CAME_TIMEOUT_MS) )
-        console_log("INFO: Missed CAME event");
-
+      /* stop motor */
+      CU_STOP_Off();
       gear_stop();
       
-      //set 7SEG to a valid value
-      SEG7_Set(SEG7_0);
+      /* update SEG7 */
+      if(gear_current_pos!=gear_pos_lost)
+      {
+        if(gear_current_pos>gear_pos_1)
+          gear_current_pos--;
+        SEG7_Set(gear_current_pos);
+      }
     }
   }
 }
