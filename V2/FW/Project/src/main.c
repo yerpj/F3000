@@ -3,7 +3,7 @@
 #define UID_ADDRESS_BASE (uint8_t*)(0x1FFF7A10)
 #define UID_BYTE_SIZE   (12)
 
-#define FLASH_REINIT
+//#define FLASH_REINIT
 uint8_t UID[8];
 uint8_t NXS_UID[12];
 uint8_t NXS_EUI64[8];
@@ -208,6 +208,7 @@ void F3000_Periodic(void * pvParameters)
   {
     vTaskDelay(100);
     
+    //handle App, Conf or Diag modes
     if(CU_GetNeutralButton())
     {
       if(gear_getPosition()==gear_pos_N)
@@ -250,6 +251,7 @@ void F3000_Periodic(void * pvParameters)
         gear_toNeutral();
       }
     }
+
     //check MODE buttons
     Indicator_LED_Mode_Set(CU_GetMode());
     //handle temperature sensor
@@ -396,6 +398,7 @@ uint8_t F3000CLIInterpreter(uint8_t *raw)
 
 void F3000_Init(void * pvParameters)
 {
+  uint32_t param;
   UID_Init(UID_ADDRESS_BASE,UID_BYTE_SIZE);
   UID_getUID(UID);
   UID_getNXSFormat(NXS_UID);
@@ -411,7 +414,7 @@ void F3000_Init(void * pvParameters)
   if( PC_Init() )
     console_log("can't init Parameter Collection. Flash problem?");
 #ifdef FLASH_REINIT
-  uint32_t param=50;
+  param=50;
   PC_SetParam((uint8_t*)&param,"LED_I");
 #endif /* FLASH_REINIT */
   
@@ -435,6 +438,29 @@ void F3000_Init(void * pvParameters)
   STBT_Init(COM1);
   console_Init(STBT_ConsoleOutput);
   CLI_Init(console_log,F3000CLIInterpreter);
+  
+  /* WELCOME SEQUENCE */
+  uint8_t a,b;
+  bargraph_NegMaskState(0);
+  a=11;
+  b=11;
+  while(b<=21)
+  {
+    bargraph_Set(a,b);
+    a--;
+    b++;
+    vTaskDelay(30);
+  }
+  a=1;
+  while(b>0)
+  {
+    bargraph_Set(a,b);
+    b--;
+    vTaskDelay(30);
+  }
+  bargraph_NegMaskState(1);
+  
+  /* restore normal tasks */
   vTaskResume(ConfigTaskHandle);
   vTaskResume(DiagnosticTaskHandle);
   vTaskResume(PeriodicTaskHandle);
