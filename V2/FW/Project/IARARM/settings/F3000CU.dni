@@ -21,7 +21,7 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=-826904628
+Checksum=535809998
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -49,9 +49,11 @@ ITMlogFile=$PROJ_DIR$\ITM.log
 [struct_types]
 Fmt0=DebouncedArray_t-EdgeMask	1	0
 Fmt1=DebouncedArray_t-IsDebouncing	1	0
+Fmt2=struct <Unnamed 18>-MODER	4	0
 [array_types]
-Fmt0=uint16_t[3]	1	0
-Fmt1=uint8_t[4]	4	0
+Fmt0=uint16_t[32]	4	0
+Fmt1=uint16_t[3]	1	0
+Fmt2=uint8_t[4]	4	0
 [watch_formats]
 Fmt0={W}0:InputMask	1	0
 Fmt1={W}0:Inputs	1	0
@@ -80,10 +82,6 @@ GraphEnabled=0
 ShowTimeLog=1
 ShowTimeSum=1
 SumSortOrder=0
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Count=0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -91,9 +89,6 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
-[Aliases]
-Count=0
-SuppressDialog=0
 [Trace2]
 Enabled=0
 ShowSource=0
@@ -114,3 +109,10 @@ Mode=3
 Graph=0
 Symbiont=0
 Exclusions=
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Count=0
+[Aliases]
+Count=0
+SuppressDialog=0

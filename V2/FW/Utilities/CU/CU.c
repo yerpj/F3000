@@ -587,10 +587,10 @@ uint8_t CU_IOInit(void)
   /* Configure Button EXTI line */
   EXTI_InitStructure.EXTI_Line = NEUTRAL_INPUT_EXTI_LINE;
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;  
-  //EXTI_Init(&EXTI_InitStructure);
+  EXTI_Init(&EXTI_InitStructure);
   /* Enable and set Button EXTI Interrupt to the lowest priority */
   NVIC_InitStructure.NVIC_IRQChannel = NEUTRAL_INPUT_EXTI_IRQn;
-  //NVIC_Init(&NVIC_InitStructure);   
+  NVIC_Init(&NVIC_InitStructure);   
   
   //-->RAPPORTp_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = RAPPORTp_INPUT_PUPD;
@@ -602,10 +602,10 @@ uint8_t CU_IOInit(void)
   /* Configure Button EXTI line */
   EXTI_InitStructure.EXTI_Line = RAPPORTp_INPUT_EXTI_LINE;
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
-  //EXTI_Init(&EXTI_InitStructure);
+  EXTI_Init(&EXTI_InitStructure);
   /* Enable and set Button EXTI Interrupt to the lowest priority */
   NVIC_InitStructure.NVIC_IRQChannel = RAPPORTp_INPUT_EXTI_IRQn;
-  //NVIC_Init(&NVIC_InitStructure);
+  NVIC_Init(&NVIC_InitStructure);
   
   //-->RAPPORTm_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = RAPPORTm_INPUT_PUPD;
@@ -617,10 +617,10 @@ uint8_t CU_IOInit(void)
   /* Configure Button EXTI line */
   EXTI_InitStructure.EXTI_Line = RAPPORTm_INPUT_EXTI_LINE;
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
-  //EXTI_Init(&EXTI_InitStructure);
+  EXTI_Init(&EXTI_InitStructure);
   /* Enable and set Button EXTI Interrupt to the lowest priority */
   NVIC_InitStructure.NVIC_IRQChannel = RAPPORTm_INPUT_EXTI_IRQn;
-  //NVIC_Init(&NVIC_InitStructure);
+  NVIC_Init(&NVIC_InitStructure);
   
   //-->SHIFTER_INPUT_PIN        formerly P2
   GPIO_InitStructure.GPIO_PuPd = SHIFTER_INPUT_PUPD;

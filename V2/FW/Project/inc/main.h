@@ -43,6 +43,7 @@ enum {
   MainMode_App=0,
   MainMode_Diagnostic=1,
   MainMode_Configuration=2,
+  MainMode_Init=3
 };
 
 uint8_t MainAppGetMode(void);

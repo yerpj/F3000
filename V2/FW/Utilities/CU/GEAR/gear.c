@@ -23,18 +23,127 @@ void gear_task(void * pvParameters)
     if( MainAppGetMode()!=MainMode_App )
     {
       vTaskDelay(20);
+      if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RAPPORTp_BIT )
+      {
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT);
+      }
+      if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RAPPORTm_BIT )
+      {
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTm_BIT);
+      }
       continue;
     }
     EventBits=xEventGroupWaitBits(gear_Events,GEAR_EVENT_INCREASE|GEAR_EVENT_DECREASE|GEAR_EVENT_TONEUTRAL,pdFALSE,pdFALSE,50);
     if( !EventBits )
-    {//no event. continue
+    {//no event--> Handle SEG7 and continue
+      if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RAPPORTp_BIT )
+      {
+        if(gear_current_pos!=gear_pos_lost)
+        {
+          if(gear_current_pos==gear_pos_N)
+          {
+            gear_current_pos=gear_pos_2;
+          }
+          else
+          {
+            if(gear_current_pos<gear_pos_5)
+              gear_current_pos++;
+          }
+        }
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT);
+      }
+      else if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RAPPORTm_BIT )
+      {
+        if(gear_current_pos!=gear_pos_lost)
+        {
+          if(gear_current_pos==gear_pos_N)
+          {
+            gear_current_pos=gear_pos_1;
+          }
+          else
+          {
+            if(gear_current_pos>gear_pos_1)
+              gear_current_pos--;
+          }
+        }
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTm_BIT);
+      }
       SEG7_Set(gear_current_pos);
       continue;
     }
     else if( (EventBits & GEAR_EVENT_TONEUTRAL) !=0)
 /**/{//to neutral
-      xEventGroupClearBits(gear_Events,GEAR_EVENT_TONEUTRAL);
-      if( (gear_current_pos==gear_pos_lost) || (gear_current_pos==gear_pos_1) || (!CU_GetNeutralInput() && (gear_current_pos==gear_pos_N)) )   //TO BE VERIFIED
+      if(gear_current_pos==gear_pos_lost || gear_current_pos==gear_pos_1 || gear_current_pos==gear_pos_2 )
+      {
+        SEG7_Set(SEG7_DOT);
+        //clear NEUTRAL event bit
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT);
+        
+        if( gear_current_pos==gear_pos_1 || gear_current_pos==gear_pos_lost )
+        {
+          //begin turning motor
+          gear_up();
+          
+          //wait on Neutral event
+          if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS) )
+          {  //error
+            console_log("INFO: Missed Neutral event while going to Neutral position. Lost.");
+            gear_current_pos=gear_pos_lost;
+          }
+          else
+          {
+            //clear CAME event bit
+            xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
+            
+            //begin turning motor in reverse direction
+            gear_down();
+            
+            if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_CAME_TIMEOUT_MS) )
+            {  //error
+              console_log("INFO: Missed Came event while going to Neutral position. Lost.");
+              gear_current_pos=gear_pos_lost;
+            }
+            else
+            {
+              gear_current_pos=gear_pos_N;
+            }
+          }
+          gear_stop();
+        }
+        else if( gear_current_pos==gear_pos_2 )
+        {
+          //begin turning motor
+          gear_down();
+          
+          //wait on Neutral event
+          if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS) )
+          {  //error
+            console_log("INFO: Missed Neutral event while going to Neutral position. Lost.");
+            gear_current_pos=gear_pos_lost;
+          }
+          else
+          {
+            //clear CAME event bit
+            xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
+            
+            //begin turning motor in reverse direction
+            gear_up();
+            
+            if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_CAME_TIMEOUT_MS) )
+            {  //error
+              console_log("INFO: Missed Came event while going to Neutral position. Lost.");
+              gear_current_pos=gear_pos_lost;
+            }
+            else
+            {
+              gear_current_pos=gear_pos_N;
+            }
+          }
+          gear_stop();
+        }
+      }
+      xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
+      /*if( (gear_current_pos==gear_pos_lost) || (gear_current_pos==gear_pos_1) || (!CU_GetNeutralInput() && (gear_current_pos==gear_pos_N)) )   //TO BE VERIFIED
       {
         SEG7_Set(SEG7_DOT);
         
@@ -57,7 +166,7 @@ void gear_task(void * pvParameters)
         //clear CAME event bit
         xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
         
-        i=(GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS/2 /*same time as in while loop below*/ );
+        i=(GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS/2  );
       
         //wait for NEUTRAL INPUT TO BE ASSERTED with timeout
         while( i && !(xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT) )
@@ -143,10 +252,10 @@ void gear_task(void * pvParameters)
         gear_stop();
       }      
       SEG7_Set(SEG7_0);
+      xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);*/
     }
     else if( (EventBits & GEAR_EVENT_INCREASE) !=0 )
 /**/{//increase
-      xEventGroupClearBits(gear_Events,GEAR_EVENT_INCREASE);
       
       //set 7SEG to DOT
       SEG7_Set(SEG7_DOT);
@@ -189,16 +298,24 @@ void gear_task(void * pvParameters)
       gear_stop();
       
       /* update SEG7 */
-      if(gear_current_pos!=gear_pos_lost)
+      /*if(gear_current_pos!=gear_pos_lost)
       {
-        if(gear_current_pos<gear_pos_6)
-          gear_current_pos++;
-        SEG7_Set(gear_current_pos);
-      }
+        if(gear_current_pos==gear_pos_N)
+        {
+          gear_current_pos=gear_pos_2;
+          SEG7_Set(gear_current_pos);
+        }
+        else
+        {
+          if(gear_current_pos<gear_pos_6)
+            gear_current_pos++;
+          SEG7_Set(gear_current_pos);
+        }
+      }*/
+      xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
     }
     else if( (EventBits & GEAR_EVENT_DECREASE) !=0 )
 /**/{//decrease
-      xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE);
       
       //set 7SEG to DOT
       SEG7_Set(SEG7_DOT);
@@ -241,12 +358,21 @@ void gear_task(void * pvParameters)
       gear_stop();
       
       /* update SEG7 */
-      if(gear_current_pos!=gear_pos_lost)
+      /*if(gear_current_pos!=gear_pos_lost)
       {
-        if(gear_current_pos>gear_pos_1)
-          gear_current_pos--;
-        SEG7_Set(gear_current_pos);
-      }
+        if(gear_current_pos==gear_pos_N)
+        {
+          gear_current_pos=gear_pos_1;
+          SEG7_Set(gear_current_pos);
+        }
+        else
+        {
+          if(gear_current_pos>gear_pos_1)
+            gear_current_pos--;
+          SEG7_Set(gear_current_pos);
+        }
+      }*/
+      xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
     }
   }
 }

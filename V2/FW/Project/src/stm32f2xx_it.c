@@ -493,9 +493,10 @@ void EXTI4_IRQHandler()
   
   //Rapport+: PA4
   if(EXTI_GetITStatus(RAPPORTp_INPUT_EXTI_LINE) != RESET){
-    if(CU_Inputs_EventGroup!=NULL){
+    Debounce(CU_INPUT_EVENT_RAPPORTp_BIT);
+    /*if(CU_Inputs_EventGroup!=NULL){
       if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RAPPORTp_BIT) ==RESET)
-        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT,&xHigherPriorityTaskWoken);}
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT,&xHigherPriorityTaskWoken);}*/
     EXTI_ClearITPendingBit(RAPPORTp_INPUT_EXTI_LINE);}
 }
 
@@ -529,9 +530,10 @@ void EXTI1_IRQHandler()
   
   //Rapport-: PA1
   if(EXTI_GetITStatus(RAPPORTm_INPUT_EXTI_LINE) != RESET){
-    if(CU_Inputs_EventGroup!=NULL){
+    Debounce(CU_INPUT_EVENT_RAPPORTm_BIT);
+    /*if(CU_Inputs_EventGroup!=NULL){
       if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RAPPORTm_BIT) ==RESET)
-        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTm_BIT,&xHigherPriorityTaskWoken);}
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTm_BIT,&xHigherPriorityTaskWoken);}*/
     EXTI_ClearITPendingBit(RAPPORTm_INPUT_EXTI_LINE);}
 }
 

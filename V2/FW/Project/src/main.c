@@ -16,7 +16,7 @@ SemaphoreHandle_t MainConfigMutex;
 SemaphoreHandle_t MainDiagMutex;
 
 //application modes
-uint8_t MainMode=MainMode_App;
+uint8_t MainMode=MainMode_Init;
 
 //other variables
 uint8_t Vreg_based_LED=0;
@@ -212,38 +212,35 @@ void F3000_Periodic(void * pvParameters)
     //handle App, Conf or Diag modes
     if(CU_GetNeutralButton())
     {
-      if(gear_getPosition()==gear_pos_N)
+      i=20;
+      while(i && CU_GetNeutralButton())
       {
-        i=20;
-        while(i && CU_GetNeutralButton())
+        vTaskDelay(100);
+        i--;
+      }
+      if(CU_GetNeutralButton())
+      {
+        if(MainMode==MainMode_App)
         {
-          vTaskDelay(100);
-          i--;
+          if(MainAppChangeMode(MainMode_Diagnostic))
+          {
+            //problem
+          }
+          //bargraph_Set(1,7,0);
         }
-        if(CU_GetNeutralButton())
+        else if(MainMode==MainMode_Diagnostic)
         {
-          if(MainMode==MainMode_App)
+          if(MainAppChangeMode(MainMode_Configuration))
           {
-            if(MainAppChangeMode(MainMode_Diagnostic))
-            {
-              //problem
-            }
-            //bargraph_Set(1,7,0);
+            //problem
           }
-          else if(MainMode==MainMode_Diagnostic)
+          //bargraph_Set(7,14,0);
+        }
+        else if(MainMode==MainMode_Configuration)
+        {
+          if(MainAppChangeMode(MainMode_App))
           {
-            if(MainAppChangeMode(MainMode_Configuration))
-            {
-              //problem
-            }
-            //bargraph_Set(7,14,0);
-          }
-          else if(MainMode==MainMode_Configuration)
-          {
-            if(MainAppChangeMode(MainMode_App))
-            {
-              //problem
-            }
+            //problem
           }
         }
       }
@@ -272,19 +269,21 @@ void F3000_Periodic(void * pvParameters)
       CU_STOP_On();
     else
       CU_STOP_Off();
+    
+    //Neutral LED 
+    if(gear_getPosition()==gear_pos_N)
+      Indicator_LED_N_Set();
+    else
+      Indicator_LED_N_Reset();
   }
 }
 
 extern EventGroupHandle_t gear_Events;
-void PALG_Gear_cb(void)
-{
-  xEventGroupSetBitsFromISR(gear_Events,GEAR_EVENT_DECREASE,0);
-}
+void PALG_Gear_cb(void){
+  xEventGroupSetBitsFromISR(gear_Events,GEAR_EVENT_DECREASE,0);}
 
-void PALD_Gear_cb(void)
-{
-  xEventGroupSetBitsFromISR(gear_Events,GEAR_EVENT_INCREASE,0);
-}
+void PALD_Gear_cb(void){
+  xEventGroupSetBitsFromISR(gear_Events,GEAR_EVENT_INCREASE,0);}
 
 void F3000_App(void * pvParameters)
 {
@@ -297,9 +296,13 @@ void F3000_App(void * pvParameters)
   //uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,uint32_t DebounceTime_ms
   DebouncerAddInput(CU_INPUT_EVENT_CAME_BIT,CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN,DEBOUNCER_INT_EDGE_RISING,CU_INPUT_EVENT_CAME_BIT,0,20);
   
-  /* debounce and generate Event conditionally on PALG and PALD */
+  /* debounce and calls respective callbacks conditionally on PALG and PALD */
   DebouncerAddInput(CU_INPUT_EVENT_PALG_BIT,PALG_INPUT_GPIO_PORT,PALG_INPUT_PIN,DEBOUNCER_INT_EDGE_FALLING,CU_INPUT_EVENT_PALG_BIT,PALG_Gear_cb,50);
   DebouncerAddInput(CU_INPUT_EVENT_PALD_BIT,PALD_INPUT_GPIO_PORT,PALD_INPUT_PIN,DEBOUNCER_INT_EDGE_FALLING,CU_INPUT_EVENT_PALD_BIT,PALD_Gear_cb,50);
+  
+  /* debounce and generate Events on Rapport+ and Rapport- signals*/
+  DebouncerAddInput(CU_INPUT_EVENT_RAPPORTp_BIT,RAPPORTp_INPUT_GPIO_PORT,RAPPORTp_INPUT_PIN,DEBOUNCER_INT_EDGE_RISING,CU_INPUT_EVENT_RAPPORTp_BIT,NULL,50);
+  DebouncerAddInput(CU_INPUT_EVENT_RAPPORTm_BIT,RAPPORTm_INPUT_GPIO_PORT,RAPPORTm_INPUT_PIN,DEBOUNCER_INT_EDGE_RISING,CU_INPUT_EVENT_RAPPORTm_BIT,NULL,50);
   
 
   while(!err)
@@ -458,21 +461,35 @@ void F3000_Init(void * pvParameters)
   /* WELCOME SEQUENCE */
   uint8_t a,b;
   bargraph_NegMaskState(0);
-  a=11;
-  b=11;
+  a=1;
+  b=1;
+  /* everything OFF */
+  LEDbuffer_MaskReset(0xFFFFFFFFFFFF);
+  LEDbuffer_refresh(0);
+  
+  /* simulate engine speed increase */
   while(b<=21)
   {
     bargraph_Set(a,b);
-    a--;
     b++;
-    vTaskDelay(30);
+    vTaskDelay(15);
   }
-  a=1;
+  
+  /* everything ON */
+  LEDbuffer_MaskSet(0xFFFFFFFFFFFF);
+  LEDbuffer_refresh(0);
+  vTaskDelay(700);
+  
+  /* Everything OFF */
+  LEDbuffer_MaskReset(0xFFFFFFFFFFFF);
+  LEDbuffer_refresh(0);
+  
+  /* Simulate engine speed decrease */
   while(b>0)
   {
     bargraph_Set(a,b);
     b--;
-    vTaskDelay(30);
+    vTaskDelay(15);
   }
   bargraph_NegMaskState(1);
   
@@ -481,6 +498,7 @@ void F3000_Init(void * pvParameters)
   vTaskResume(DiagnosticTaskHandle);
   vTaskResume(PeriodicTaskHandle);
   vTaskResume(AppTaskHandle);
+  MainMode=MainMode_App;
   vTaskDelete(NULL);
 }
 
