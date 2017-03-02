@@ -453,20 +453,21 @@ void EXTI9_5_IRQHandler()
     EXTI_ClearITPendingBit(RESERVED1_INPUT_EXTI_LINE);}
   
   //Reserved2: PA6//conflict with Neutre, do not activate interrupt on this line!
-  if(EXTI_GetITStatus(RESERVED2_INPUT_EXTI_LINE) != RESET){
+  //if(EXTI_GetITStatus(RESERVED2_INPUT_EXTI_LINE) != RESET){
     /*if(CU_Inputs_EventGroup!=NULL){
       if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RESERVED2_BIT) ==RESET)
         xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_RESERVED2_BIT,&xHigherPriorityTaskWoken);}*/
-    EXTI_ClearITPendingBit(RESERVED2_INPUT_EXTI_LINE);}
+    //EXTI_ClearITPendingBit(RESERVED2_INPUT_EXTI_LINE);}
   
   //Neutral: PC6
   if(EXTI_GetITStatus(NEUTRAL_INPUT_EXTI_LINE) != RESET)
   {
-    if(!GPIO_ReadInputDataBit(NEUTRAL_INPUT_GPIO_PORT,NEUTRAL_INPUT_PIN))
+    if(GPIO_ReadInputDataBit(NEUTRAL_INPUT_GPIO_PORT,NEUTRAL_INPUT_PIN))
     {
       if(CU_Inputs_EventGroup!=NULL){
         if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT) ==RESET)
-          xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,&xHigherPriorityTaskWoken);}
+        {
+          xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,&xHigherPriorityTaskWoken);}}
     }
     EXTI_ClearITPendingBit(NEUTRAL_INPUT_EXTI_LINE);
   }

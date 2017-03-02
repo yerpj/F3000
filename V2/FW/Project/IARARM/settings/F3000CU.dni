@@ -21,7 +21,7 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=535809998
+Checksum=1642091004
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -49,7 +49,6 @@ ITMlogFile=$PROJ_DIR$\ITM.log
 [struct_types]
 Fmt0=DebouncedArray_t-EdgeMask	1	0
 Fmt1=DebouncedArray_t-IsDebouncing	1	0
-Fmt2=struct <Unnamed 18>-MODER	4	0
 [array_types]
 Fmt0=uint16_t[32]	4	0
 Fmt1=uint16_t[3]	1	0
