@@ -1,4 +1,5 @@
 #include "main.h"
+#include "stm32f2xx_it.h"
 
 #define UID_ADDRESS_BASE (uint8_t*)(0x1FFF7A10)
 #define UID_BYTE_SIZE   (12)
@@ -274,6 +275,17 @@ void F3000_Periodic(void * pvParameters)
   }
 }
 
+extern EventGroupHandle_t gear_Events;
+void PALG_Gear_cb(void)
+{
+  xEventGroupSetBitsFromISR(gear_Events,GEAR_EVENT_DECREASE,0);
+}
+
+void PALD_Gear_cb(void)
+{
+  xEventGroupSetBitsFromISR(gear_Events,GEAR_EVENT_INCREASE,0);
+}
+
 void F3000_App(void * pvParameters)
 {
   uint8_t err=0;
@@ -283,7 +295,11 @@ void F3000_App(void * pvParameters)
   
   DebouncerInit(CU_Inputs_EventGroup);
   //uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,uint32_t DebounceTime_ms
-  DebouncerAddInput(CU_INPUT_EVENT_CAME_BIT,CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN,EXTI_Trigger_Rising,CU_INPUT_EVENT_CAME_BIT,500);
+  DebouncerAddInput(CU_INPUT_EVENT_CAME_BIT,CAME_INPUT_GPIO_PORT,CAME_INPUT_PIN,DEBOUNCER_INT_EDGE_RISING,CU_INPUT_EVENT_CAME_BIT,0,20);
+  
+  /* debounce and generate Event conditionally on PALG and PALD */
+  DebouncerAddInput(CU_INPUT_EVENT_PALG_BIT,PALG_INPUT_GPIO_PORT,PALG_INPUT_PIN,DEBOUNCER_INT_EDGE_FALLING,CU_INPUT_EVENT_PALG_BIT,PALG_Gear_cb,50);
+  DebouncerAddInput(CU_INPUT_EVENT_PALD_BIT,PALD_INPUT_GPIO_PORT,PALD_INPUT_PIN,DEBOUNCER_INT_EDGE_FALLING,CU_INPUT_EVENT_PALD_BIT,PALD_Gear_cb,50);
   
 
   while(!err)

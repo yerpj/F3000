@@ -59,11 +59,14 @@ DebouncedArray_t ExtInterrupts;
 EventGroupHandle_t * DebouncerEventGroup=NULL;
 uint8_t DebouncerInit(EventGroupHandle_t xEventGroup)
 {
+  uint8_t i=0;
   if(xEventGroup==NULL)
     return 1;
   DebouncerEventGroup=xEventGroup;
   ExtInterrupts.EdgeMask=0;
   ExtInterrupts.IsDebouncing=0;
+  for(i=0;i<32;i++)
+    ExtInterrupts.AssociatedCallback[i]=0;
   return 0;
 }
 
@@ -72,7 +75,7 @@ uint32_t Regime_getRPM(void)
   return Regime_RPM;
 }
 
-uint8_t DebouncerAddInput(uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,uint32_t DebounceTime_ms)
+uint8_t DebouncerAddInput(uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,void cb(void),uint32_t DebounceTime_ms)
 {
   uint8_t InputIndex=0;
   while( ((InputMask>>InputIndex)&0x01)==0 && InputIndex<32 )
@@ -86,6 +89,8 @@ uint8_t DebouncerAddInput(uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uin
   else
     ExtInterrupts.EdgeMask&=~InputMask;
   ExtInterrupts.AssociatedEvent[InputIndex]=Event;
+  if(cb)
+    ExtInterrupts.AssociatedCallback[InputIndex]=cb;
   ExtInterrupts.IsDebouncing&=~InputMask;
   ExtInterrupts.DebounceTime_ms[InputIndex]=DebounceTime_ms;
   return 0;
@@ -139,6 +144,10 @@ uint8_t DebouncerHandle(void)
              {
               if( (xEventGroupGetBitsFromISR(DebouncerEventGroup) & ExtInterrupts.AssociatedEvent[i]) ==RESET)
                 xEventGroupSetBitsFromISR(DebouncerEventGroup,ExtInterrupts.AssociatedEvent[i],&xHigherPriorityTaskWoken);
+              if(ExtInterrupts.AssociatedCallback[i])
+              {
+                ExtInterrupts.AssociatedCallback[i]();
+              }
              }
           }
         }
@@ -472,9 +481,10 @@ void EXTI9_5_IRQHandler()
   
   //PAL_g: PA8
   if(EXTI_GetITStatus(PALG_INPUT_EXTI_LINE) != RESET){
-    if(CU_Inputs_EventGroup!=NULL){
+    Debounce(CU_INPUT_EVENT_PALG_BIT);
+    /*if(CU_Inputs_EventGroup!=NULL){
       if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_PALG_BIT) ==RESET)
-        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_PALG_BIT,&xHigherPriorityTaskWoken);}
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_PALG_BIT,&xHigherPriorityTaskWoken);}*/
     EXTI_ClearITPendingBit(PALG_INPUT_EXTI_LINE);}
 }
 void EXTI4_IRQHandler() 
@@ -531,9 +541,10 @@ void EXTI0_IRQHandler()
   
   //PAL_d: PC0
   if(EXTI_GetITStatus(PALD_INPUT_EXTI_LINE) != RESET){
-    if(CU_Inputs_EventGroup!=NULL){
+    Debounce(CU_INPUT_EVENT_PALD_BIT);
+    /*if(CU_Inputs_EventGroup!=NULL){
       if( (xEventGroupGetBitsFromISR(CU_Inputs_EventGroup)&CU_INPUT_EVENT_PALD_BIT) ==RESET)
-        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_PALD_BIT,&xHigherPriorityTaskWoken);}
+        xEventGroupSetBitsFromISR(CU_Inputs_EventGroup,CU_INPUT_EVENT_PALD_BIT,&xHigherPriorityTaskWoken);}*/
     EXTI_ClearITPendingBit(PALD_INPUT_EXTI_LINE);}
 }
 

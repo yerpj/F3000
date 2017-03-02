@@ -17,6 +17,7 @@ void gear_task(void * pvParameters)
 {
   EventBits_t EventBits;
   uint32_t i=0;
+  uint32_t timeout=0;
   while(1)
   {
     if( MainAppGetMode()!=MainMode_App )
@@ -154,7 +155,8 @@ void gear_task(void * pvParameters)
       gear_up();
       
       //wait until CAME input is low
-      while( CU_GetCameInput() )// TODO: add a timeout mechanism HERE
+      timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
+      while( CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
       {
         if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
         {
@@ -163,11 +165,13 @@ void gear_task(void * pvParameters)
           else
             CU_STOP_Off();
         }
-        vTaskDelay(5);
+        vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
+        timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
       }
       
       //wait until CAME input is high
-      while( !CU_GetCameInput() )// TODO: add a timeout mechanism HERE
+      timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
+      while( !CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
       {
         if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
         {
@@ -176,7 +180,8 @@ void gear_task(void * pvParameters)
           else
             CU_STOP_Off();
         }
-        vTaskDelay(5);
+        vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
+        timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
       }
       
       /* stop motor */
@@ -202,7 +207,8 @@ void gear_task(void * pvParameters)
       gear_down();
       
       //wait until CAME input is low
-      while( CU_GetCameInput() )// TODO: add a timeout mechanism HERE
+      timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
+      while( CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
       {
         if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
         {
@@ -211,11 +217,13 @@ void gear_task(void * pvParameters)
           else
             CU_STOP_Off();
         }
-        vTaskDelay(5);
+        vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
+        timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
       }
       
       //wait until CAME input is high
-      while( !CU_GetCameInput() )// TODO: add a timeout mechanism HERE
+      timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
+      while( !CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
       {
         if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
         {
@@ -224,7 +232,8 @@ void gear_task(void * pvParameters)
           else
             CU_STOP_Off();
         }
-        vTaskDelay(5);
+        vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
+        timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
       }
       
       /* stop motor */

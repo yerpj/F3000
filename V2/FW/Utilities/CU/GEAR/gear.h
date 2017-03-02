@@ -10,6 +10,8 @@
 #define GEAR_WAIT_ON_CAME_TIMEOUT_MS (2000)
 #define GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS (1000)
 
+#define GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS (5)
+
 enum{//see SEG7.h for correspondancy
   gear_pos_1=1,
   gear_pos_N=0,

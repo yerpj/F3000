@@ -680,10 +680,10 @@ uint8_t CU_IOInit(void)
   /* Configure Button EXTI line */
   EXTI_InitStructure.EXTI_Line = PALG_INPUT_EXTI_LINE;
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
-  //EXTI_Init(&EXTI_InitStructure);
+  EXTI_Init(&EXTI_InitStructure);
   /* Enable and set Button EXTI Interrupt to the lowest priority */
   NVIC_InitStructure.NVIC_IRQChannel = PALG_INPUT_EXTI_IRQn;
-  //NVIC_Init(&NVIC_InitStructure);   
+  NVIC_Init(&NVIC_InitStructure);   
   
   //-->PALD_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = PALD_INPUT_PUPD;
@@ -695,10 +695,10 @@ uint8_t CU_IOInit(void)
   /* Configure Button EXTI line */
   EXTI_InitStructure.EXTI_Line = PALD_INPUT_EXTI_LINE;
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
-  //EXTI_Init(&EXTI_InitStructure);
+  EXTI_Init(&EXTI_InitStructure);
   /* Enable and set Button EXTI Interrupt to the lowest priority */
   NVIC_InitStructure.NVIC_IRQChannel = PALD_INPUT_EXTI_IRQn;
-  //NVIC_Init(&NVIC_InitStructure); 
+  NVIC_Init(&NVIC_InitStructure); 
   
   //-->MODE0_INPUT_PIN
   GPIO_InitStructure.GPIO_PuPd = MODE0_INPUT_PUPD;

@@ -31,6 +31,8 @@
 #include "stm32f2xx.h"
 
 /* Exported types ------------------------------------------------------------*/
+#define DEBOUNCER_INT_EDGE_RISING  1
+#define DEBOUNCER_INT_EDGE_FALLING 0
 typedef struct
 {
   uint32_t IsDebouncing;
@@ -38,6 +40,7 @@ typedef struct
   uint32_t DebounceTime_ms[32];
   uint32_t DebounceCurVal_ms[32];
   uint32_t AssociatedEvent[32];
+  void (*AssociatedCallback[32])(void);
   GPIO_TypeDef* InputGPIOPort[32];
   uint16_t InputGPIOPin[32];
 } DebouncedArray_t;
@@ -47,7 +50,7 @@ typedef struct
 #include "main.h"
 #include "event_groups.h"
 uint8_t DebouncerInit(EventGroupHandle_t xEventGroup);
-uint8_t DebouncerAddInput(uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,uint32_t DebounceTime_ms);
+uint8_t DebouncerAddInput(uint32_t InputMask,GPIO_TypeDef* GPIO,uint16_t Pin,uint8_t Edge,uint32_t Event,void cb(void),uint32_t DebounceTime_ms);
 
 void NMI_Handler(void);
 void HardFault_Handler(void);
