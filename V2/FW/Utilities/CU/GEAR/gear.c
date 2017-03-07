@@ -68,6 +68,10 @@ void gear_task(void * pvParameters)
         }
         xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTm_BIT);
       }
+      if( CU_GetNeutralInput() )
+      {
+        gear_current_pos=gear_pos_N;
+      }
       SEG7_Set(gear_current_pos);
       continue;
     }
@@ -150,6 +154,9 @@ void gear_task(void * pvParameters)
       //set 7SEG to DOT
       SEG7_Set(SEG7_DOT);
       
+      //clear Neutral event. In case of Neutral event while increasing, will be used to determine we are in gear 2
+      xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
+      
       //begin turning motor
       gear_up();
       
@@ -203,12 +210,25 @@ void gear_task(void * pvParameters)
         }
       }*/
       xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
+      
+      if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
+      {
+        //update gear position....
+        gear_current_pos=gear_pos_2;
+        xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
+        
+        //... and discard Rapport+ and Rapport- events
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT|CU_INPUT_EVENT_RAPPORTm_BIT);
+      }
     }
     else if( (EventBits & GEAR_EVENT_DECREASE) !=0 )
 /**/{//decrease
       
       //set 7SEG to DOT
       SEG7_Set(SEG7_DOT);
+      
+      //clear Neutral event. In case of Neutral event while decreasing, will be used to determine we are in gear 1
+      xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
       
       //begin turning motor
       gear_down();
@@ -263,6 +283,16 @@ void gear_task(void * pvParameters)
         }
       }*/
       xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
+      
+      if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
+      {
+        //update gear position....
+        gear_current_pos=gear_pos_1;
+        xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
+        
+        //... and discard Rapport+ and Rapport- events
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT|CU_INPUT_EVENT_RAPPORTm_BIT);
+      }
     }
   }
 }
