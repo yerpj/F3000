@@ -3,6 +3,7 @@
 #include "main.h"
 
 #define STBT_RXSTR_MAXLENGTH 50
+#define STBT_ESCAPE_SEQ "^#^$^%\n"
 
 typedef enum{
   Standby_mode=0,

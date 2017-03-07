@@ -97,6 +97,8 @@ void STBT_Task(void * pvParameters)
   //STBT_Send("AT+AB Config DeviceName=F3000\n");
   vTaskDelay(100);
   /*Reset the BT module*/
+  STBT_Send(STBT_ESCAPE_SEQ);
+  vTaskDelay(2100);
   STBT_Send("AT+AB Reset \n");
   vTaskDelay(7000);
   /*Enable autoBonding*/

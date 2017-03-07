@@ -105,7 +105,7 @@ void gear_task(void * pvParameters)
             }
             else
             {
-              gear_current_pos=gear_pos_N;
+              //gear_current_pos=gear_pos_N;
             }
           }
           gear_stop();
@@ -136,7 +136,7 @@ void gear_task(void * pvParameters)
             }
             else
             {
-              gear_current_pos=gear_pos_N;
+              //gear_current_pos=gear_pos_N;
             }
           }
           gear_stop();
