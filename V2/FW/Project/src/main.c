@@ -205,6 +205,7 @@ void F3000_Diag(void * pvParameters)
 void F3000_Periodic(void * pvParameters)
 {
   uint32_t i=0;
+  uint8_t GearMode;
   while(1)
   {
     vTaskDelay(100);
@@ -251,7 +252,9 @@ void F3000_Periodic(void * pvParameters)
     }
 
     //check MODE buttons
-    Indicator_LED_Mode_Set(CU_GetMode());
+    GearMode=CU_GetMode();
+    gear_SetMode(GearMode);
+    Indicator_LED_Mode_Set(GearMode);
     //handle temperature sensor
     Indicator_LED_Temp_Set(0/*tempSensor_Get_State()*/);
     Vreg_based_LED=((uint8_t)(tempSensor_Get_Temp()*4.2))%22;
@@ -280,10 +283,12 @@ void F3000_Periodic(void * pvParameters)
 
 extern EventGroupHandle_t gear_Events;
 void PALG_Gear_cb(void){
-  xEventGroupSetBitsFromISR(gear_Events,GEAR_EVENT_DECREASE,0);}
+  xEventGroupSetBitsFromISR(gear_Events,GEAR_EVENT_DECREASE,0);
+}
 
 void PALD_Gear_cb(void){
-  xEventGroupSetBitsFromISR(gear_Events,GEAR_EVENT_INCREASE,0);}
+  xEventGroupSetBitsFromISR(gear_Events,GEAR_EVENT_INCREASE,0);
+}
 
 void F3000_App(void * pvParameters)
 {

@@ -774,15 +774,15 @@ uint8_t CU_GetMode(void)
 {
   if(GPIO_ReadInputDataBit(MODE0_INPUT_GPIO_PORT,MODE0_INPUT_PIN) && GPIO_ReadInputDataBit(MODE1_INPUT_GPIO_PORT,MODE1_INPUT_PIN))
   {
-    CU_Mode=CU_Mode_SemiAuto;
+    CU_Mode=CU_Mode_Manual;
   }
   else if( GPIO_ReadInputDataBit(MODE0_INPUT_GPIO_PORT,MODE0_INPUT_PIN) && ( !GPIO_ReadInputDataBit(MODE1_INPUT_GPIO_PORT,MODE1_INPUT_PIN) ) )
   {
-    CU_Mode=CU_Mode_Manual;
+    CU_Mode=CU_Mode_Auto;
   }
   else if( GPIO_ReadInputDataBit(MODE1_INPUT_GPIO_PORT,MODE1_INPUT_PIN) && ( !GPIO_ReadInputDataBit(MODE0_INPUT_GPIO_PORT,MODE0_INPUT_PIN) ) )
   {
-    CU_Mode=CU_Mode_Auto;
+    CU_Mode=CU_Mode_SemiAuto;
   }
   else
     return 0;

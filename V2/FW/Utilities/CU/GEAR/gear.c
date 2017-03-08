@@ -1,6 +1,7 @@
 #include "gear.h"
 #include "CU.h"
 #include "main.h"
+#include "stm32f2xx_it.h"
 
 //#define USE_DEVMOTOR
 
@@ -150,148 +151,134 @@ void gear_task(void * pvParameters)
     }
     else if( (EventBits & GEAR_EVENT_INCREASE) !=0 )
 /**/{//increase
-      
-      //set 7SEG to DOT
-      SEG7_Set(SEG7_DOT);
-      
-      //clear Neutral event. In case of Neutral event while increasing, will be used to determine we are in gear 2
-      xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
-      
-      //begin turning motor
-      gear_up();
-      
-      //wait until CAME input is low
-      timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
-      while( CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
+  
+      //check if EMBRAY is pressed when in manual mode or if RPM is below "ralenti"
+      if( (gear_mode!=gear_mode_manual) || CU_GetEmbrayInput() || (Regime_getRPM()<500)  )
       {
-        if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
-        {
-          if(CU_GetShifterInput())
-            CU_STOP_On();
-          else
-            CU_STOP_Off();
-        }
-        vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
-        timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
-      }
-      
-      //wait until CAME input is high
-      timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
-      while( !CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
-      {
-        if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
-        {
-          if(CU_GetShifterInput())
-            CU_STOP_On();
-          else
-            CU_STOP_Off();
-        }
-        vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
-        timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
-      }
-      
-      /* stop motor */
-      CU_STOP_Off();
-      gear_stop();
-      
-      /* update SEG7 */
-      /*if(gear_current_pos!=gear_pos_lost)
-      {
-        if(gear_current_pos==gear_pos_N)
-        {
-          gear_current_pos=gear_pos_2;
-          SEG7_Set(gear_current_pos);
-        }
-        else
-        {
-          if(gear_current_pos<gear_pos_6)
-            gear_current_pos++;
-          SEG7_Set(gear_current_pos);
-        }
-      }*/
-      xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
-      
-      if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
-      {
-        //update gear position....
-        gear_current_pos=gear_pos_2;
+        //set 7SEG to DOT
+        SEG7_Set(SEG7_DOT);
+        
+        //clear Neutral event. In case of Neutral event while increasing, will be used to determine we are in gear 2
         xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
         
-        //... and discard Rapport+ and Rapport- events
-        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT|CU_INPUT_EVENT_RAPPORTm_BIT);
+        //begin turning motor
+        gear_up();
+        
+        //wait until CAME input is low
+        timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
+        while( CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
+        {
+          if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
+          {
+            if(CU_GetShifterInput())
+              CU_STOP_On();
+            else
+              CU_STOP_Off();
+          }
+          vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
+          timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
+        }
+        
+        //wait until CAME input is high
+        timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
+        while( !CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
+        {
+          if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
+          {
+            if(CU_GetShifterInput())
+              CU_STOP_On();
+            else
+              CU_STOP_Off();
+          }
+          vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
+          timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
+        }
+        
+        /* stop motor */
+        CU_STOP_Off();
+        gear_stop();
+        
+        xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
+        
+        if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
+        {
+          //update gear position....
+          gear_current_pos=gear_pos_2;
+          xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
+          
+          //... and discard Rapport+ and Rapport- events
+          xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT|CU_INPUT_EVENT_RAPPORTm_BIT);
+        }
+      }
+      else
+      {
+        xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
       }
     }
     else if( (EventBits & GEAR_EVENT_DECREASE) !=0 )
 /**/{//decrease
-      
-      //set 7SEG to DOT
-      SEG7_Set(SEG7_DOT);
-      
-      //clear Neutral event. In case of Neutral event while decreasing, will be used to determine we are in gear 1
-      xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
-      
-      //begin turning motor
-      gear_down();
-      
-      //wait until CAME input is low
-      timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
-      while( CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
+  
+      //check if EMBRAY is pressed when in manual mode or if RPM is below "ralenti"
+      if( (gear_mode!=gear_mode_manual) || CU_GetEmbrayInput() || (Regime_getRPM()<500)  )
       {
-        if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
-        {
-          if(CU_GetShifterInput())
-            CU_STOP_On();
-          else
-            CU_STOP_Off();
-        }
-        vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
-        timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
-      }
-      
-      //wait until CAME input is high
-      timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
-      while( !CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
-      {
-        if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
-        {
-          if(CU_GetShifterInput())
-            CU_STOP_On();
-          else
-            CU_STOP_Off();
-        }
-        vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
-        timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
-      }
-      
-      /* stop motor */
-      CU_STOP_Off();
-      gear_stop();
-      
-      /* update SEG7 */
-      /*if(gear_current_pos!=gear_pos_lost)
-      {
-        if(gear_current_pos==gear_pos_N)
-        {
-          gear_current_pos=gear_pos_1;
-          SEG7_Set(gear_current_pos);
-        }
-        else
-        {
-          if(gear_current_pos>gear_pos_1)
-            gear_current_pos--;
-          SEG7_Set(gear_current_pos);
-        }
-      }*/
-      xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
-      
-      if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
-      {
-        //update gear position....
-        gear_current_pos=gear_pos_1;
+        //set 7SEG to DOT
+        SEG7_Set(SEG7_DOT);
+        
+        //clear Neutral event. In case of Neutral event while decreasing, will be used to determine we are in gear 1
         xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
         
-        //... and discard Rapport+ and Rapport- events
-        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT|CU_INPUT_EVENT_RAPPORTm_BIT);
+        //begin turning motor
+        gear_down();
+        
+        //wait until CAME input is low
+        timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
+        while( CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
+        {
+          /*if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
+          {
+            if(CU_GetShifterInput())
+              CU_STOP_On();
+            else
+              CU_STOP_Off();
+          }*/
+          vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
+          timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
+        }
+        
+        //wait until CAME input is high
+        timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
+        while( !CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
+        {
+          if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
+          {
+            if(CU_GetShifterInput())
+              CU_STOP_On();
+            else
+              CU_STOP_Off();
+          }
+          vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
+          timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
+        }
+        
+        /* stop motor */
+        CU_STOP_Off();
+        gear_stop();
+        
+        xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
+        
+        if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
+        {
+          //update gear position....
+          gear_current_pos=gear_pos_1;
+          xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
+          
+          //... and discard Rapport+ and Rapport- events
+          xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT|CU_INPUT_EVENT_RAPPORTm_BIT);
+        }
+      }
+      else
+      {
+        xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
       }
     }
   }

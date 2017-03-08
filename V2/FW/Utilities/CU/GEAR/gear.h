@@ -24,9 +24,9 @@ enum{//see SEG7.h for correspondancy
 };
 
 enum{
-  gear_mode_manual=0,
-  gear_mode_semiauto=1,
-  gear_mode_auto=2
+  gear_mode_manual=1,
+  gear_mode_semiauto=2,
+  gear_mode_auto=3
 };
 
 uint8_t gear_Init(void);

@@ -33,13 +33,13 @@ uint8_t Indicator_LED_Mode_Set(uint8_t Mode)
   switch(Mode)
   {
   case 1:
-    LEDbuffer_MaskSet(LED_MODE1_MASK);
-    break;
-  case 2:
     LEDbuffer_MaskSet(LED_MODE2_MASK);
     break;
-  case 3:
+  case 2:
     LEDbuffer_MaskSet(LED_MODE3_MASK);
+    break;
+  case 3:
+    LEDbuffer_MaskSet(LED_MODE1_MASK);
     break;
   default:
     return 1;
