@@ -708,6 +708,7 @@ uint8_t CU_GetCameInput(void);
 void CU_STOP_On(void);
 void CU_STOP_Off(void);
 uint8_t CU_RPMToBargraph(void);
+uint8_t CU_UserInputToBargraph(uint32_t RPM);
 void CU_MX25L1606E_LowLevel_Init(void);
 void CU_MX25L1606E_transfer(uint8_t *buffer,uint32_t length,uint8_t immediateCSRelease);
 void CU_MX25L1606E_CS(uint8_t state);

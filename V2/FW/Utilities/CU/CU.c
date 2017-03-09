@@ -891,6 +891,17 @@ uint8_t CU_RPMToBargraph(void)
   return (uint8_t)ScaledRPM;
 }
 
+uint8_t CU_UserInputToBargraph(uint32_t RPM)
+{
+  uint32_t ScaledRPM=0;
+  ScaledRPM=(uint32_t)(CU_RPM_A*(float)RPM+CU_RPM_B);
+  if(ScaledRPM<1)
+    ScaledRPM=1;
+  if(ScaledRPM>BARGRAPH_NLEDS)
+    ScaledRPM=BARGRAPH_NLEDS;
+  return (uint8_t)ScaledRPM;
+}
+
 void CU_MX25L1606E_LowLevel_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;

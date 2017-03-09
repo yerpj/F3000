@@ -5,6 +5,7 @@
 #define UID_BYTE_SIZE   (12)
 
 //#define FLASH_REINIT
+#define FAKE_ENGINE_SPEED_DATA
 uint8_t UID[8];
 uint8_t NXS_UID[12];
 uint8_t NXS_EUI64[8];
@@ -204,6 +205,10 @@ void F3000_Diag(void * pvParameters)
 
 void F3000_Periodic(void * pvParameters)
 {
+#ifdef FAKE_ENGINE_SPEED_DATA
+  uint8_t updown=1;
+  uint32_t userRPM=500;
+#endif /* FAKE_ENGINE_SPEED_DATA */
   uint32_t i=0;
   uint8_t GearMode;
   while(1)
@@ -255,6 +260,15 @@ void F3000_Periodic(void * pvParameters)
     GearMode=CU_GetMode();
     gear_SetMode(GearMode);
     Indicator_LED_Mode_Set(GearMode);
+    if(GearMode==CU_Mode_Auto && CU_UserInputToBargraph(userRPM)>=bargraph_getPotValue())
+    {
+      if(gear_getPosition()<gear_pos_5 && gear_getPosition()!=gear_pos_N)
+      {
+        gear_increase();
+        updown=1;
+        userRPM=800;
+      }
+    }
     //handle temperature sensor
     Indicator_LED_Temp_Set(0/*tempSensor_Get_State()*/);
     Vreg_based_LED=((uint8_t)(tempSensor_Get_Temp()*4.2))%22;
@@ -264,7 +278,27 @@ void F3000_Periodic(void * pvParameters)
       Indicator_LED_OIL_Set();
     else
       Indicator_LED_OIL_Reset();
+    
     //handle bargraph
+#ifdef FAKE_ENGINE_SPEED_DATA
+    bargraph_Set(1,CU_UserInputToBargraph(userRPM));
+    if(updown)
+    {
+      userRPM+=125;
+      if(userRPM>CU_RPM_MAX)
+        updown=0;
+    }
+    else
+    {
+      userRPM-=125;
+      if(userRPM<CU_RPM_MIN)
+        updown=1;
+    }
+#else /*FAKE_ENGINE_SPEED_DATA */
+    bargraph_Set(1,CU_RPMToBargraph());
+#endif /* FAKE_ENGINE_SPEED_DATA */
+    
+    
     
     
     //handle STOP button
@@ -324,7 +358,6 @@ void F3000_App(void * pvParameters)
       {
        gear_toNeutral();
       }*/
-      bargraph_Set(1,CU_RPMToBargraph());
       //LEDbuffer_MaskSet(0xFFFFFFFFFFFF);
       //LEDbuffer_refresh(0);
       //release MainAppMutex 
