@@ -284,13 +284,13 @@ void F3000_Periodic(void * pvParameters)
     bargraph_Set(1,CU_UserInputToBargraph(userRPM));
     if(updown)
     {
-      userRPM+=125;
+      userRPM+=75;
       if(userRPM>CU_RPM_MAX)
         updown=0;
     }
     else
     {
-      userRPM-=125;
+      userRPM-=75;
       if(userRPM<CU_RPM_MIN)
         updown=1;
     }
