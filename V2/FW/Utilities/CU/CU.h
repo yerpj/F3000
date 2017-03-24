@@ -87,11 +87,11 @@ enum{
 
 #define SEG7_IOEXP_OFFSET               2
 /* CU 7 segment display */
-#define SEG7_SEG_INTENSITY              40//8
-#if (SEG7_SEG_INTENSITY>40)
-  #warning SEG7 current limited to 40% (8mA)
+#define SEG7_SEG_INTENSITY              50//8
+#if (SEG7_SEG_INTENSITY>50)
+  #warning SEG7 current limited to 50% (8mA)
   #undef SEG7_SEG_INTENSITY
-  #define SEG7_SEG_INTENSITY 40
+  #define SEG7_SEG_INTENSITY 50
 #endif 
 #define SEG7_SEG_A_MASK                 ((uint64_t)0x0000000000000001<<(12+(16*SEG7_IOEXP_OFFSET)))
 #define SEG7_SEG_B_MASK                 ((uint64_t)0x0000000000000001<<(11+(16*SEG7_IOEXP_OFFSET)))

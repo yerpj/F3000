@@ -281,18 +281,21 @@ void F3000_Periodic(void * pvParameters)
     
     //handle bargraph
 #ifdef FAKE_ENGINE_SPEED_DATA
-    bargraph_Set(1,CU_UserInputToBargraph(userRPM));
-    if(updown)
+    if(MainMode==MainMode_App)
     {
-      userRPM+=75;
-      if(userRPM>CU_RPM_MAX)
-        updown=0;
-    }
-    else
-    {
-      userRPM-=75;
-      if(userRPM<CU_RPM_MIN)
-        updown=1;
+      bargraph_Set(1,CU_UserInputToBargraph(userRPM));
+      if(updown)
+      {
+        userRPM+=75;
+        if(userRPM>CU_RPM_MAX)
+          updown=0;
+      }
+      else
+      {
+        userRPM-=75;
+        if(userRPM<CU_RPM_MIN)
+          updown=1;
+      }
     }
 #else /*FAKE_ENGINE_SPEED_DATA */
     bargraph_Set(1,CU_RPMToBargraph());
