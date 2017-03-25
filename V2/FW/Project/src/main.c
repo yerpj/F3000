@@ -5,7 +5,7 @@
 #define UID_BYTE_SIZE   (12)
 
 //#define FLASH_REINIT
-#define FAKE_ENGINE_SPEED_DATA
+//#define FAKE_ENGINE_SPEED_DATA
 uint8_t UID[8];
 uint8_t NXS_UID[12];
 uint8_t NXS_EUI64[8];
@@ -59,6 +59,7 @@ uint8_t MainAppChangeMode(uint8_t Mode)
     MainMode=MainMode_Diagnostic;
     break;
   case MainMode_Configuration:
+    CU_LEDsSetIntensity(1);     //set luminosity to 100%. Exact intensity is restored when exiting CONF mode
     MainMode=MainMode_Configuration;
     break;
   default:break;
@@ -145,8 +146,6 @@ void F3000_Conf(void * pvParameters)
           {
             ledIntensity=(uint32_t)((float)paramValue*4.7619);
             PC_SetParam((uint8_t*)&ledIntensity,"LED_I");
-            PC_GetParam((uint8_t*)&ledIntensity,"LED_I");
-            CU_LEDsSetIntensity( (((float)ledIntensity)/100) );
             while(CU_GetNeutralButton())
             vTaskDelay(20);
             state=1;
@@ -164,6 +163,8 @@ void F3000_Conf(void * pvParameters)
       {
         state=0;
         MainAppChangeMode(MainMode_App);
+        PC_GetParam((uint8_t*)&ledIntensity,"LED_I");
+        CU_LEDsSetIntensity( (((float)ledIntensity)/100) );
       }
       vTaskDelay(20);
     }
@@ -260,13 +261,11 @@ void F3000_Periodic(void * pvParameters)
     GearMode=CU_GetMode();
     gear_SetMode(GearMode);
     Indicator_LED_Mode_Set(GearMode);
-    if(GearMode==CU_Mode_Auto && CU_UserInputToBargraph(userRPM)>=bargraph_getPotValue())
+    if(GearMode==CU_Mode_Auto && CU_RPMToBargraph()>=bargraph_getPotValue())
     {
-      if(gear_getPosition()<gear_pos_5 && gear_getPosition()!=gear_pos_N)
+      if(gear_getPosition()<gear_pos_5 && gear_getPosition()!=gear_pos_N && CU_GetGazInput() && !CU_GetEmbrayInput() )
       {
         gear_increase();
-        updown=1;
-        userRPM=800;
       }
     }
     //handle temperature sensor
@@ -298,7 +297,8 @@ void F3000_Periodic(void * pvParameters)
       }
     }
 #else /*FAKE_ENGINE_SPEED_DATA */
-    bargraph_Set(1,CU_RPMToBargraph());
+    if(MainMode==MainMode_App)
+      bargraph_Set(1,CU_RPMToBargraph());
 #endif /* FAKE_ENGINE_SPEED_DATA */
     
     

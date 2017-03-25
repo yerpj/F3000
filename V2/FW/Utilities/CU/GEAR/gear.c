@@ -152,8 +152,8 @@ void gear_task(void * pvParameters)
     else if( (EventBits & GEAR_EVENT_INCREASE) !=0 )
 /**/{//increase
   
-      //check if EMBRAY is pressed when in manual mode or if RPM is below "ralenti"
-      if( (gear_mode!=gear_mode_manual) || CU_GetEmbrayInput() || (Regime_getRPM()<500)  )
+      //check if EMBRAY is pressed when in neutral or if RPM is below "ralenti"
+      if( (gear_current_pos!=gear_pos_N) || ( CU_GetEmbrayInput() || ( Regime_getRPM()<(CU_RPM_MIN-100) ) ) )
       {
         //set 7SEG to DOT
         SEG7_Set(SEG7_DOT);
@@ -218,8 +218,8 @@ void gear_task(void * pvParameters)
     else if( (EventBits & GEAR_EVENT_DECREASE) !=0 )
 /**/{//decrease
   
-      //check if EMBRAY is pressed when in manual mode or if RPM is below "ralenti"
-      if( (gear_mode!=gear_mode_manual) || CU_GetEmbrayInput() || (Regime_getRPM()<500)  )
+      //check if EMBRAY is pressed when in neutral or if RPM is below "ralenti"
+      if( (gear_current_pos!=gear_pos_N) || ( CU_GetEmbrayInput() || ( Regime_getRPM()<(CU_RPM_MIN-100) ) ) )
       {
         //set 7SEG to DOT
         SEG7_Set(SEG7_DOT);
@@ -249,13 +249,13 @@ void gear_task(void * pvParameters)
         timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
         while( !CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
         {
-          if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
+          /*if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
           {
             if(CU_GetShifterInput())
               CU_STOP_On();
             else
               CU_STOP_Off();
-          }
+          }*/
           vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
           timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
         }
@@ -347,8 +347,8 @@ uint8_t gear_up(void)
   GPIO_SetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);//dir
   GPIO_SetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);//enable
 #else /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
-  GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
-  GPIO_SetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
+  GPIO_SetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
+  GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
 #endif /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
   return 0;
 }
@@ -360,8 +360,8 @@ uint8_t gear_down(void)
   GPIO_SetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);//dir
   GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);//enable
 #else /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
-  GPIO_SetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
-  GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
+  GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
+  GPIO_SetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
 #endif /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
   return 0;
 }
@@ -373,8 +373,8 @@ uint8_t gear_stop(void)
   GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);//dir
   GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);//enable
 #else /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
-  GPIO_ResetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
-  GPIO_ResetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
+  GPIO_SetBits(MOTEURm_OUTPUT_GPIO_PORT,MOTEURm_OUTPUT_PIN);
+  GPIO_SetBits(MOTEURp_OUTPUT_GPIO_PORT,MOTEURp_OUTPUT_PIN);
 #endif /* defined(USE_BREADBOARD) || defined(USE_DEVMOTOR) */
   return 0;
 }

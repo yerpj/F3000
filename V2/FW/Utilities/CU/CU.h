@@ -31,8 +31,8 @@ enum{
 #define LED_GREEN LED2
 
 /* Bargraph RPM constants */
-#define CU_RPM_MIN      (float)600 //(raw per minute)
-#define CU_RPM_MAX      (float)8000 //(raw per minute)
+#define CU_RPM_MIN      (float)500 //(raw per minute)
+#define CU_RPM_MAX      (float)10500 //(raw per minute)
 #define CU_RPM_A        (float)(20/(CU_RPM_MAX-CU_RPM_MIN))
 #define CU_RPM_B        (float)( (CU_RPM_MAX-21*CU_RPM_MIN) / (CU_RPM_MAX-CU_RPM_MIN) )
 
@@ -60,7 +60,7 @@ enum{
 #define LED_BLUE_3MM_INTENSITY            25
 #define LED_RED_3MM_INTENSITY             40
 #define LED_GREEN_3MM_INTENSITY           7
-#define LED_RED_5MM_INTENSITY             35
+#define LED_RED_5MM_INTENSITY             100
 #define LED_GREEN_5MM_INTENSITY           7
 
 #define LED_OIL_IOEXP_OFFSET                2
@@ -705,6 +705,7 @@ uint8_t CU_GetShifterInput(void);
 uint8_t CU_GetEmbrayInput(void);
 uint8_t CU_GetNeutralInput(void);
 uint8_t CU_GetCameInput(void);
+uint8_t CU_GetGazInput(void);
 void CU_STOP_On(void);
 void CU_STOP_Off(void);
 uint8_t CU_RPMToBargraph(void);

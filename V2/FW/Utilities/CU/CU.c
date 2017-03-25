@@ -791,7 +791,7 @@ uint8_t CU_GetMode(void)
 
 uint8_t CU_GetOilWarning(void)
 {
-  return GPIO_ReadInputDataBit(OIL_INPUT_GPIO_PORT,OIL_INPUT_PIN);
+  return !GPIO_ReadInputDataBit(OIL_INPUT_GPIO_PORT,OIL_INPUT_PIN);
 }
 
 uint8_t CU_GetStopButton(void)
@@ -822,6 +822,11 @@ uint8_t CU_GetEmbrayInput(void)
 uint8_t CU_GetNeutralInput(void)
 {
   return GPIO_ReadInputDataBit(NEUTRAL_INPUT_GPIO_PORT,NEUTRAL_INPUT_PIN);
+}
+
+uint8_t CU_GetGazInput(void)
+{
+  GPIO_ReadInputDataBit(GAZ_INPUT_GPIO_PORT,GAZ_INPUT_PIN);
 }
 
 uint8_t CU_GetCameInput(void)
