@@ -13,12 +13,15 @@ extern EventGroupHandle_t CU_Inputs_EventGroup;
 
 uint8_t gear_current_pos=gear_pos_lost;
 uint8_t gear_moving=0;
+  uint32_t Rapport_pm=0;
+  
+EventBits_t RapportsEvents;
 
 void gear_task(void * pvParameters)
 {
   EventBits_t EventBits;
   uint32_t i=0;
-  uint32_t timeout=0;
+  int32_t timeout=0;
   while(1)
   {
     if( MainAppGetMode()!=MainMode_App )
@@ -37,9 +40,15 @@ void gear_task(void * pvParameters)
     EventBits=xEventGroupWaitBits(gear_Events,GEAR_EVENT_INCREASE|GEAR_EVENT_DECREASE|GEAR_EVENT_TONEUTRAL,pdFALSE,pdFALSE,50);
     if( !EventBits )
     {//no event--> Handle SEG7 and continue
-      if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RAPPORTp_BIT )
+      RapportsEvents=xEventGroupGetBits(CU_Inputs_EventGroup);
+      if( RapportsEvents&CU_INPUT_EVENT_RAPPORTp_BIT )
       {
-        if(gear_current_pos!=gear_pos_lost)
+        if(RapportsEvents&CU_INPUT_EVENT_NEUTRAL_BIT)
+        {
+          xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT);
+          gear_current_pos=gear_pos_2;
+        }
+        else if(gear_current_pos!=gear_pos_lost)
         {
           if(gear_current_pos==gear_pos_N)
           {
@@ -53,12 +62,15 @@ void gear_task(void * pvParameters)
         }
         xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT);
       }
-      else if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_RAPPORTm_BIT )
+      else if( RapportsEvents&CU_INPUT_EVENT_RAPPORTm_BIT )
       {
-        if(gear_current_pos!=gear_pos_lost)
+        if(RapportsEvents&CU_INPUT_EVENT_NEUTRAL_BIT)
+          gear_current_pos=gear_pos_1;
+        else if(gear_current_pos!=gear_pos_lost)
         {
           if(gear_current_pos==gear_pos_N)
           {
+            xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT);
             gear_current_pos=gear_pos_1;
           }
           else
@@ -81,6 +93,9 @@ void gear_task(void * pvParameters)
       if(gear_current_pos==gear_pos_lost || gear_current_pos==gear_pos_1 || gear_current_pos==gear_pos_2 )
       {
         SEG7_Set(SEG7_DOT);
+        
+        //clear CAME event bit
+        xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
         //clear NEUTRAL event bit
         xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT);
         
@@ -89,8 +104,41 @@ void gear_task(void * pvParameters)
           //begin turning motor
           gear_up();
           
+          timeout=GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS;
+        
           //wait on Neutral event
-          if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS) )
+          while( !(xEventGroupGetBits(CU_Inputs_EventGroup) & CU_INPUT_EVENT_NEUTRAL_BIT ) && timeout>0)
+          {
+            vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
+            timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
+            if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_CAME_BIT )
+            {//error. Put timeout to zero to force exiting the loop
+              timeout=0;
+              console_log("INFO: Missed Neutral event while going to Neutral position. Lost.");
+              gear_current_pos=gear_pos_lost;
+            }
+          }
+          
+          if(timeout>0)
+          {
+            //clear CAME event bit
+            xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
+            
+            //begin turning motor in reverse direction
+            gear_down();
+            
+            if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_CAME_TIMEOUT_MS) )
+            {  //error
+              console_log("INFO: Missed Came event while going to Neutral position. Lost.");
+              gear_current_pos=gear_pos_lost;
+            }
+            else
+            {
+              //gear_current_pos=gear_pos_N;
+            }
+          }
+                
+          /*if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS) )
           {  //error
             console_log("INFO: Missed Neutral event while going to Neutral position. Lost.");
             gear_current_pos=gear_pos_lost;
@@ -112,7 +160,7 @@ void gear_task(void * pvParameters)
             {
               //gear_current_pos=gear_pos_N;
             }
-          }
+          }*/
           gear_stop();
         }
         else if( gear_current_pos==gear_pos_2 )
@@ -121,7 +169,36 @@ void gear_task(void * pvParameters)
           gear_down();
           
           //wait on Neutral event
-          if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS) )
+          while( !(xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT ) && timeout>0)
+          {
+            vTaskDelay(GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS);
+            timeout-=GEAR_WAIT_ON_SIGNAL_POLLING_DELAY_MS; 
+            if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_CAME_BIT )
+            {//error. Put timeout to zero to force exiting the loop
+              timeout=0;
+              console_log("INFO: Missed Neutral event while going to Neutral position. Lost.");
+              gear_current_pos=gear_pos_lost;
+            }
+          }
+          if(timeout>0)
+          {
+            //clear CAME event bit
+            xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
+            
+            //begin turning motor in reverse direction
+            gear_up();
+            
+            if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_CAME_TIMEOUT_MS) )
+            {  //error
+              console_log("INFO: Missed Came event while going to Neutral position. Lost.");
+              gear_current_pos=gear_pos_lost;
+            }
+            else
+            {
+              //gear_current_pos=gear_pos_N;
+            }
+          }
+          /*if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS) )
           {  //error
             console_log("INFO: Missed Neutral event while going to Neutral position. Lost.");
             gear_current_pos=gear_pos_lost;
@@ -143,7 +220,7 @@ void gear_task(void * pvParameters)
             {
               //gear_current_pos=gear_pos_N;
             }
-          }
+          }*/
           gear_stop();
         }
       }
@@ -200,7 +277,7 @@ void gear_task(void * pvParameters)
         
         xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
         
-        if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
+        /*if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
         {
           //update gear position....
           gear_current_pos=gear_pos_2;
@@ -208,7 +285,7 @@ void gear_task(void * pvParameters)
           
           //... and discard Rapport+ and Rapport- events
           xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT|CU_INPUT_EVENT_RAPPORTm_BIT);
-        }
+        }*/
       }
       else
       {
@@ -266,7 +343,7 @@ void gear_task(void * pvParameters)
         
         xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
         
-        if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
+        /*if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
         {
           //update gear position....
           gear_current_pos=gear_pos_1;
@@ -274,7 +351,7 @@ void gear_task(void * pvParameters)
           
           //... and discard Rapport+ and Rapport- events
           xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT|CU_INPUT_EVENT_RAPPORTm_BIT);
-        }
+        }*/
       }
       else
       {

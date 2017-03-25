@@ -48,21 +48,41 @@ uint8_t Indicator_LED_Mode_Set(uint8_t Mode)
   return 0;
 }
 
-uint8_t Indicator_LED_Temp_Set(uint8_t Temp)
+uint8_t Indicator_LED_Temp_Set(uint8_t TempState)
 {
+  static uint8_t blinkState=0;
   LEDbuffer_MaskReset(LED_TEMP1_MASK|LED_TEMP2_MASK|LED_TEMP3_MASK);
-  switch(Temp)
+  switch(TempState)
   {
   case 0:
-    break;
   case 1:
-    LEDbuffer_MaskSet(LED_TEMP1_MASK);
     break;
   case 2:
-    LEDbuffer_MaskSet(LED_TEMP1_MASK|LED_TEMP2_MASK);
+    LEDbuffer_MaskSet(LED_TEMP1_MASK);
     break;
   case 3:
-    LEDbuffer_MaskSet(LED_TEMP1_MASK|LED_TEMP2_MASK|LED_TEMP3_MASK);
+    LEDbuffer_MaskSet(LED_TEMP1_MASK|LED_TEMP2_MASK);
+    break;
+  case 4:
+    LEDbuffer_MaskSet(LED_TEMP2_MASK);
+    break;
+  case 5:
+    LEDbuffer_MaskSet(LED_TEMP2_MASK|LED_TEMP3_MASK);
+    break;
+  case 6:
+    LEDbuffer_MaskSet(LED_TEMP3_MASK);
+    break;
+  case 7:
+    if(blinkState)
+    {
+      LEDbuffer_MaskSet(LED_TEMP3_MASK);
+      blinkState=0;
+    }
+    else
+    {
+      LEDbuffer_MaskReset(LED_TEMP3_MASK);
+      blinkState=1;
+    }
     break;
   default:
     return 1;

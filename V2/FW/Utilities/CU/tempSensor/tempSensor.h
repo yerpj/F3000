@@ -4,9 +4,25 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#define TEMPSENSOR_COLD_TO_MEDIUM_VOLTAGE      (4.5)
-#define TEMPSENSOR_MEDIUM_TO_HOT_VOLTAGE       (3.0)
-#define TEMPSENSOR_HYSTERESIS_VOLTAGE   (0.5)
+/*7 different states:
+
+from cold to hot:
+
+1) nothing
+2) blue led
+3) blue+green led
+4) green led
+5) green+red led
+6) red led
+7) flashing red led
+
+*/
+#define TEMPSENSOR_THRESHOLD_1_V        (0.67)
+#define TEMPSENSOR_THRESHOLD_2_V        (0.64)
+#define TEMPSENSOR_THRESHOLD_3_V        (0.60)
+#define TEMPSENSOR_THRESHOLD_4_V        (0.58)
+#define TEMPSENSOR_THRESHOLD_5_V        (0.54)
+#define TEMPSENSOR_THRESHOLD_6_V        (0.52)
 
 enum{
   TempSensor_Cold=1,

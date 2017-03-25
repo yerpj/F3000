@@ -269,7 +269,7 @@ void F3000_Periodic(void * pvParameters)
       }
     }
     //handle temperature sensor
-    Indicator_LED_Temp_Set(0/*tempSensor_Get_State()*/);
+    Indicator_LED_Temp_Set(tempSensor_Get_State());
     Vreg_based_LED=((uint8_t)(tempSensor_Get_Temp()*4.2))%22;
 
     //handle OIL sensor
@@ -469,6 +469,7 @@ void F3000_Init(void * pvParameters)
   ITS_Init(NULL,0);
   tempSensor_Init(NULL);
   bargraph_Init();
+  vTaskDelay(200);//wait a little bit in order to let flash be ready
   if(flash_init())
      console_log("can't init flash");
   if( PC_Init() )
@@ -477,7 +478,7 @@ void F3000_Init(void * pvParameters)
   param=50;
   PC_SetParam((uint8_t*)&param,"LED_I");
 #endif /* FLASH_REINIT */
-  
+  vTaskDelay(200);//safe wait before reading flash memory
   PC_GetParam((uint8_t*)&param,"LED_I");
   CU_LEDsInit( (((float)param)/100) );
   if(gear_Init())
