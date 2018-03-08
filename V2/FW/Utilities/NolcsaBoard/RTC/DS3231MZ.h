@@ -1,6 +1,6 @@
 #ifndef _DS3231MZ_
 #define _DS3231MZ_
-#include "nolcsa.h"
+#include "commonDefs.h"
 #include "I2C.h"
 
 #define DS3231MZ_ADDR                   (0xD0)  //or 0x68 or 0xD0

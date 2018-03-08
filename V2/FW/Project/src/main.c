@@ -459,6 +459,7 @@ uint8_t F3000CLIInterpreter(uint8_t *raw)
 void F3000_Init(void * pvParameters)
 {
   uint32_t param;
+
   UID_Init(UID_ADDRESS_BASE,UID_BYTE_SIZE);
   UID_getUID(UID);
   UID_getNXSFormat(NXS_UID);
@@ -475,7 +476,7 @@ void F3000_Init(void * pvParameters)
   if( PC_Init() )
     console_log("can't init Parameter Collection. Flash problem?");
 #ifdef FLASH_REINIT
-  param=50;
+  param=100;
   PC_SetParam((uint8_t*)&param,"LED_I");
 #endif /* FLASH_REINIT */
   vTaskDelay(200);//safe wait before reading flash memory

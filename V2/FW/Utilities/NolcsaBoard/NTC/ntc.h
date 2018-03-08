@@ -1,7 +1,7 @@
 #ifndef __NTC_H__
 #define __NTC_H__
 
-#include "nolcsa.h"
+#include "commonDefs.h"
 #include "math.h"
 
 

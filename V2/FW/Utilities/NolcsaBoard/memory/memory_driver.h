@@ -2,7 +2,7 @@
 #define MEMORY_DRIVER_H_
 
 #include "stm32f2xx_spi.h"
-#include "nolcsa.h"
+#include "commonDefs.h"
 
 /* Scheduler includes. */
 #include "FreeRTOS.h"

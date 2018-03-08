@@ -1,5 +1,6 @@
 #ifndef _STRBUF_H_
 #define _STRBUF_H_
+
 #include "commonDefs.h"
 
 void buffer_init(uint8_t *buf,uint8_t val,uint32_t len);
