@@ -34,7 +34,7 @@ uint8_t bargraph_DisplayPotValue(void)
 uint8_t bargraph_Set(uint8_t StartValue,uint8_t StopValue)
 {
   uint8_t i;
-  uint32_t filledMask=0;
+  uint64_t filledMask=0;
   if(StartValue<1 || StartValue>BARGRAPH_NLEDS)
     return 1;
   if(StopValue<1)

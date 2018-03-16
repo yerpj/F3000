@@ -20,9 +20,9 @@ uint8_t PCA9952_Init(I2C_List_Typedef I2Cx,uint8_t devAddr)
   
   /*if(tmp!=0x05)
     return 1;*/
-  
-  PCA9952_write_reg(devAddr,REG_MODE2,0x25);
-  PCA9952_write_reg(devAddr,REG_IREFALL,10);
+
+  PCA9952_write_reg(devAddr,REG_MODE2,0x05);
+  PCA9952_write_reg(devAddr,REG_IREFALL,255);//set maximum output current to 19.1 [mA] (0.9/Rext*255/4, with Rext=3k)
   
   /*Every LED off*/
   PCA9952_write_reg(devAddr,REG_LEDOUT0,0x00);
@@ -39,6 +39,8 @@ uint8_t PCA9952_LED_Intensity_Control(uint8_t DevAddr,uint16_t Mask,uint8_t Perc
   uint8_t Intensity=(uint8_t)((float)Percent*2.55);
   if(Intensity==0)
     Intensity=1;
+  if(Intensity>255)
+    Intensity=255;
   for(i=0;i<16;i++)
   {
     if(Mask&(0x0001<<i))

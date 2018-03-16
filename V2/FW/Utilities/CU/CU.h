@@ -55,13 +55,13 @@ enum{
 #define LED3_GPIO_CLK                    RCC_AHB1Periph_GPIOC 
 
 
-#define BAR_LED_INTENSITY_GLOBAL_FACTOR (float)(0.3)
+//#define BAR_LED_INTENSITY_GLOBAL_FACTOR (float)(0.3)
 
-#define LED_BLUE_3MM_INTENSITY            25
-#define LED_RED_3MM_INTENSITY             40
-#define LED_GREEN_3MM_INTENSITY           7
-#define LED_RED_5MM_INTENSITY             100
-#define LED_GREEN_5MM_INTENSITY           7
+#define LED_BLUE_3MM_INTENSITY            8//4//2
+#define LED_RED_3MM_INTENSITY             20//52
+#define LED_GREEN_3MM_INTENSITY           4//2
+#define LED_RED_5MM_INTENSITY             30//15//30//78
+#define LED_GREEN_5MM_INTENSITY           4//2
 
 #define LED_OIL_IOEXP_OFFSET                2
 #define LED_OIL_INTENSITY                   LED_RED_5MM_INTENSITY
@@ -87,12 +87,12 @@ enum{
 
 #define SEG7_IOEXP_OFFSET               2
 /* CU 7 segment display */
-#define SEG7_SEG_INTENSITY              50//8
-#if (SEG7_SEG_INTENSITY>50)
-  #warning SEG7 current limited to 50% (8mA)
+#define SEG7_SEG_INTENSITY              70//52//8
+#if (SEG7_SEG_INTENSITY>80)
+  #warning SEG7 current limited to 80% , 15.3mA
   #undef SEG7_SEG_INTENSITY
-  #define SEG7_SEG_INTENSITY 50
-#endif 
+  #define SEG7_SEG_INTENSITY 80
+#endif
 #define SEG7_SEG_A_MASK                 ((uint64_t)0x0000000000000001<<(12+(16*SEG7_IOEXP_OFFSET)))
 #define SEG7_SEG_B_MASK                 ((uint64_t)0x0000000000000001<<(11+(16*SEG7_IOEXP_OFFSET)))
 #define SEG7_SEG_C_MASK                 ((uint64_t)0x0000000000000001<<(6+(16*SEG7_IOEXP_OFFSET)))
@@ -695,7 +695,7 @@ void I2C_Bus_Init(I2C_List_Typedef I2Cx);
 uint16_t CU_ReadInputsRaw(void);
 uint8_t CU_IOInit(void);
 uint8_t CU_LEDsInit(float intensityPercent);
-uint8_t CU_LEDsSetIntensity(float intensity);
+uint8_t CU_LEDsSetIntensity(float percent);
 uint8_t CU_GetMode(void);
 uint8_t CU_GetOilWarning(void);
 uint8_t CU_GetStopButton(void);

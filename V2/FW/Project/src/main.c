@@ -4,7 +4,7 @@
 #define UID_ADDRESS_BASE (uint8_t*)(0x1FFF7A10)
 #define UID_BYTE_SIZE   (12)
 
-//#define FLASH_REINIT
+#define FLASH_REINIT
 //#define FAKE_ENGINE_SPEED_DATA
 uint8_t UID[8];
 uint8_t NXS_UID[12];
@@ -59,7 +59,7 @@ uint8_t MainAppChangeMode(uint8_t Mode)
     MainMode=MainMode_Diagnostic;
     break;
   case MainMode_Configuration:
-    CU_LEDsSetIntensity(1);     //set luminosity to 100%. Exact intensity is restored when exiting CONF mode
+    CU_LEDsSetIntensity(100);     //set luminosity to 100%. Exact intensity is restored when exiting CONF mode
     MainMode=MainMode_Configuration;
     break;
   default:break;
@@ -164,7 +164,7 @@ void F3000_Conf(void * pvParameters)
         state=0;
         MainAppChangeMode(MainMode_App);
         PC_GetParam((uint8_t*)&ledIntensity,"LED_I");
-        CU_LEDsSetIntensity( (((float)ledIntensity)/100) );
+        CU_LEDsSetIntensity( (float)ledIntensity );
       }
       vTaskDelay(20);
     }
@@ -476,12 +476,12 @@ void F3000_Init(void * pvParameters)
   if( PC_Init() )
     console_log("can't init Parameter Collection. Flash problem?");
 #ifdef FLASH_REINIT
-  param=100;
+  param=30;
   PC_SetParam((uint8_t*)&param,"LED_I");
 #endif /* FLASH_REINIT */
   vTaskDelay(200);//safe wait before reading flash memory
   PC_GetParam((uint8_t*)&param,"LED_I");
-  CU_LEDsInit( (((float)param)/100) );
+  CU_LEDsInit( (float)param );
   if(gear_Init())
   {
     console_log("can't init GearBox");
@@ -523,6 +523,7 @@ void F3000_Init(void * pvParameters)
   LEDbuffer_refresh(0);
   vTaskDelay(700);
   
+
   /* Everything OFF */
   LEDbuffer_MaskReset(0xFFFFFFFFFFFF);
   LEDbuffer_refresh(0);
@@ -536,6 +537,25 @@ void F3000_Init(void * pvParameters)
   }
   bargraph_NegMaskState(1);
   
+  /********************************************************************************/
+  /*//TODO: Remove this debug code
+  uint8_t buf[1];
+  PCA9952_LED_Intensity_Control(PCA9952_MAIN_ADDR,0x1000,SEG7_SEG_INTENSITY);
+  PCA9952_LED_Control(PCA9952_MAIN_ADDR,0x1000);
+  PCA9952_LED_Intensity_Control(PCA9952_MAIN_ADDR,0x1000,50);
+  PCA9952_write_reg(PCA9952_MAIN_ADDR,REG_GRPPWM,0xFF);
+  PCA9952_write_reg(PCA9952_MAIN_ADDR,REG_GRPPWM,127);
+  PCA9952_write_reg(PCA9952_MAIN_ADDR,REG_GRPPWM,0xFF);
+  PCA9952_LED_Intensity_Control(PCA9952_MAIN_ADDR,0x1000,100);
+  PCA9952_write_reg(PCA9952_MAIN_ADDR,REG_MODE2,0x25);
+  PCA9952_read_reg(PCA9952_MAIN_ADDR,REG_MODE2,buf,1);
+  PCA9952_write_reg(PCA9952_MAIN_ADDR,REG_MODE2,0x05);
+  PCA9952_read_reg(PCA9952_MAIN_ADDR,REG_MODE2,buf,1);
+  PCA9952_read_reg(PCA9952_MAIN_ADDR,REG_MODE2,buf,1);
+
+
+  while(1);*/
+
   /* restore normal tasks */
   vTaskResume(ConfigTaskHandle);
   vTaskResume(DiagnosticTaskHandle);
