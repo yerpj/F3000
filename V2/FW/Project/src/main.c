@@ -4,7 +4,7 @@
 #define UID_ADDRESS_BASE (uint8_t*)(0x1FFF7A10)
 #define UID_BYTE_SIZE   (12)
 
-#define FLASH_REINIT
+//#define FLASH_REINIT
 //#define FAKE_ENGINE_SPEED_DATA
 uint8_t UID[8];
 uint8_t NXS_UID[12];
@@ -196,6 +196,9 @@ void F3000_Diag(void * pvParameters)
       if(CU_GetStopButton())
       {
         MainAppChangeMode(MainMode_App);
+#ifdef RESET_CU_WHEN_EXITING_DIAGNOSTIC_MODE
+        NVIC_SystemReset();
+#endif /* RESET_CU_WHEN_EXITING_DIAGNOSTIC_MODE */
       }
       vTaskDelay(20);
     }
@@ -212,6 +215,8 @@ void F3000_Periodic(void * pvParameters)
 #endif /* FAKE_ENGINE_SPEED_DATA */
   uint32_t i=0;
   uint8_t GearMode;
+  uint8_t PotValue=1;
+  uint8_t DelayBetweenTwoGearUp=0;
   while(1)
   {
     vTaskDelay(100);
@@ -261,13 +266,22 @@ void F3000_Periodic(void * pvParameters)
     GearMode=CU_GetMode();
     gear_SetMode(GearMode);
     Indicator_LED_Mode_Set(GearMode);
-    if(GearMode==CU_Mode_Auto && CU_RPMToBargraph()>=bargraph_getPotValue())
+
+    /* check Pot value for AUTO mode */
+    PotValue=bargraph_getPotValue();
+    if(PotValue<POT_MINIMUM_VALUE_FOR_AUTO_MODE)
+      PotValue=POT_MINIMUM_VALUE_FOR_AUTO_MODE;
+    if(GearMode==CU_Mode_Auto && CU_RPMToBargraph()>=PotValue)
     {
-      if(gear_getPosition()<gear_pos_5 && gear_getPosition()!=gear_pos_N && CU_GetGazInput() && !CU_GetEmbrayInput() )
+      if( (gear_getPosition()<gear_pos_5) && (gear_getPosition()!=gear_pos_N) && CU_GetGazInput() && !CU_GetEmbrayInput() && !DelayBetweenTwoGearUp)
       {
         gear_increase();
+        DelayBetweenTwoGearUp=DELAYBETWEEN2GEARUP_100MS;
       }
     }
+    if(DelayBetweenTwoGearUp)
+      DelayBetweenTwoGearUp--;
+
     //handle temperature sensor
     Indicator_LED_Temp_Set(tempSensor_Get_State());
     Vreg_based_LED=((uint8_t)(tempSensor_Get_Temp()*4.2))%22;
@@ -300,10 +314,7 @@ void F3000_Periodic(void * pvParameters)
     if(MainMode==MainMode_App)
       bargraph_Set(1,CU_RPMToBargraph());
 #endif /* FAKE_ENGINE_SPEED_DATA */
-    
-    
-    
-    
+
     //handle STOP button
     if(CU_GetStopButton())
       CU_STOP_On();
@@ -552,8 +563,6 @@ void F3000_Init(void * pvParameters)
   PCA9952_write_reg(PCA9952_MAIN_ADDR,REG_MODE2,0x05);
   PCA9952_read_reg(PCA9952_MAIN_ADDR,REG_MODE2,buf,1);
   PCA9952_read_reg(PCA9952_MAIN_ADDR,REG_MODE2,buf,1);
-
-
   while(1);*/
 
   /* restore normal tasks */

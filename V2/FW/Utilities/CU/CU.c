@@ -899,7 +899,7 @@ uint8_t CU_RPMToBargraph(void)
     ScaledRPM=1;
   if(ScaledRPM>BARGRAPH_NLEDS)
     ScaledRPM=BARGRAPH_NLEDS;
-  return (uint8_t)ScaledRPM;
+  return (uint8_t)ScaledRPM;//output value goes from 1 to BARGRAPH_NLEDS
 }
 
 uint8_t CU_UserInputToBargraph(uint32_t RPM)

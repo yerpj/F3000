@@ -100,14 +100,14 @@ void Vreg_Monitor_callback(uint16_t value)
       for(i=0;i<Vreg_ADC_ACCU_SIZE;i++)
         Vreg_Accu+=Vreg_ADCAccu[i];
       Vreg_value=0.0054*(((float)Vreg_Accu)/((float)Vreg_ADC_ACCU_SIZE));
-      if(Vreg_value>21)
-        Mask=21;
+      if(Vreg_value>BARGRAPH_NLEDS)
+        Mask=BARGRAPH_NLEDS;
       else if(Vreg_value<1)
         Mask=1;
       else
         Mask=(uint8_t)Vreg_value;
 #ifdef INVERT_VREG_VALUE
-    Mask=22-Mask;
+    Mask=(BARGRAPH_NLEDS+1)-Mask;
 #endif /* INVERT_VREG_VALUE */
       //Vreg_currentValue=(float)( ( (Vreg_value-Vreg_V_TEMP_25)/Vreg_AVG_SLOPE) +25 );
     if(NegativeMaskEnabled)
@@ -119,5 +119,5 @@ void Vreg_Monitor_callback(uint16_t value)
 
 uint8_t bargraph_getPotValue(void)
 {
-  return NegativeMask;
+  return NegativeMask;//goes from 1 to BARGRAPH_NLEDS
 }

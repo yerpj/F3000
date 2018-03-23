@@ -1,6 +1,7 @@
 #include "gear.h"
 #include "CU.h"
 #include "main.h"
+#include "SEG7.h"
 #include "stm32f2xx_it.h"
 
 //#define USE_DEVMOTOR
@@ -13,7 +14,7 @@ extern EventGroupHandle_t CU_Inputs_EventGroup;
 
 uint8_t gear_current_pos=gear_pos_lost;
 uint8_t gear_moving=0;
-  uint32_t Rapport_pm=0;
+uint32_t Rapport_pm=0;
   
 EventBits_t RapportsEvents;
 
@@ -85,6 +86,10 @@ void gear_task(void * pvParameters)
       {
         gear_current_pos=gear_pos_N;
       }
+      else if(gear_current_pos==gear_pos_N)
+      { //handle the case where we think gear is N but N input is not active
+        gear_current_pos=gear_pos_lost;
+      }
       SEG7_Set(gear_current_pos);
       continue;
     }
@@ -137,30 +142,6 @@ void gear_task(void * pvParameters)
               //gear_current_pos=gear_pos_N;
             }
           }
-                
-          /*if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS) )
-          {  //error
-            console_log("INFO: Missed Neutral event while going to Neutral position. Lost.");
-            gear_current_pos=gear_pos_lost;
-          }
-          else
-          {
-            //clear CAME event bit
-            xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
-            
-            //begin turning motor in reverse direction
-            gear_down();
-            
-            if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_CAME_TIMEOUT_MS) )
-            {  //error
-              console_log("INFO: Missed Came event while going to Neutral position. Lost.");
-              gear_current_pos=gear_pos_lost;
-            }
-            else
-            {
-              //gear_current_pos=gear_pos_N;
-            }
-          }*/
           gear_stop();
         }
         else if( gear_current_pos==gear_pos_2 )
@@ -198,29 +179,6 @@ void gear_task(void * pvParameters)
               //gear_current_pos=gear_pos_N;
             }
           }
-          /*if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_NEUTRAL_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_NEUTRAL_TIMEOUT_MS) )
-          {  //error
-            console_log("INFO: Missed Neutral event while going to Neutral position. Lost.");
-            gear_current_pos=gear_pos_lost;
-          }
-          else
-          {
-            //clear CAME event bit
-            xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT);
-            
-            //begin turning motor in reverse direction
-            gear_up();
-            
-            if( !xEventGroupWaitBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_CAME_BIT,pdTRUE,pdFALSE,GEAR_WAIT_ON_CAME_TIMEOUT_MS) )
-            {  //error
-              console_log("INFO: Missed Came event while going to Neutral position. Lost.");
-              gear_current_pos=gear_pos_lost;
-            }
-            else
-            {
-              //gear_current_pos=gear_pos_N;
-            }
-          }*/
           gear_stop();
         }
       }
@@ -228,7 +186,6 @@ void gear_task(void * pvParameters)
     }
     else if( (EventBits & GEAR_EVENT_INCREASE) !=0 )
 /**/{//increase
-  
       //check if EMBRAY is pressed when in neutral or if RPM is below "ralenti"
       if( (gear_current_pos!=gear_pos_N) || ( CU_GetEmbrayInput() || ( Regime_getRPM()<(CU_RPM_MIN-100) ) ) )
       {
@@ -243,7 +200,7 @@ void gear_task(void * pvParameters)
         
         //wait until CAME input is low
         timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
-        while( CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
+        while( CU_GetCameInput() && timeout>0 )
         {
           if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
           {
@@ -258,7 +215,7 @@ void gear_task(void * pvParameters)
         
         //wait until CAME input is high
         timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
-        while( !CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
+        while( !CU_GetCameInput() && timeout>0 )
         {
           if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
           {
@@ -276,16 +233,6 @@ void gear_task(void * pvParameters)
         gear_stop();
         
         xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
-        
-        /*if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
-        {
-          //update gear position....
-          gear_current_pos=gear_pos_2;
-          xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
-          
-          //... and discard Rapport+ and Rapport- events
-          xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT|CU_INPUT_EVENT_RAPPORTm_BIT);
-        }*/
       }
       else
       {
@@ -309,7 +256,7 @@ void gear_task(void * pvParameters)
         
         //wait until CAME input is low
         timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
-        while( CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
+        while( CU_GetCameInput() && timeout>0 )
         {
           /*if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
           {
@@ -324,7 +271,7 @@ void gear_task(void * pvParameters)
         
         //wait until CAME input is high
         timeout=GEAR_WAIT_ON_CAME_TIMEOUT_MS;
-        while( !CU_GetCameInput() && timeout>0 )// TODO: add a timeout mechanism HERE
+        while( !CU_GetCameInput() && timeout>0 )
         {
           /*if( gear_mode!=gear_mode_manual && !CU_GetEmbrayInput() )
           {
@@ -340,18 +287,8 @@ void gear_task(void * pvParameters)
         /* stop motor */
         CU_STOP_Off();
         gear_stop();
-        
+
         xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
-        
-        /*if( xEventGroupGetBits(CU_Inputs_EventGroup)&CU_INPUT_EVENT_NEUTRAL_BIT )
-        {
-          //update gear position....
-          gear_current_pos=gear_pos_1;
-          xEventGroupClearBits(gear_Events,CU_INPUT_EVENT_NEUTRAL_BIT);
-          
-          //... and discard Rapport+ and Rapport- events
-          xEventGroupClearBits(CU_Inputs_EventGroup,CU_INPUT_EVENT_RAPPORTp_BIT|CU_INPUT_EVENT_RAPPORTm_BIT);
-        }*/
       }
       else
       {

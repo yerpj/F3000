@@ -618,6 +618,8 @@ enum{
   #define VREG_INPUT_GPIO_PORT                            GPIOB
   #define VREG_INPUT_GPIO_CLK                             RCC_AHB1Periph_GPIOB 
 
+  #define POT_MINIMUM_VALUE_FOR_AUTO_MODE                 10    //In AUTO mode, Potentiometer is virtually floored to this value in order to avoid gearing up or down at too low RPMs
+
   #define TEMP_IN_INPUT_PUPD                              GPIO_PuPd_NOPULL 
   #define TEMP_IN_INPUT_PIN                               GPIO_Pin_0
   #define TEMP_IN_INPUT_GPIO_PORT                         GPIOB

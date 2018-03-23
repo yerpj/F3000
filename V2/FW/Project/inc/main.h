@@ -22,6 +22,7 @@ extern EventGroupHandle_t CU_Inputs_EventGroup;
 #include "commontypes.h"
 #include "console.h"
 
+#include "F3000Conf.h"
 #include "CU.h"
 #include "CLI.h"
 #include "UID.h"
