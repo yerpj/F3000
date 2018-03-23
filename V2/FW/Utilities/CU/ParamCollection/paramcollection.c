@@ -19,6 +19,7 @@ uint8_t PC_Init(void)
   if(tmp!='Z')
     return 1;*/
   PC_AddParam("LED_I");
+  PC_AddParam("AUTO_GU_BT");//AUTO mode, GEAR UP, BLANKING TIME: time between 2 consecutive GEAR_UP actions
   return 0;
 }
 

@@ -22,6 +22,7 @@ uint8_t MainMode=MainMode_Init;
 //other variables
 uint8_t Vreg_based_LED=0;
 uint8_t str[300];
+uint8_t PotMinimumValueForAutoMode=0;
 EventGroupHandle_t CU_Inputs_EventGroup;
 
 uint8_t MainAppGetMode(void)
@@ -104,6 +105,7 @@ void F3000_Conf(void * pvParameters)
   uint8_t varNum=0;
   uint8_t paramValue=0;
   uint32_t ledIntensity=0;
+  uint32_t PotMinValueForAutoMode=0;
   while(1)
   {
     if(MainMode==MainMode_Configuration)
@@ -141,13 +143,23 @@ void F3000_Conf(void * pvParameters)
         paramValue=bargraph_getPotValue();
         switch(varNum)
         {
+        case 8:
+          if(CU_GetNeutralButton())
+          {
+            PotMinValueForAutoMode=(uint32_t)paramValue;
+            PC_SetParam((uint8_t*)&PotMinValueForAutoMode,"AUTO_GU_BT");
+            while(CU_GetNeutralButton())
+              vTaskDelay(20);
+            state=1;
+          }
+          break;
         case 9:
           if(CU_GetNeutralButton())
           {
             ledIntensity=(uint32_t)((float)paramValue*4.7619);
             PC_SetParam((uint8_t*)&ledIntensity,"LED_I");
             while(CU_GetNeutralButton())
-            vTaskDelay(20);
+              vTaskDelay(20);
             state=1;
           }
           break;
@@ -165,6 +177,9 @@ void F3000_Conf(void * pvParameters)
         MainAppChangeMode(MainMode_App);
         PC_GetParam((uint8_t*)&ledIntensity,"LED_I");
         CU_LEDsSetIntensity( (float)ledIntensity );
+
+        PC_GetParam((uint8_t*)&PotMinValueForAutoMode,"AUTO_GU_BT");
+        PotMinimumValueForAutoMode=PotMinValueForAutoMode;
       }
       vTaskDelay(20);
     }
@@ -269,8 +284,8 @@ void F3000_Periodic(void * pvParameters)
 
     /* check Pot value for AUTO mode */
     PotValue=bargraph_getPotValue();
-    if(PotValue<POT_MINIMUM_VALUE_FOR_AUTO_MODE)
-      PotValue=POT_MINIMUM_VALUE_FOR_AUTO_MODE;
+    if(PotValue<PotMinimumValueForAutoMode)
+      PotValue=PotMinimumValueForAutoMode;
     if(GearMode==CU_Mode_Auto && CU_RPMToBargraph()>=PotValue)
     {
       if( (gear_getPosition()<gear_pos_5) && (gear_getPosition()!=gear_pos_N) && CU_GetGazInput() && !CU_GetEmbrayInput() && !DelayBetweenTwoGearUp)
@@ -487,12 +502,19 @@ void F3000_Init(void * pvParameters)
   if( PC_Init() )
     console_log("can't init Parameter Collection. Flash problem?");
 #ifdef FLASH_REINIT
+  /* Here are the default Parameter values to be initially stored in flash */
   param=30;
   PC_SetParam((uint8_t*)&param,"LED_I");
+
+  param=10;
+  PC_SetParam((uint8_t*)&param,"AUTO_GU_BT"); //see detail in PC_Init() function
 #endif /* FLASH_REINIT */
   vTaskDelay(200);//safe wait before reading flash memory
   PC_GetParam((uint8_t*)&param,"LED_I");
   CU_LEDsInit( (float)param );
+
+  PC_GetParam((uint8_t*)&param,"AUTO_GU_BT");
+  PotMinimumValueForAutoMode=(uint8_t)param;
   if(gear_Init())
   {
     console_log("can't init GearBox");
