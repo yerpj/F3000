@@ -19,6 +19,7 @@
 #define SEG7_A (14)
 #define SEG7_d (15)
 #define SEG7_C (16)
+#define SEG7_E (17)
 
 uint8_t SEG7_Set(uint8_t value);
 

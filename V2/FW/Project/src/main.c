@@ -57,6 +57,7 @@ uint8_t MainAppChangeMode(uint8_t Mode)
     MainMode=MainMode_App;
     break;
   case MainMode_Diagnostic:
+    CU_LEDsSetIntensity(80);     //set luminosity to 80%. On exit, system is rebooted, intensity is read from FLASH
     MainMode=MainMode_Diagnostic;
     break;
   case MainMode_Configuration:
@@ -129,6 +130,7 @@ void F3000_Conf(void * pvParameters)
         varNum=bargraph_getPotValue();
         if(varNum>9)
           varNum=9;
+        bargraph_MaskSet(0x01<<(varNum-1));
         SEG7_Set(varNum);
         if(CU_GetNeutralButton())
         {
@@ -143,7 +145,7 @@ void F3000_Conf(void * pvParameters)
         paramValue=bargraph_getPotValue();
         switch(varNum)
         {
-        case 8:
+        case 8:// set the potentiometer minimum value for AUTO mode
           if(CU_GetNeutralButton())
           {
             PotMinValueForAutoMode=(uint32_t)paramValue;
@@ -153,7 +155,7 @@ void F3000_Conf(void * pvParameters)
             state=1;
           }
           break;
-        case 9:
+        case 9:// set LEDs intensity
           if(CU_GetNeutralButton())
           {
             ledIntensity=(uint32_t)((float)paramValue*4.7619);
@@ -163,7 +165,11 @@ void F3000_Conf(void * pvParameters)
             state=1;
           }
           break;
-        default:break;
+        default:
+          SEG7_Set(SEG7_E);
+          vTaskDelay(500);
+          state=1;//no parameter found, return to parameter selection
+          break;
         }
         break;
       default:break;

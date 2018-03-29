@@ -120,6 +120,13 @@ uint8_t SEG7_Set(uint8_t value)
                       SEG7_SEG_E_MASK |
                       SEG7_SEG_F_MASK );
     break;
+  case SEG7_E:
+    LEDbuffer_MaskSet(SEG7_SEG_A_MASK |
+                      SEG7_SEG_F_MASK |
+                      SEG7_SEG_G_MASK |
+                      SEG7_SEG_E_MASK |
+                      SEG7_SEG_D_MASK );
+    break;
   default:break;
   }
   LEDbuffer_refresh(0);
