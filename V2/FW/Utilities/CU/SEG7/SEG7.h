@@ -22,5 +22,6 @@
 #define SEG7_E (17)
 
 uint8_t SEG7_Set(uint8_t value);
+uint8_t SEG7_EnableDot(uint8_t enabled);
 
 #endif /* __SEG7_H__ */

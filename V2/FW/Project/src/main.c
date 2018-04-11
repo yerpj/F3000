@@ -106,6 +106,7 @@ void F3000_Conf(void * pvParameters)
   uint8_t varNum=0;
   uint8_t paramValue=0;
   uint32_t ledIntensity=0;
+  uint32_t Seg7Intensity=0;
   uint32_t PotMinValueForAutoMode=0;
   while(1)
   {
@@ -141,10 +142,21 @@ void F3000_Conf(void * pvParameters)
         break;
       case 2:
         SEG7_Set(varNum);
+        SEG7_EnableDot(1);
         bargraph_DisplayPotValue();
         paramValue=bargraph_getPotValue();
         switch(varNum)
         {
+        case 7:// set 7seg intensity
+          if(CU_GetNeutralButton())
+          {
+            Seg7Intensity=(uint32_t)((float)paramValue*4.7619);
+            PC_SetParam((uint8_t*)&Seg7Intensity,"SEG7_I");
+            while(CU_GetNeutralButton())
+              vTaskDelay(20);
+            state=1;
+          }
+          break;
         case 8:// set the potentiometer minimum value for AUTO mode
           if(CU_GetNeutralButton())
           {
@@ -183,6 +195,9 @@ void F3000_Conf(void * pvParameters)
         MainAppChangeMode(MainMode_App);
         PC_GetParam((uint8_t*)&ledIntensity,"LED_I");
         CU_LEDsSetIntensity( (float)ledIntensity );
+
+        PC_GetParam((uint8_t*)&Seg7Intensity,"SEG7_I");
+        CU_SEG7sSetIntensity( (float)Seg7Intensity );
 
         PC_GetParam((uint8_t*)&PotMinValueForAutoMode,"AUTO_GU_BT");
         PotMinimumValueForAutoMode=PotMinValueForAutoMode;
@@ -518,6 +533,9 @@ void F3000_Init(void * pvParameters)
   vTaskDelay(200);//safe wait before reading flash memory
   PC_GetParam((uint8_t*)&param,"LED_I");
   CU_LEDsInit( (float)param );
+
+  PC_GetParam((uint8_t*)&param,"SEG7_I");
+  CU_SEG7sSetIntensity( (float)param );
 
   PC_GetParam((uint8_t*)&param,"AUTO_GU_BT");
   PotMinimumValueForAutoMode=(uint8_t)param;

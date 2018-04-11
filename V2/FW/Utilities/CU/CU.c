@@ -479,6 +479,20 @@ uint8_t CU_LEDsSetIntensity(float percent)
   return 0;
 }
 
+uint8_t CU_SEG7sSetIntensity(float percent)
+{
+  uint32_t i=0;
+
+  if( (percent>100) || (percent<0) )
+    return 1;
+  /* Set other leds intensity */
+  for(i=0;i<7;i++)
+  {
+    PCA9952_LED_Intensity_Control(PCA9952_MAIN_ADDR,(CU_CommonLeds_table[i]>>32),(uint32_t)(CU_CommonLeds_intensity[i]*percent/100));
+  }
+  return 0;
+}
+
 uint8_t CU_LEDsInit(float intensity)
 {
 #ifdef USE_BREADBOARD

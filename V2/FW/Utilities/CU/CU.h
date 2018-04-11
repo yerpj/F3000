@@ -698,6 +698,7 @@ uint16_t CU_ReadInputsRaw(void);
 uint8_t CU_IOInit(void);
 uint8_t CU_LEDsInit(float intensityPercent);
 uint8_t CU_LEDsSetIntensity(float percent);
+uint8_t CU_SEG7sSetIntensity(float percent);
 uint8_t CU_GetMode(void);
 uint8_t CU_GetOilWarning(void);
 uint8_t CU_GetStopButton(void);

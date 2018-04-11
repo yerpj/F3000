@@ -133,4 +133,14 @@ uint8_t SEG7_Set(uint8_t value)
   return 0;
 }
 
+uint8_t SEG7_EnableDot(uint8_t enabled)
+{
+  if(enabled)
+    LEDbuffer_MaskSet(SEG7_SEG_DP_MASK);
+  else
+    LEDbuffer_MaskReset(SEG7_SEG_DP_MASK);
+  LEDbuffer_refresh(0);
+  return 0;
+}
+
 
