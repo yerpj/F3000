@@ -465,9 +465,9 @@ uint8_t F3000CLIInterpreter(uint8_t *raw)
       {
         PC_SetParam((uint8_t*)&lum,"LED_I");
         PC_GetParam((uint8_t*)&lum,"LED_I");
-        CU_LEDsSetIntensity( (((float)lum)/100) );
+        CU_LEDsSetIntensity( ((float)lum) );
         LEDbuffer_refresh(1);
-        sprintf(str,"LED luminosity set to %3i [\%]",lum);
+        sprintf(str,"LED luminosity set to %3i [%]",lum);
         CLI_Output(str);
       }
     }
@@ -503,9 +503,9 @@ uint8_t F3000CLIInterpreter(uint8_t *raw)
         {
           PC_SetParam((uint8_t*)&lum,"SEG7_I");
           PC_GetParam((uint8_t*)&lum,"SEG7_I");
-          CU_SEG7sSetIntensity( (((float)lum)/100) );
+          CU_SEG7sSetIntensity( ((float)lum) );
           LEDbuffer_refresh(1);
-          sprintf(str,"7SEG luminosity set to %3i [\%]",lum);
+          sprintf(str,"7SEG luminosity set to %3i [%]",lum);
           CLI_Output(str);
         }
       }
