@@ -205,7 +205,7 @@ void F3000_Conf(void * pvParameters)
       vTaskDelay(20);
     }
     else
-      vTaskDelay(200);
+      vTaskDelay(300);
     
   }
 }
@@ -239,7 +239,7 @@ void F3000_Diag(void * pvParameters)
       vTaskDelay(20);
     }
     else
-      vTaskDelay(200);
+      vTaskDelay(300);
   }
 }
 
@@ -565,6 +565,9 @@ void F3000_Init(void * pvParameters)
   /* Here are the default Parameter values to be initially stored in flash */
   param=30;
   PC_SetParam((uint8_t*)&param,"LED_I");
+
+  param=30;
+  PC_SetParam((uint8_t*)&param,"SEG7_I");
 
   param=10;
   PC_SetParam((uint8_t*)&param,"AUTO_GU_BT"); //see detail in PC_Init() function
