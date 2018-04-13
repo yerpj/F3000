@@ -435,10 +435,10 @@ uint8_t F3000CLIInterpreter(uint8_t *raw)
     CLI_Output("Temp: not yet measured");
     return 0;
   }
-  if(strstr(cmd,"SYS -s Lum")>0)
+  if(strstr(cmd,"SYS -s LEDLum")>0)
   {
     uint32_t lum=0;
-    cmd=strstr(cmd,"SYS -s Lum");
+    cmd=strstr(cmd,"SYS -s LEDLum");
     if(strstr(cmd,"=")>0)
     {
       cmd=strstr(cmd,"=")+1;
@@ -465,14 +465,52 @@ uint8_t F3000CLIInterpreter(uint8_t *raw)
       {
         PC_SetParam((uint8_t*)&lum,"LED_I");
         PC_GetParam((uint8_t*)&lum,"LED_I");
-        CU_LEDsInit( (((float)lum)/100) );
+        CU_LEDsSetIntensity( (((float)lum)/100) );
         LEDbuffer_refresh(1);
-        sprintf(str,"luminosity set to %3i [\%]",lum);
+        sprintf(str,"LED luminosity set to %3i [\%]",lum);
         CLI_Output(str);
       }
     }
     return 0;
   }
+  if(strstr(cmd,"SYS -s SegLum")>0)
+    {
+      uint32_t lum=0;
+      cmd=strstr(cmd,"SYS -s SegLum");
+      if(strstr(cmd,"=")>0)
+      {
+        cmd=strstr(cmd,"=")+1;
+        if(cmd[0]>='0' && cmd[0]<='9')
+        {
+          if(cmd[1]>='0' && cmd[1]<='9')
+          {
+            if(cmd[2]>='0' && cmd[2]<='9')
+            {
+              lum+=(cmd[0]-'0')*100;
+              lum+=(cmd[1]-'0')*10;
+              lum+=cmd[2]-'0';
+            }
+            else
+            {
+              lum+=(cmd[0]-'0')*10;
+              lum+=cmd[1]-'0';
+            }
+          }
+          else
+            lum+=cmd[0]-'0';
+        }
+        if(lum>0 && lum<=100)
+        {
+          PC_SetParam((uint8_t*)&lum,"SEG7_I");
+          PC_GetParam((uint8_t*)&lum,"SEG7_I");
+          CU_SEG7sSetIntensity( (((float)lum)/100) );
+          LEDbuffer_refresh(1);
+          sprintf(str,"7SEG luminosity set to %3i [\%]",lum);
+          CLI_Output(str);
+        }
+      }
+      return 0;
+    }
   else if(strstr(cmd,"SYS -r")>0)
   {
     CLI_Output("Rebooting... Please unconnect and reconnect Bluetooth app");
@@ -517,6 +555,7 @@ void F3000_Init(void * pvParameters)
   ITS_Init(NULL,0);
   tempSensor_Init(NULL);
   bargraph_Init();
+  CU_LEDsInit();
   vTaskDelay(200);//wait a little bit in order to let flash be ready
   if(flash_init())
      console_log("can't init flash");
@@ -532,7 +571,7 @@ void F3000_Init(void * pvParameters)
 #endif /* FLASH_REINIT */
   vTaskDelay(200);//safe wait before reading flash memory
   PC_GetParam((uint8_t*)&param,"LED_I");
-  CU_LEDsInit( (float)param );
+  CU_LEDsSetIntensity( (float)param );
 
   PC_GetParam((uint8_t*)&param,"SEG7_I");
   CU_SEG7sSetIntensity( (float)param );

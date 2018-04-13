@@ -493,7 +493,7 @@ uint8_t CU_SEG7sSetIntensity(float percent)
   return 0;
 }
 
-uint8_t CU_LEDsInit(float intensity)
+uint8_t CU_LEDsInit(void)
 {
 #ifdef USE_BREADBOARD
   PCA9952_Init(BUS_I2C3,PCA9952_MAIN_ADDR);
@@ -503,7 +503,6 @@ uint8_t CU_LEDsInit(float intensity)
   PCA9952_Init(BUS_I2C1,PCA9952_BAR2_ADDR);
 #endif /* USE_BREADBOARD */
   
-  CU_LEDsSetIntensity(intensity);
   return 0;
 }
 

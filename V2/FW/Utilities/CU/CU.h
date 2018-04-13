@@ -696,7 +696,7 @@ uint8_t Console_LowLevelInit(void);
 void I2C_Bus_Init(I2C_List_Typedef I2Cx);
 uint16_t CU_ReadInputsRaw(void);
 uint8_t CU_IOInit(void);
-uint8_t CU_LEDsInit(float intensityPercent);
+uint8_t CU_LEDsInit(void);
 uint8_t CU_LEDsSetIntensity(float percent);
 uint8_t CU_SEG7sSetIntensity(float percent);
 uint8_t CU_GetMode(void);
