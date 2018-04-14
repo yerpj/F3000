@@ -49,5 +49,7 @@ enum {
 };
 
 uint8_t MainAppGetMode(void);
+uint8_t GetPotMinimumValueForAutoMode(void);
+uint32_t GetBlankingTime_ms(void);
 
 #endif /* __MAIN_H */

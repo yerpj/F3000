@@ -1,5 +1,7 @@
 #include "bargraph.h"
 #include "ADC.h"
+#include "main.h"
+#include "CU.h"
 
 extern uint32_t CU_bargraph_table[];
 
@@ -15,6 +17,7 @@ uint8_t NegativeMaskEnabled=0;
 uint8_t bargraph_NegMaskState(uint8_t state)
 {
   NegativeMaskEnabled=state?1:0;
+  return 0;
 }
 
 uint8_t bargraph_DisplayPotValue(void)
@@ -35,6 +38,7 @@ uint8_t bargraph_Set(uint8_t StartValue,uint8_t StopValue)
 {
   uint8_t i;
   uint64_t filledMask=0;
+  uint8_t negativeMaskLowerLimit=GetPotMinimumValueForAutoMode();
   if(StartValue<1 || StartValue>BARGRAPH_NLEDS)
     return 1;
   if(StopValue<1)
@@ -51,6 +55,8 @@ uint8_t bargraph_Set(uint8_t StartValue,uint8_t StopValue)
   
   if(NegativeMaskEnabled)
   {
+	  if(NegativeMask<negativeMaskLowerLimit)
+		  NegativeMask=negativeMaskLowerLimit;
     filledMask^=CU_bargraph_table[NegativeMask-1];
   }
   LEDbuffer_MaskSet(filledMask);

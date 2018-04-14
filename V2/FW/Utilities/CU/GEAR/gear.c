@@ -23,6 +23,7 @@ void gear_task(void * pvParameters)
   EventBits_t EventBits;
   uint32_t i=0;
   int32_t timeout=0;
+  vTaskDelay(2000);
   while(1)
   {
     if( MainAppGetMode()!=MainMode_App )
@@ -231,7 +232,7 @@ void gear_task(void * pvParameters)
         /* stop motor */
         CU_STOP_Off();
         gear_stop();
-        
+        vTaskDelay(GetBlankingTime_ms());
         xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
       }
       else
@@ -287,7 +288,7 @@ void gear_task(void * pvParameters)
         /* stop motor */
         CU_STOP_Off();
         gear_stop();
-
+        vTaskDelay(GetBlankingTime_ms());
         xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
       }
       else

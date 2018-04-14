@@ -53,17 +53,17 @@ void tempSensor_Monitor_callback(uint16_t value)
     
 
     //define temperature state
-    if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_1_V )
+    if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_1 )
       tempSensor_currentState=1;
-    else if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_2_V && tempSensor_currentValue<TEMPSENSOR_THRESHOLD_1_V )
+    else if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_2 && tempSensor_currentValue<TEMPSENSOR_THRESHOLD_1 )
       tempSensor_currentState=2;
-    else if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_3_V && tempSensor_currentValue<TEMPSENSOR_THRESHOLD_2_V )
+    else if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_3 && tempSensor_currentValue<TEMPSENSOR_THRESHOLD_2 )
       tempSensor_currentState=3;
-    else if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_4_V && tempSensor_currentValue<TEMPSENSOR_THRESHOLD_3_V )
+    else if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_4 && tempSensor_currentValue<TEMPSENSOR_THRESHOLD_3 )
       tempSensor_currentState=4;
-    else if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_5_V && tempSensor_currentValue<TEMPSENSOR_THRESHOLD_4_V )
+    else if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_5 && tempSensor_currentValue<TEMPSENSOR_THRESHOLD_4 )
       tempSensor_currentState=5;
-    else if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_6_V && tempSensor_currentValue<TEMPSENSOR_THRESHOLD_5_V )
+    else if( tempSensor_currentValue>=TEMPSENSOR_THRESHOLD_6 && tempSensor_currentValue<TEMPSENSOR_THRESHOLD_5 )
       tempSensor_currentState=6;
     else 
       tempSensor_currentState=7;

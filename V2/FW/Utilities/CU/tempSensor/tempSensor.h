@@ -17,12 +17,12 @@ from cold to hot:
 7) flashing red led
 
 */
-#define TEMPSENSOR_THRESHOLD_1_V        (0.67)
-#define TEMPSENSOR_THRESHOLD_2_V        (0.64)
-#define TEMPSENSOR_THRESHOLD_3_V        (0.60)
-#define TEMPSENSOR_THRESHOLD_4_V        (0.58)
-#define TEMPSENSOR_THRESHOLD_5_V        (0.54)
-#define TEMPSENSOR_THRESHOLD_6_V        (0.52)
+#define TEMPSENSOR_THRESHOLD_1        (1.5)
+#define TEMPSENSOR_THRESHOLD_2        (1.009)
+#define TEMPSENSOR_THRESHOLD_3        (0.715)
+#define TEMPSENSOR_THRESHOLD_4        (0.577)
+#define TEMPSENSOR_THRESHOLD_5        (0.332)
+#define TEMPSENSOR_THRESHOLD_6        (0.256)
 
 enum{
   TempSensor_Cold=1,

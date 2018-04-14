@@ -20,7 +20,8 @@ uint8_t PC_Init(void)
     return 1;*/
   PC_AddParam("LED_I");// leds intensity
   PC_AddParam("SEG7_I");// 7 seg intensity
-  PC_AddParam("AUTO_GU_BT");//AUTO mode, GEAR UP, BLANKING TIME: time between 2 consecutive GEAR_UP actions
+  PC_AddParam("AUTO_GU_BT");//AUTO mode, GEAR UP, BLANKING TIME: time between 2 consecutive GEAR_UP actions. unit: millisecond
+  PC_AddParam("AUTO_GU_MT");//AUTO mode, GEAR UP, minimum threshold
   return 0;
 }
 

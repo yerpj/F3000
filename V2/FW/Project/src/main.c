@@ -22,8 +22,20 @@ uint8_t MainMode=MainMode_Init;
 //other variables
 uint8_t Vreg_based_LED=0;
 uint8_t str[300];
-uint8_t PotMinimumValueForAutoMode=0;
+uint16_t PotMinimumValueForAutoMode=0;//unit: rpm
+uint32_t BlankingTime_ms=0;//unit: millisecond
 EventGroupHandle_t CU_Inputs_EventGroup;
+
+//shouldn't be here logically but easier to implement
+uint8_t GetPotMinimumValueForAutoMode(void)
+{
+	return PotMinimumValueForAutoMode;
+}
+
+uint32_t GetBlankingTime_ms(void)
+{
+	return BlankingTime_ms;
+}
 
 uint8_t MainAppGetMode(void)
 {
@@ -107,7 +119,8 @@ void F3000_Conf(void * pvParameters)
   uint8_t paramValue=0;
   uint32_t ledIntensity=0;
   uint32_t Seg7Intensity=0;
-  uint32_t PotMinValueForAutoMode=0;
+  uint32_t PotMinValueForAutoMode=0;//range: 1- MAX LEDS
+  uint32_t BlankingTime=0;//ms
   while(1)
   {
     if(MainMode==MainMode_Configuration)
@@ -147,6 +160,16 @@ void F3000_Conf(void * pvParameters)
         paramValue=bargraph_getPotValue();
         switch(varNum)
         {
+        case 6:// set the potentiometer threshold minimum value for AUTO mode
+		  if(CU_GetNeutralButton())
+		  {
+			PotMinValueForAutoMode=(uint32_t)paramValue;
+			PC_SetParam((uint8_t*)&PotMinValueForAutoMode,"AUTO_GU_MT");
+			while(CU_GetNeutralButton())
+			  vTaskDelay(20);
+			state=1;
+		  }
+	  break;
         case 7:// set 7seg intensity
           if(CU_GetNeutralButton())
           {
@@ -157,13 +180,14 @@ void F3000_Conf(void * pvParameters)
             state=1;
           }
           break;
-        case 8:// set the potentiometer minimum value for AUTO mode
+        case 8:// set the blanking time between two GEAR UP
           if(CU_GetNeutralButton())
           {
-            PotMinValueForAutoMode=(uint32_t)paramValue;
-            PC_SetParam((uint8_t*)&PotMinValueForAutoMode,"AUTO_GU_BT");
-            while(CU_GetNeutralButton())
-              vTaskDelay(20);
+        	  BlankingTime=(uint32_t)paramValue;
+        	  BlankingTime=BlankingTime*50;//50ms per LED
+              PC_SetParam((uint8_t*)&BlankingTime,"AUTO_GU_BT");
+              while(CU_GetNeutralButton())
+                vTaskDelay(20);
             state=1;
           }
           break;
@@ -192,15 +216,21 @@ void F3000_Conf(void * pvParameters)
       if(CU_GetStopButton())
       {
         state=0;
-        MainAppChangeMode(MainMode_App);
+#ifdef RESET_CU_WHEN_EXITING_CONFIGURATION_MODE
+        NVIC_SystemReset();
+#endif /* RESET_CU_WHEN_EXITING_CONFIGURATION_MODE */
+        /*MainAppChangeMode(MainMode_App);
         PC_GetParam((uint8_t*)&ledIntensity,"LED_I");
         CU_LEDsSetIntensity( (float)ledIntensity );
 
         PC_GetParam((uint8_t*)&Seg7Intensity,"SEG7_I");
         CU_SEG7sSetIntensity( (float)Seg7Intensity );
 
-        PC_GetParam((uint8_t*)&PotMinValueForAutoMode,"AUTO_GU_BT");
+        PC_GetParam((uint8_t*)&PotMinValueForAutoMode,"AUTO_GU_MT");//automatic mode, gear UP,minimum pot threshold
         PotMinimumValueForAutoMode=PotMinValueForAutoMode;
+
+        PC_GetParam((uint8_t*)&BlankingTime_ms,"AUTO_GU_BT");//automatic mode, gear UP, blanking time
+        BlankingTime_ms=BlankingTime;*/
       }
       vTaskDelay(20);
     }
@@ -252,6 +282,7 @@ void F3000_Periodic(void * pvParameters)
   uint32_t i=0;
   uint8_t GearMode;
   uint8_t PotValue=1;
+  uint8_t PotValueMinScaled=0;
   uint8_t DelayBetweenTwoGearUp=0;
   while(1)
   {
@@ -305,8 +336,9 @@ void F3000_Periodic(void * pvParameters)
 
     /* check Pot value for AUTO mode */
     PotValue=bargraph_getPotValue();
-    if(PotValue<PotMinimumValueForAutoMode)
-      PotValue=PotMinimumValueForAutoMode;
+    PotValueMinScaled=GetPotMinimumValueForAutoMode();
+    if(PotValue<PotValueMinScaled )
+      PotValue=PotValueMinScaled;
     if(GearMode==CU_Mode_Auto && CU_RPMToBargraph()>=PotValue)
     {
       if( (gear_getPosition()<gear_pos_5) && (gear_getPosition()!=gear_pos_N) && CU_GetGazInput() && !CU_GetEmbrayInput() && !DelayBetweenTwoGearUp)
@@ -556,6 +588,7 @@ void F3000_Init(void * pvParameters)
   tempSensor_Init(NULL);
   bargraph_Init();
   CU_LEDsInit();
+  //CU_IOInit(); already done earlier in F3000_System_Start
   vTaskDelay(200);//wait a little bit in order to let flash be ready
   if(flash_init())
      console_log("can't init flash");
@@ -569,7 +602,10 @@ void F3000_Init(void * pvParameters)
   param=30;
   PC_SetParam((uint8_t*)&param,"SEG7_I");
 
-  param=10;
+  param=5000;
+  PC_SetParam((uint8_t*)&param,"AUTO_GU_MT");// see detail inPC_Init() function
+
+  param=500;//millisecond
   PC_SetParam((uint8_t*)&param,"AUTO_GU_BT"); //see detail in PC_Init() function
 #endif /* FLASH_REINIT */
   vTaskDelay(200);//safe wait before reading flash memory
@@ -579,8 +615,11 @@ void F3000_Init(void * pvParameters)
   PC_GetParam((uint8_t*)&param,"SEG7_I");
   CU_SEG7sSetIntensity( (float)param );
 
+  PC_GetParam((uint8_t*)&param,"AUTO_GU_MT");
+  PotMinimumValueForAutoMode=(uint16_t)param;
+
   PC_GetParam((uint8_t*)&param,"AUTO_GU_BT");
-  PotMinimumValueForAutoMode=(uint8_t)param;
+  BlankingTime_ms=param;
   if(gear_Init())
   {
     console_log("can't init GearBox");
@@ -592,9 +631,6 @@ void F3000_Init(void * pvParameters)
 
   //events
   CU_Inputs_EventGroup=xEventGroupCreate();
-  
-  CU_IOInit();
-  
   
   STBT_Init(COM1);
   console_Init(STBT_ConsoleOutput);
@@ -664,6 +700,8 @@ void F3000_Init(void * pvParameters)
 
 void F3000_System_Start(void)
 {
+  //init IO before anything else in order to avoid outputs to be floating
+  CU_IOInit();
   //xTaskCreate(ToggleLed1, "LED1", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, NULL);
   xTaskCreate(F3000_App, "Application", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &AppTaskHandle);
   xTaskCreate(F3000_Periodic, "PeriodicTask", configMINIMAL_STACK_SIZE, NULL, LED_TASK_PRIO, &PeriodicTaskHandle);
@@ -680,6 +718,7 @@ void F3000_System_Start(void)
 void main(void)
 {
   /* System function that updates the SystemCoreClock variable. */
+
   SystemCoreClockUpdate();
   NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );//no bits of sub-priority. Only preemption priorities are used
   F3000_System_Start();

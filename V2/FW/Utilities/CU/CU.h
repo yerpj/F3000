@@ -59,9 +59,9 @@ enum{
 
 #define LED_BLUE_3MM_INTENSITY            8//4//2
 #define LED_RED_3MM_INTENSITY             20//52
-#define LED_GREEN_3MM_INTENSITY           4//2
+#define LED_GREEN_3MM_INTENSITY           5//2
 #define LED_RED_5MM_INTENSITY             30//15//30//78
-#define LED_GREEN_5MM_INTENSITY           4//2
+#define LED_GREEN_5MM_INTENSITY           5//2
 
 #define LED_OIL_IOEXP_OFFSET                2
 #define LED_OIL_INTENSITY                   LED_RED_5MM_INTENSITY
