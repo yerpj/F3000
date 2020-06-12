@@ -232,7 +232,7 @@ void gear_task(void * pvParameters)
         /* stop motor */
         CU_STOP_Off();
         gear_stop();
-        vTaskDelay(GetBlankingTime_ms());
+        vTaskDelay(GetBlankingTime_ms());  //delay is mandatory when increasing gear
         xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
       }
       else
@@ -288,7 +288,7 @@ void gear_task(void * pvParameters)
         /* stop motor */
         CU_STOP_Off();
         gear_stop();
-        vTaskDelay(GetBlankingTime_ms());
+        vTaskDelay(GetBlankingTime_ms());//delay is optionnal when decreasing gear. Final user prefers to keep it anyway...
         xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
       }
       else

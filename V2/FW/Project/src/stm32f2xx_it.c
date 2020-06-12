@@ -290,7 +290,7 @@ void SysTick_Handler(void)
   
   if(++Regime_Delay_ms>200)
   {
-    Regime_RPM=100*RegimeIRQEvents;
+    Regime_RPM=300*RegimeIRQEvents;
     RegimeIRQEvents=0;
     Regime_Delay_ms=0;
   }
