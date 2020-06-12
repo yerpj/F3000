@@ -22,6 +22,7 @@ void gear_task(void * pvParameters)
 {
   EventBits_t EventBits;
   uint32_t i=0;
+  uint8_t BlankingTimeNeeded=0;
   int32_t timeout=0;
   vTaskDelay(2000);
   while(1)
@@ -92,6 +93,11 @@ void gear_task(void * pvParameters)
         gear_current_pos=gear_pos_lost;
       }
       SEG7_Set(gear_current_pos);
+      if(BlankingTimeNeeded)
+      {
+        vTaskDelay(GetBlankingTime_ms());  //delay applied after a gear Increase and Decrease. No delay after a Neutral command
+        BlankingTimeNeeded=0;
+      }
       continue;
     }
     else if( (EventBits & GEAR_EVENT_TONEUTRAL) !=0)
@@ -232,7 +238,7 @@ void gear_task(void * pvParameters)
         /* stop motor */
         CU_STOP_Off();
         gear_stop();
-        vTaskDelay(GetBlankingTime_ms());  //delay is mandatory when increasing gear
+        BlankingTimeNeeded=1;
         xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
       }
       else
@@ -288,7 +294,7 @@ void gear_task(void * pvParameters)
         /* stop motor */
         CU_STOP_Off();
         gear_stop();
-        vTaskDelay(GetBlankingTime_ms());//delay is optionnal when decreasing gear. Final user prefers to keep it anyway...
+        BlankingTimeNeeded=1;
         xEventGroupClearBits(gear_Events,GEAR_EVENT_DECREASE|GEAR_EVENT_INCREASE|GEAR_EVENT_TONEUTRAL);
       }
       else
